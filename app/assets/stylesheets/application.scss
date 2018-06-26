@@ -14,9 +14,114 @@
  *= require_self
  */
 
-@import "material";
-
-
 .full-width-table{
   width: 100%;
+}
+.body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+h1.header{
+  color: #616161;
+}
+@media all and (max-width: 600px) {
+
+  h1{
+    font-size: 3.2rem;
+  }
+
+  nav .brand-logo{
+    font-size: 1.7rem;
+  }
+
+}
+@media all and (min-width: 600px) {
+
+  nav .brand-logo {
+    margin-left: 20px;
+  }
+
+}
+main {
+  flex: 1 0 auto;
+  background: gainsboro;
+}
+
+.modal.modal-fixed-footer .modal-content{
+  overflow-x: hidden;
+}
+.btn-block {
+  display: block !important;
+  width: 100%;
+}
+
+.modal-footer .row{
+  margin: 0;
+}
+
+.ml-1{
+  margin-left: 10px;
+}
+
+.toast{
+  padding: 0;
+  min-height: 0;
+}
+
+.toast span{
+  padding: 10px 25px;
+  min-height: 48px;
+  line-height: 28px;
+  width: 100%;
+}
+
+.background-loader{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  background: rgba(187, 187, 187, 0.58);
+  left: 0;
+  z-index: 10000;
+}
+
+.background-loader .preloader-wrapper.big{
+  width: 128px;
+  height: 128px;
+  top: calc(50% - 64px);
+  left: calc(50% - 64px);
+}
+
+.delete-modal{
+
+}
+
+.delete-modal .modal-header{
+  padding: 14px;
+}
+
+.delete-modal .modal-content h6{
+  margin: 0.46rem;
+}
+
+.delete-modal .modal-footer{
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.m0{
+  margin: 0 !important;
+}
+
+.page-footer{
+  padding: 0;
+}
+
+.sidenav-overlay{
+  z-index: 1;
+}
+
+.sidenav.collection .collection-item:last-child{
+  border-bottom: 1px solid #e0e0e0;
 }

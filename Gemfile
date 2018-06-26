@@ -69,6 +69,4 @@ gem 'react-rails', '2.4.4'
 
 gem 'jquery-rails'
 
-gem 'material_design_lite-rails', '~> 1.3'
-
 gem 'material_icons'

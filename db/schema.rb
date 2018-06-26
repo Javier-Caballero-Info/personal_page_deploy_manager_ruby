@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_145946) do
+ActiveRecord::Schema.define(version: 2018_06_21_194635) do
 
   create_table "apps", force: :cascade do |t|
     t.string "name"
+    t.string "docker_image"
+    t.string "exposed_ports"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "environments", force: :cascade do |t|
+    t.string "name"
+    t.string "portainer_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
