@@ -20,6 +20,7 @@ const Header = (createReactClass({
                         </a>
                         <ul className="right hide-on-med-and-down">
                             <li><a href="/environments">Environments</a></li>
+                            <li><a href="/apps">Applications</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -30,6 +31,11 @@ const Header = (createReactClass({
                     </div>
                     <a href="/environments" className="collection-item">
                         <div>Environments
+                            <span className="secondary-content"><i className="material-icons">send</i></span>
+                        </div>
+                    </a>
+                    <a href="/apps" className="collection-item">
+                        <div>Applications
                             <span className="secondary-content"><i className="material-icons">send</i></span>
                         </div>
                     </a>

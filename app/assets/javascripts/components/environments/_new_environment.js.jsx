@@ -9,7 +9,7 @@ var NewEnvironment = (createReactClass({
                 'name': '',
                 'portainer_url': ''
             },
-            loadingList: false
+            loading: false
         };
     },
 
@@ -26,7 +26,7 @@ var NewEnvironment = (createReactClass({
     },
 
     onSave(environment){
-        this.setState({loadingList: true});
+        this.setState({loading: true});
 
         $.ajax({
             url: "/api/v1/environments",
@@ -36,7 +36,20 @@ var NewEnvironment = (createReactClass({
                 Alert.success('New environment created');
                 $('#modalCreateEnvironment').modal('close');
                 this.props.handleSubmit(environment);
-                this.setState({loadingList: false});
+                this.setState({loading: false});
+                this.formInstance.onReset();
+            },
+            error: (xhr) => {
+                if(xhr.status === 422) {
+                    const response = xhr.responseJSON;
+                    Object.keys(response.errors).map((k) => {
+                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                    });
+                }
+                if(xhr.status >= 500) {
+                    Alert.danger('Something get wrong');
+                }
+                this.setState({loading: false});
             }
         });
 
@@ -50,10 +63,10 @@ var NewEnvironment = (createReactClass({
                     New Environment <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateEnvironment" className="modal">
-                    <FormEnvironment environment={this.state.environment} title={"New Environment"}
-                                     onSubmit={this.onSave} onClose={this.onModalClose}/>
+                    <FormEnvironment ref={instance => { this.formInstance = instance; }} title={"New Environment"}
+                                     environment={this.state.environment} onSubmit={this.onSave} onClose={this.onModalClose}/>
                 </div>
-                {this.state.loadingList &&
+                {this.state.loading &&
                     <Loader/>
                 }
             </div>

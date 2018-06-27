@@ -11,7 +11,6 @@ const DeleteConfirmationMsg = (createReactClass({
 
     show(text){
         this.setState({msg: text});
-        console.log(text);
         $('#deleteConfirmationModal').modal('open');
     },
 
@@ -23,7 +22,7 @@ const DeleteConfirmationMsg = (createReactClass({
         return (
             <div id="deleteConfirmationModal" className="modal delete-modal">
                 <div className="modal-header red white-text">
-                    <h5 className="m0">Confirm Delete</h5>
+                    <h5 className="m-0">Confirm Delete</h5>
                 </div>
 
                 <div className="modal-content">

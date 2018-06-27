@@ -13,6 +13,16 @@
  *= require_tree .
  *= require_self
  */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.chips .input{
+  margin: 0 !important;
+  border: none !important;
+}
 
 .full-width-table{
   width: 100%;
@@ -110,8 +120,16 @@ main {
   border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-.m0{
-  margin: 0 !important;
+.standard-table tr td:last-child{
+  width: 122px;
+}
+
+.m-0{
+   margin: 0 !important;
+}
+
+.mt-0{
+  margin-top: 0 !important;
 }
 
 .page-footer{
@@ -124,4 +142,8 @@ main {
 
 .sidenav.collection .collection-item:last-child{
   border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-content > .row{
+  margin-bottom: 0;
 }

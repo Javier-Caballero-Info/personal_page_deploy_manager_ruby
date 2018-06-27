@@ -6,7 +6,7 @@ const IndexEnvironments = (createReactClass({
 
         $.getJSON("/api/v1/environments.json", response => {
             this.setState({ environments: response });
-            this.setState({ loadingList: false });
+            this.setState({ loading: false });
         });
     },
 
@@ -44,7 +44,7 @@ const IndexEnvironments = (createReactClass({
     getInitialState() {
         return {
             environments: [],
-            loadingList: true,
+            loading: true,
             loadingRequest: false
         };
     },
@@ -62,26 +62,26 @@ const IndexEnvironments = (createReactClass({
                             <Loader/>
                         }
 
-                        {!this.state.loadingList &&
+                        {!this.state.loading &&
                             <NewEnvironment handleSubmit={this.handleCreateEnvironment}/>
                         }
 
-                        {this.state.loadingList &&
+                        {this.state.loading &&
                             <div className="card-panel">
-                                <div className="progress m0">
+                                <div className="progress m-0">
                                     <div className="indeterminate"/>
                                 </div>
                             </div>
                         }
 
-                        {!this.state.loadingList && this.state.environments.length > 0 &&
+                        {!this.state.loading && this.state.environments.length > 0 &&
                             <AllEnvironments environments={this.state.environments} handleDelete={this.handleDeleteEnvironment}
                                          handleEdit={this.handleEditEnvironment}/>
                         }
 
-                        {!this.state.loadingList && this.state.environments.length < 1 &&
+                        {!this.state.loading && this.state.environments.length < 1 &&
                             <div className="card-panel yellow lighten-3 orange-text">
-                                <h5 className="center m0">No environments loaded.</h5>
+                                <h5 className="center m-0">No environments loaded.</h5>
                             </div>
                         }
 

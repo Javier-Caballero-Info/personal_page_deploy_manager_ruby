@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'site#index'
 
   get '/environments', to: 'site#environments'
+  get '/apps', to: 'site#apps'
 
   namespace :api do
     namespace :v1 do

@@ -1,9 +1,10 @@
 const FormEnvironment = (createReactClass({
 
     onSubmit(){
-
         this.props.onSubmit(this.state.environment);
+    },
 
+    onReset() {
         this.state.environment = {
             'name': '',
             'portainer_url': ''

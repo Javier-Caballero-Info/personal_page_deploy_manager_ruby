@@ -28,10 +28,22 @@ var AllEnvironments = (createReactClass({
             success: (environment) => {
                 this.setState({ loading: false});
                 Alert.success('Environment ' + environment.name +  ' edited');
+                this.setState({ editForm: null});
+                $('#modalEditEnvironment').modal('close');
+            },
+            error: (xhr) => {
+                if(xhr.status === 422) {
+                    const response = xhr.responseJSON;
+                    Object.keys(response.errors).map((k) => {
+                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                    });
+                }
+                if(xhr.status >= 500) {
+                    Alert.danger('Something get wrong');
+                }
+                this.setState({loading: false});
             }
         });
-        this.setState({ editForm: null});
-        $('#modalEditEnvironment').modal('close');
     },
 
     openEditModal(environment) {
@@ -73,7 +85,7 @@ var AllEnvironments = (createReactClass({
                 {this.state.loading &&
                    <Loader/>
                 }
-                <table className="responsive-table highlight striped">
+                <table className="responsive-table highlight striped standard-table">
                     <thead>
                     <tr>
                         <th>Name</th>

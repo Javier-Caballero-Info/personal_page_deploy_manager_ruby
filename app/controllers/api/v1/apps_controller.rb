@@ -20,6 +20,6 @@ class Api::V1::AppsController < Api::V1::BaseController
   private
 
     def app_params
-      params.require(:app).permit(:id, :name, :description)
+      params.require(:app).permit(:id, :name, :description, :docker_image, :exposed_ports)
     end
 end

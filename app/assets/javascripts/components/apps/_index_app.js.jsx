@@ -1,25 +1,94 @@
-const IndexApp = (createReactClass({
+const IndexApps = (createReactClass({
+    componentDidMount() {
 
-    handleSubmit(app) {
-        var newState = this.state.apps.concat(app);
+        this.refs.deleteModal = null;
+
+        $.getJSON("/api/v1/apps.json", response => {
+            this.setState({ apps: response });
+            this.setState({ loading: false });
+        });
+    },
+
+    handleCreateApp(app) {
+        const newState = this.state.apps.concat(app);
         this.setState({ apps: newState })
     },
 
-    getInitialState() {
-        return { apps: [] };
+    removeAppClient(id) {
+        const newApps = this.state.apps.filter((app) => {
+            return app.id !== id;
+        });
+
+        this.setState({ apps: newApps });
     },
 
-    componentDidMount() {
-        $.getJSON("/api/v1/apps.json", response => {
-            this.setState({ apps: response });
+    confirmDelete() {
+        this.setState({loadingRequest: true});
+        $.ajax({
+            url: `/api/v1/apps/${this.app.id}`,
+            type: 'DELETE',
+            success:() => {
+                Alert.success('App deleted');
+                this.removeAppClient(this.app.id);
+                this.setState({loadingRequest: false});
+            }
         });
+    },
+
+    handleDeleteApp(app) {
+        this.app = app;
+        this.childDeletePopUp.show('¿Are you sure that you want to delete the app "' + app.name + '"?');
+    },
+
+    getInitialState() {
+        return {
+            apps: [],
+            loading: true,
+            loadingRequest: false
+        };
     },
 
     render() {
         return (
-            <div>
-                <NewApp handleSubmit={this.handleSubmit}/>
-                <AllApps apps={this.state.apps}/>
+            <div className="body">
+                <Header/>
+                <main>
+                    <div className="container">
+
+                        <h1 className="header">Apps</h1>
+
+                        {this.state.loadingRequest &&
+                        <Loader/>
+                        }
+
+                        {!this.state.loading &&
+                        <NewApp handleSubmit={this.handleCreateApp}/>
+                        }
+
+                        {this.state.loading &&
+                        <div className="card-panel">
+                            <div className="progress m-0">
+                                <div className="indeterminate"/>
+                            </div>
+                        </div>
+                        }
+
+                        {!this.state.loading && this.state.apps.length > 0 &&
+                        <AllApps apps={this.state.apps} handleDelete={this.handleDeleteApp}
+                                         handleEdit={this.handleEditApp}/>
+                        }
+
+                        {!this.state.loading && this.state.apps.length < 1 &&
+                        <div className="card-panel yellow lighten-3 orange-text">
+                            <h5 className="center m-0">No apps loaded.</h5>
+                        </div>
+                        }
+
+                        <DeleteConfirmationMsg  ref={instance => { this.childDeletePopUp = instance; }} handleConfirm={this.confirmDelete} />
+
+                    </div>
+                </main>
+                <Footer/>
             </div>
         )
     }
