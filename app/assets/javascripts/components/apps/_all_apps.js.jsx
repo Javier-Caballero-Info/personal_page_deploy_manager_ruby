@@ -1,6 +1,27 @@
 var AllApps = (createReactClass({
     componentDidMount() {
-        $('#modalEditApp').modal()
+        $.getJSON("/api/v1/environments.json", response => {
+            const environment_items = response.map((environment) => {
+                return (
+                    <li key={environment.id}>
+                        <a onClick={(e) => this.openEnvironmentVarsModal(environment, e)}>
+                            <i className="material-icons">extension</i>{environment.name}
+                        </a>
+                    </li>
+                )
+            });
+
+            this.setState({environment_items: environment_items});
+
+        });
+
+        $('#modalEditApp').modal();
+        $('#modalListEnvVars').modal();
+
+        $('.dropdown-trigger').dropdown({
+            constrainWidth: false,
+            coverTrigger: false
+        });
     },
 
     getInitialState() {
@@ -62,6 +83,25 @@ var AllApps = (createReactClass({
         $('#modalEditApp').modal('close');
     },
 
+    openEnvironmentVarsModal(environment){
+        this.setState({ listEnvVars:
+                <ModalIndexEnvVars title={"Environment Vars - App: " + this.state.app.name + ' - Environment: ' + environment.name}
+                                   app={this.state.app} onClose={this.closeEnvironmentVarsModal} environment={environment}/>
+        });
+
+        $('#modalListEnvVars').modal('open');
+
+    },
+
+    closeEnvironmentVarsModal() {
+        this.setState({ listEnvVars: null});
+        $('#modalListEnvVars').modal('close');
+    },
+
+    setApp(app) {
+        this.setState({app: app});
+    },
+
     render() {
 
         const apps = this.props.apps.map((app) => {
@@ -70,7 +110,12 @@ var AllApps = (createReactClass({
                     <td>{app.name}</td>
                     <td>{app.docker_image}</td>
                     <td>
-                        <button className="waves-effect waves-light btn blue" onClick={(e) => this.openEditModal(app, e)}>
+                        <button className="waves-effect waves-light btn deep-purple dropdown-trigger"
+                                data-target='dropdown1' onClick={(e) => this.setApp(app, e)}>
+                            <i className="material-icons"> style </i> <i
+                            className="material-icons"> arrow_drop_down </i>
+                        </button>
+                        <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openEditModal(app, e)}>
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
@@ -88,7 +133,7 @@ var AllApps = (createReactClass({
                 {this.state.loading &&
                 <Loader/>
                 }
-                <table className="responsive-table highlight striped standard-table">
+                <table className="responsive-table highlight striped standard-table-4">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -100,8 +145,16 @@ var AllApps = (createReactClass({
                     {apps}
                     </tbody>
                 </table>
+                <ul id='dropdown1' className='dropdown-content'>
+                    <li className="disabled"><a>Environment vars by environment</a></li>
+                    <li className="divider" tabIndex="-1"/>
+                    {this.state.environment_items}
+                </ul>
                 <div id="modalEditApp" className="modal">
                     {this.state.editForm}
+                </div>
+                <div id="modalListEnvVars" className="modal modal-big">
+                    {this.state.listEnvVars}
                 </div>
             </div>
         )

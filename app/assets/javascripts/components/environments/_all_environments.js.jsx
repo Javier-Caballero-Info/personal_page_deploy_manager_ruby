@@ -65,18 +65,18 @@ var AllEnvironments = (createReactClass({
         $('#modalEditEnvironment').modal('close');
     },
 
-    openEnvironmentVars(environment){
+    openEnvironmentVarsModal(environment){
 
         this.setState({ listEnvVars:
                 <ModalIndexEnvVars title={"Environment Vars - Environment: " + environment.name}
-                                   onClose={this.closeEnvironmentVars} environment={environment}/>
+                                   onClose={this.closeEnvironmentVarsModal} environment={environment}/>
         });
 
         $('#modalListEnvVars').modal('open');
 
     },
 
-    closeEnvironmentVars() {
+    closeEnvironmentVarsModal() {
         this.setState({ listEnvVars: null});
         $('#modalListEnvVars').modal('close');
     },
@@ -89,7 +89,7 @@ var AllEnvironments = (createReactClass({
                     <td>{environment.name}</td>
                     <td>{environment.portainer_url}</td>
                     <td>
-                        <button className="waves-effect waves-light btn deep-purple" onClick={(e) => this.openEnvironmentVars(environment, e)}>
+                        <button className="waves-effect waves-light btn deep-purple" onClick={(e) => this.openEnvironmentVarsModal(environment, e)}>
                             <i className="material-icons">extension</i>
                         </button>
                         <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openEditModal(environment, e)}>

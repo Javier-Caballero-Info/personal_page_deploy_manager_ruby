@@ -1,7 +1,11 @@
 const Header = (createReactClass({
     componentDidMount() {
         $('.sidenav').sidenav();
-        $('.sidenav-dropdown-env-vars').dropdown( { hover: false, constrainWidth: false });
+        $('.sidenav-dropdown-env-vars').dropdown( {
+            hover: false,
+            constrainWidth: false,
+            coverTrigger: false
+        });
     },
 
     getInitialState: function() {
