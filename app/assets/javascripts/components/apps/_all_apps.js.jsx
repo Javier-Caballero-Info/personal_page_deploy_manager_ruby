@@ -47,8 +47,11 @@ var AllApps = (createReactClass({
     },
 
     openEditModal(app) {
+
+        const tmp_app = Object.assign({}, app);
+
         this.setState({ editForm:
-                <FormApp app={app} title={"Edit App"} onSubmit={this.handleEdit}
+                <FormApp app={tmp_app} title={"Edit App"} onSubmit={this.handleEdit}
                                  onClose={this.closeEditModal}/>
         });
         $('#modalEditApp').modal('open');

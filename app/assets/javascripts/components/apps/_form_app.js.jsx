@@ -31,25 +31,23 @@ const FormApp = (createReactClass({
     },
 
     onReset() {
-        this.state.app = {
-            'name': '',
-            'docker_image': '',
-            'exposed_ports': ''
-        };
+
+        this.refs.name.value = '';
+        this.refs.name.className = 'validate';
+
+        this.refs.docker_image.value = '';
+        this.refs.docker_image.className = 'validate';
+
         $('.chips').chips({
             placeholder: '',
             secondaryPlaceholder: '+Port',
             data: []
         });
+
     },
 
     onClose(){
-
-        this.state.app = {
-            'name': '',
-            'docker_image': '',
-            'exposed_ports': ''
-        };
+        this.onReset();
 
         this.props.onClose();
     },
@@ -127,14 +125,14 @@ const FormApp = (createReactClass({
                     <h4 className="center-align">{this.props.title}</h4>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input id="name_input" type="text" name="name" className="validate"
-                                   required="required" value={this.state.app.name} onChange={this.handleChange}/>
+                            <input id="name_input" type="text" name="name" className="validate" ref="name"
+                                   required="required" defaultValue={this.state.app.name} onChange={this.handleChange}/>
                             <label className="active" htmlFor="name_input">Name</label>
                             <span className="helper-text" data-error="The name is invalid"/>
                         </div>
                         <div className="input-field col s12">
-                            <input id="docker_image_input" type="text" name="docker_image" className="validate"
-                                   required="required" value={this.state.app.docker_image} onChange={this.handleChange}/>
+                            <input id="docker_image_input" type="text" name="docker_image" className="validate" ref="docker_image"
+                                   required="required" defaultValue={this.state.app.docker_image} onChange={this.handleChange}/>
                             <label className="active" htmlFor="docker_image_input">Docker Image</label>
                             <span className="helper-text" data-error="The docker image is invalid"/>
                         </div>

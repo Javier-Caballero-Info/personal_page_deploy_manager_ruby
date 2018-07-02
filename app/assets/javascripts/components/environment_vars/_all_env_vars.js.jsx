@@ -1,14 +1,14 @@
-var AllEnvironments = (createReactClass({
+var AllEnvVars = (createReactClass({
 
     componentDidMount() {
-        $('#modalEditEnvironment').modal()
+        $('#modalEditEnvironmentVar').modal()
     },
 
     getInitialState() {
         return {
-            environment: {
-                'name': '',
-                'portainer_url': ''
+            environment_var: {
+                'key': '',
+                'body': '',
             },
             formEdit: null,
             loading: false
@@ -19,17 +19,18 @@ var AllEnvironments = (createReactClass({
         this.props.handleDelete(id);
     },
 
-    handleEdit(environment) {
+    handleEdit(environment_var) {
         this.setState({ loading: true});
         $.ajax({
-            url: "/api/v1/environments/" + environment.id,
+            url: "/api/v1/environment_vars/" + environment_var.id,
             type: "PUT",
-            data: { environment: environment },
-            success: (environment) => {
+            data: { environment_var: environment_var },
+            success: (environment_var) => {
                 this.setState({ loading: false});
-                Alert.success('Environment ' + environment.name +  ' edited');
+                Alert.success('Environment var ' + environment_var.key +  ' edited');
+                this.props.handleEdit(environment_var);
                 this.setState({ editForm: null});
-                $('#modalEditEnvironment').modal('close');
+                $('#modalEditEnvironmentVar').modal('close');
             },
             error: (xhr) => {
                 if(xhr.status === 422) {
@@ -46,36 +47,36 @@ var AllEnvironments = (createReactClass({
         });
     },
 
-    openEditModal(environment) {
+    openEditModal(environment_var) {
 
-        let env = Object.assign({}, environment);
+        let env_var = Object.assign({}, environment_var);
 
         this.setState({ editForm:
-                <FormEnvironment environment={env} title={"Edit Environment"} onSubmit={this.handleEdit}
+                <FormEnvVar environment_var={env_var} title={"Edit Environment Var"} onSubmit={this.handleEdit}
                                  onClose={this.closeEditModal}/>
         });
 
-        $('#modalEditEnvironment').modal('open');
+        $('#modalEditEnvironmentVar').modal('open');
     },
 
     closeEditModal() {
         this.setState({ editForm: null});
-        $('#modalEditEnvironment').modal('close');
+        $('#modalEditEnvironmentVar').modal('close');
     },
 
     render() {
 
-        const environments = this.props.environments.map((environment) => {
+        const environment_vars = this.props.environment_vars.map((environment_var) => {
             return (
-                <tr key={environment.id}>
-                    <td>{environment.name}</td>
-                    <td>{environment.portainer_url}</td>
+                <tr key={environment_var.id}>
+                    <td>{environment_var.key}</td>
+                    <td>{environment_var.body}</td>
                     <td>
-                        <button className="waves-effect waves-light btn blue" onClick={(e) => this.openEditModal(environment, e)}>
+                        <button className="waves-effect waves-light btn blue" onClick={(e) => this.openEditModal(environment_var, e)}>
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
-                           onClick={this.handleDelete.bind(this, environment)}>
+                                onClick={this.handleDelete.bind(this, environment_var)}>
                             <i className="material-icons">delete</i>
                         </button>
                     </td>
@@ -87,21 +88,21 @@ var AllEnvironments = (createReactClass({
 
             <div className="card-panel">
                 {this.state.loading &&
-                   <Loader/>
+                <Loader/>
                 }
                 <table className="responsive-table highlight striped standard-table">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Portainer Url</th>
-                        <th></th>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>
-                        {environments}
+                    {environment_vars}
                     </tbody>
                 </table>
-                <div id="modalEditEnvironment" className="modal">
+                <div id="modalEditEnvironmentVar" className="modal">
                     {this.state.editForm}
                 </div>
             </div>

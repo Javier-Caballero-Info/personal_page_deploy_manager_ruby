@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_21_194635) do
+ActiveRecord::Schema.define(version: 2018_06_27_160341) do
 
   create_table "apps", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,17 @@ ActiveRecord::Schema.define(version: 2018_06_21_194635) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "environment_vars", force: :cascade do |t|
+    t.string "key"
+    t.text "body"
+    t.integer "app_id"
+    t.integer "environment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_environment_vars_on_app_id"
+    t.index ["environment_id"], name: "index_environment_vars_on_environment_id"
   end
 
   create_table "environments", force: :cascade do |t|

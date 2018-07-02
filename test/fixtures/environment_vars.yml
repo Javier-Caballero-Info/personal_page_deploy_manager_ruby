@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  key: MyString
+  body: MyText
+  app: one
+  environment: one
+
+two:
+  key: MyString
+  body: MyText
+  app: two
+  environment: two

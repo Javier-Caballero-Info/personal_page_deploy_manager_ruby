@@ -9,4 +9,7 @@ class SiteController < ApplicationController
   def environments
   end
 
+  def global_env_vars
+  end
+
 end
