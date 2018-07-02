@@ -53,7 +53,7 @@ var AllEnvVars = (createReactClass({
 
         this.setState({ editForm:
                 <FormEnvVar environment_var={env_var} title={"Edit Environment Var"} onSubmit={this.handleEdit}
-                                 onClose={this.closeEditModal}/>
+                            onClose={this.closeEditModal} environment={this.props.environment} app={this.props.app}/>
         });
 
         $('#modalEditEnvironmentVar').modal('open');

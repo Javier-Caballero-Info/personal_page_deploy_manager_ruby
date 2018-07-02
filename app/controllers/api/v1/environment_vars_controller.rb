@@ -1,6 +1,15 @@
 class Api::V1::EnvironmentVarsController < Api::V1::BaseController
   def index
-    render json: EnvironmentVar.all.to_json(:include => [:app, :environment])
+
+    app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
+    environment_id = params[:environment] && params[:environment] != "null" ? params[:environment].to_i : nil
+
+    environment_vars = EnvironmentVar.all
+    environment_vars = environment_vars.where(app_id: app_id)
+    environment_vars = environment_vars.where(environment_id: environment_id)
+
+    render json: environment_vars.to_json(:include => [:app, :environment])
+
   end
 
   def create

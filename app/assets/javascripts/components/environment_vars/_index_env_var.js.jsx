@@ -3,7 +3,10 @@ const IndexEnvVars = (createReactClass({
 
         this.refs.deleteModal = null;
 
-        $.getJSON("/api/v1/environment_vars.json", response => {
+        const env_id = this.props.environment ? this.props.environment.id : null;
+        const app_id = this.props.app ? this.props.app.id : null;
+
+        $.getJSON("/api/v1/environment_vars.json?environment=" + env_id + '&app=' + app_id , response => {
             this.setState({ environment_vars: response });
             this.setState({ loading: false });
         });
@@ -59,46 +62,39 @@ const IndexEnvVars = (createReactClass({
 
     render() {
         return (
-            <div className="body">
-                <Header/>
-                <main>
-                    <div className="container">
+                <div>
+                    {this.state.loadingRequest &&
+                    <Loader/>
+                    }
 
-                        <h1 className="header">Environment Vars</h1>
+                    {!this.state.loading &&
+                    <NewEnvVar handleSubmit={this.handleCreateEnvironmentVar} environment={this.props.environment}
+                               app={this.props.app}/>
+                    }
 
-                        {this.state.loadingRequest &&
-                        <Loader/>
-                        }
-
-                        {!this.state.loading &&
-                        <NewEnvVar handleSubmit={this.handleCreateEnvironmentVar}/>
-                        }
-
-                        {this.state.loading &&
-                        <div className="card-panel">
-                            <div className="progress m-0">
-                                <div className="indeterminate"/>
-                            </div>
+                    {this.state.loading &&
+                    <div className="card-panel">
+                        <div className="progress m-0">
+                            <div className="indeterminate"/>
                         </div>
-                        }
-
-                        {!this.state.loading && this.state.environment_vars.length > 0 &&
-                        <AllEnvVars environment_vars={this.state.environment_vars} handleDelete={this.handleDeleteEnvironmentVar}
-                                         handleEdit={this.handleUpdateEnvironmentVar}/>
-                        }
-
-                        {!this.state.loading && this.state.environment_vars.length < 1 &&
-                        <div className="card-panel yellow lighten-3 orange-text">
-                            <h5 className="center m-0">No environment vars loaded.</h5>
-                        </div>
-                        }
-
-                        <DeleteConfirmationMsg  ref={instance => { this.childDeletePopUp = instance; }} handleConfirm={this.confirmDelete} />
-
                     </div>
-                </main>
-                <Footer/>
-            </div>
+                    }
+
+                    {!this.state.loading && this.state.environment_vars.length > 0 &&
+                    <AllEnvVars environment_vars={this.state.environment_vars} handleDelete={this.handleDeleteEnvironmentVar}
+                                handleEdit={this.handleUpdateEnvironmentVar} environment={this.props.environment}
+                                app={this.props.app}/>
+                    }
+
+                    {!this.state.loading && this.state.environment_vars.length < 1 &&
+                    <div className="card-panel yellow lighten-3 orange-text">
+                        <h5 className="center m-0">No environment vars loaded.</h5>
+                    </div>
+                    }
+
+                    <DeleteConfirmationMsg  ref={instance => { this.childDeletePopUp = instance; }} handleConfirm={this.confirmDelete} />
+
+                </div>
         )
     }
 }));

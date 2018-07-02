@@ -1,7 +1,13 @@
 const FormEnvVar = (createReactClass({
    
     onSubmit(){
-        this.props.onSubmit(this.state.environment_var);
+
+        const env_var = this.state.environment_var;
+
+        env_var['environment_id']= this.props.environment ? this.props.environment.id : null;
+        env_var['app_id'] = this.props.app ? this.props.app.id : null;
+
+        this.props.onSubmit(env_var);
     },
 
     onReset() {

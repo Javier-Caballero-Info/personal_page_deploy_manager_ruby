@@ -1,7 +1,8 @@
 var AllEnvironments = (createReactClass({
 
     componentDidMount() {
-        $('#modalEditEnvironment').modal()
+        $('#modalEditEnvironment').modal();
+        $('#modalListEnvVars').modal();
     },
 
     getInitialState() {
@@ -11,6 +12,7 @@ var AllEnvironments = (createReactClass({
                 'portainer_url': ''
             },
             formEdit: null,
+            listEnvVars: null,
             loading: false
         };
     },
@@ -63,6 +65,22 @@ var AllEnvironments = (createReactClass({
         $('#modalEditEnvironment').modal('close');
     },
 
+    openEnvironmentVars(environment){
+
+        this.setState({ listEnvVars:
+                <ModalIndexEnvVars title={"Environment Vars - Environment: " + environment.name}
+                                   onClose={this.closeEnvironmentVars} environment={environment}/>
+        });
+
+        $('#modalListEnvVars').modal('open');
+
+    },
+
+    closeEnvironmentVars() {
+        this.setState({ listEnvVars: null});
+        $('#modalListEnvVars').modal('close');
+    },
+
     render() {
 
         const environments = this.props.environments.map((environment) => {
@@ -71,7 +89,10 @@ var AllEnvironments = (createReactClass({
                     <td>{environment.name}</td>
                     <td>{environment.portainer_url}</td>
                     <td>
-                        <button className="waves-effect waves-light btn blue" onClick={(e) => this.openEditModal(environment, e)}>
+                        <button className="waves-effect waves-light btn deep-purple" onClick={(e) => this.openEnvironmentVars(environment, e)}>
+                            <i className="material-icons">extension</i>
+                        </button>
+                        <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openEditModal(environment, e)}>
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
@@ -89,12 +110,12 @@ var AllEnvironments = (createReactClass({
                 {this.state.loading &&
                    <Loader/>
                 }
-                <table className="responsive-table highlight striped standard-table">
+                <table className="responsive-table highlight striped standard-table-3">
                     <thead>
                     <tr>
                         <th>Name</th>
                         <th>Portainer Url</th>
-                        <th></th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>
@@ -103,6 +124,9 @@ var AllEnvironments = (createReactClass({
                 </table>
                 <div id="modalEditEnvironment" className="modal">
                     {this.state.editForm}
+                </div>
+                <div id="modalListEnvVars" className="modal modal-big">
+                    {this.state.listEnvVars}
                 </div>
             </div>
         )

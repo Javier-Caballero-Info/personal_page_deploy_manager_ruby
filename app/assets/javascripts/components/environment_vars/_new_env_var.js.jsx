@@ -69,8 +69,9 @@ var NewEnvVar = (createReactClass({
                     New Environment Var <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateEnvironmentVar" className="modal">
-                    <FormEnvVar ref={instance => { this.formInstance = instance; }} title={"New EnvironmentVar"}
-                                     environment_var={this.state.environment_var} onSubmit={this.onSave} onClose={this.onModalClose}/>
+                    <FormEnvVar ref={instance => { this.formInstance = instance; }} title={"New Environment Var"}
+                                environment_var={this.state.environment_var} onSubmit={this.onSave}
+                                onClose={this.onModalClose} environment={this.props.environment} app={this.props.app}/>
                 </div>
                 {this.state.loading &&
                     <Loader/>
