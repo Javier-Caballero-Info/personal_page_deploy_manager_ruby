@@ -10,7 +10,7 @@ const Header = (createReactClass({
 
     getInitialState: function() {
         return {
-            title: 'Version Manager'
+            title: 'Deploy Manager'
         };
     },
 

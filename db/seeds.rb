@@ -1,3 +1,4 @@
+
 Environment.create!([
                       {
                         name: 'Production',
@@ -21,3 +22,33 @@ App.create!([
                 exposed_ports: '80'
               }
             ])
+
+EnvironmentVar.create!([
+                        {
+                          key: 'GLOBAL_VAR_1',
+                          body: '1'
+                        },
+                        {
+                          key: 'GLOBAL_VAR_2',
+                          body: '2'
+                        }
+                       ])
+
+Environment.all.each do |e|
+
+  EnvironmentVar.create!({
+                             key: "VAR_#{e.name.upcase}_1",
+                             body: '1',
+                             environment_id: e.id
+                           })
+
+  App.all.each_with_index do |a, j|
+    EnvironmentVar.create!({
+                             key: "VAR_#{a.name.to_s.upcase.gsub(' ', '_').gsub('-', '')}_#{e.name.upcase}_#{j.to_s}",
+                             body: j.to_s,
+                             environment_id: e.id,
+                             app_id: a.id
+                           })
+  end
+
+end
