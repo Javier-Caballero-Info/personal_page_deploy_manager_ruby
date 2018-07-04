@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_27_160341) do
+ActiveRecord::Schema.define(version: 2018_07_03_155222) do
+
+  create_table "app_versions", force: :cascade do |t|
+    t.string "name"
+    t.boolean "deleted"
+    t.integer "app_id"
+    t.integer "stable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_app_versions_on_app_id"
+  end
 
   create_table "apps", force: :cascade do |t|
     t.string "name"

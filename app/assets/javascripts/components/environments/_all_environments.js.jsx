@@ -110,7 +110,7 @@ var AllEnvironments = (createReactClass({
                 {this.state.loading &&
                    <Loader/>
                 }
-                <table className="responsive-table highlight striped standard-table-3">
+                <table className="responsive-table  striped standard-table-3">
                     <thead>
                     <tr>
                         <th>Name</th>

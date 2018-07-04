@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  deleted: false
+  app_id: one
+  stable: 1
+
+two:
+  name: MyString
+  deleted: false
+  app_id: two
+  stable: 1

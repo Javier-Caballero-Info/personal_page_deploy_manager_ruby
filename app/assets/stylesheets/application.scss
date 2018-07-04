@@ -131,8 +131,16 @@ blockquote{
   border-top: 1px solid rgba(0,0,0,0.1);
 }
 
+.table-flat td, .table-flat th{
+  border-radius: 0;
+}
+
 .standard-table tr td:last-child{
   width: 125px;
+}
+
+.standard-table-1 tr td:last-child{
+  width: 60px;
 }
 
 .standard-table-3 tr td:last-child{
@@ -143,26 +151,53 @@ blockquote{
   width: 235px;
 }
 
+.standard-table-5 tr td:last-child{
+  width: 290px;
+  overflow: overlay;
+}
+
+.standard-table-5 td:last-child i:first-child{
+  width: 18px;
+}
+
+.standard-table-6 tr td:last-child{
+  width: 350px;
+  overflow: overlay;
+}
+
+.standard-table-6 td:last-child i:first-child{
+  width: 18px;
+}
+
+td.middle *{
+  vertical-align: middle;
+}
+
+.modal-tiny{
+  max-width: 500px;
+}
+
 .modal-big{
+  position: fixed;
   width: 95%;
-  height: 90% !important;
+  // height: 90% !important;
   max-height: 90%;
   top: 5% !important;
   background: #e2e2e2;
 }
 
-.modal-big .header{
+.modal .header{
   border-bottom: solid 1px #c1c1c1;
   padding-bottom: 10px;
   margin: 20px;
 }
 
-.modal-big .modal-content{
+.modal .modal-content{
   height: calc(100% - 92px);
 }
 
-.modal-big .modal-footer{
-  position: absolute;
+.modal .modal-footer{
+  position: static;
   bottom: 0;
   border-top: solid 2px #adadad;
   background: #f1f1f1;
@@ -170,6 +205,10 @@ blockquote{
 
 .modal-big blockquote{
   margin: 0 20px;
+}
+
+.modal .modal-content{
+  height: auto;
 }
 
 .m-0{
@@ -194,4 +233,8 @@ blockquote{
 
 .modal-content > .row{
   margin-bottom: 0;
+}
+
+.mdi-24{
+  font-size: 24px;
 }

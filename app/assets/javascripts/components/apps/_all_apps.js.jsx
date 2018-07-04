@@ -17,6 +17,7 @@ var AllApps = (createReactClass({
 
         $('#modalEditApp').modal();
         $('#modalListEnvVars').modal();
+        $('#modalListAppVersions').modal();
 
         $('.dropdown-trigger').dropdown({
             constrainWidth: false,
@@ -32,6 +33,7 @@ var AllApps = (createReactClass({
                 'exposed_ports': ''
             },
             formEdit: null,
+            appVersions: null,
             loading: false
         };
     },
@@ -98,6 +100,18 @@ var AllApps = (createReactClass({
         $('#modalListEnvVars').modal('close');
     },
 
+    showAppVersionModal(app) {
+        this.setState({appVersions:
+            <ModalIndexAppVersion title={"Versions - App: " + app.name} app={app} onClose={this.closeAppVersionModal}/>
+        });
+        $('#modalListAppVersions').modal('open');
+    },
+
+    closeAppVersionModal() {
+        this.setState({ appVersions: null});
+        $('#modalListAppVersions').modal('close');
+    },
+
     setApp(app) {
         this.setState({app: app});
     },
@@ -110,10 +124,16 @@ var AllApps = (createReactClass({
                     <td>{app.name}</td>
                     <td>{app.docker_image}</td>
                     <td>
-                        <button className="waves-effect waves-light btn deep-purple dropdown-trigger"
-                                data-target='dropdown1' onClick={(e) => this.setApp(app, e)}>
+                        <button className="waves-effect waves-light btn green" onClick={(e) => this.showAppVersionModal(app, e)}>
+                            <i className="material-icons">local_offer</i>
+                        </button>
+                        <button className="waves-effect waves-light btn purple accent-4 ml-1">
+                            <i className="material-icons">settings</i>
+                        </button>
+                        <button className="waves-effect waves-light btn deep-purple dropdown-trigger ml-1"
+                                data-target='env_var_dropdown' onClick={(e) => this.setApp(app, e)}>
                             <i className="material-icons"> style </i> <i
-                            className="material-icons"> arrow_drop_down </i>
+                            className="material-icons">arrow_drop_down</i>
                         </button>
                         <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openEditModal(app, e)}>
                             <i className="material-icons">create</i>
@@ -133,7 +153,7 @@ var AllApps = (createReactClass({
                 {this.state.loading &&
                 <Loader/>
                 }
-                <table className="responsive-table highlight striped standard-table-4">
+                <table className="responsive-table  striped standard-table-6">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -145,7 +165,7 @@ var AllApps = (createReactClass({
                     {apps}
                     </tbody>
                 </table>
-                <ul id='dropdown1' className='dropdown-content'>
+                <ul id='env_var_dropdown' className='dropdown-content'>
                     <li className="disabled"><a>Environment vars by environment</a></li>
                     <li className="divider" tabIndex="-1"/>
                     {this.state.environment_items}
@@ -155,6 +175,9 @@ var AllApps = (createReactClass({
                 </div>
                 <div id="modalListEnvVars" className="modal modal-big">
                     {this.state.listEnvVars}
+                </div>
+                <div id="modalListAppVersions" className="modal modal-tiny">
+                    {this.state.appVersions}
                 </div>
             </div>
         )

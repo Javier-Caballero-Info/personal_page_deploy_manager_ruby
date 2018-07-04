@@ -52,3 +52,18 @@ Environment.all.each do |e|
   end
 
 end
+
+App.all.each do |a|
+
+  %w(1.0.0 1.0.1 1.2.0).each do |v|
+
+    AppVersion.create!({
+                        name: v,
+                        deleted: false,
+                        app_id: a.id,
+                        stable: 0
+                      })
+
+  end
+
+end
