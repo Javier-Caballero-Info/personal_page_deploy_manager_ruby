@@ -18,6 +18,7 @@ var AllApps = (createReactClass({
         $('#modalEditApp').modal();
         $('#modalListEnvVars').modal();
         $('#modalListAppVersions').modal();
+        $('#modalDeploySetup').modal();
 
         $('.dropdown-trigger').dropdown({
             constrainWidth: false,
@@ -34,6 +35,7 @@ var AllApps = (createReactClass({
             },
             formEdit: null,
             appVersions: null,
+            deploySetup: null,
             loading: false
         };
     },
@@ -100,9 +102,10 @@ var AllApps = (createReactClass({
         $('#modalListEnvVars').modal('close');
     },
 
-    showAppVersionModal(app) {
+    openAppVersionModal(app) {
         this.setState({appVersions:
-            <ModalIndexAppVersion title={"Versions - App: " + app.name} app={app} onClose={this.closeAppVersionModal}/>
+            <ModalIndexAppVersion title={"Versions - App: " + app.name} app={app} onClose={this.closeAppVersionModal}
+                onOpenDeploySetupModal={this.openDeploySetupModal}/>
         });
         $('#modalListAppVersions').modal('open');
     },
@@ -110,6 +113,26 @@ var AllApps = (createReactClass({
     closeAppVersionModal() {
         this.setState({ appVersions: null});
         $('#modalListAppVersions').modal('close');
+    },
+
+    openDeploySetupModal(app, app_version) {
+
+        this.closeAppVersionModal();
+
+        this.setState({deploySetup:
+            <ModalIndexDeploySetup title={"Deploy Setup - App: " + app.name} app={app} version={app_version}
+                                   onClose={this.closeDeploySetupModal}/>
+        });
+
+        setTimeout(function(){
+            $('#modalDeploySetup').modal('open');
+        }, 300);
+
+    },
+
+    closeDeploySetupModal() {
+        this.setState({ deploySetup: null});
+        $('#modalDeploySetup').modal('close');
     },
 
     setApp(app) {
@@ -124,10 +147,11 @@ var AllApps = (createReactClass({
                     <td>{app.name}</td>
                     <td>{app.docker_image}</td>
                     <td>
-                        <button className="waves-effect waves-light btn green" onClick={(e) => this.showAppVersionModal(app, e)}>
+                        <button className="waves-effect waves-light btn green" onClick={(e) => this.openAppVersionModal(app, e)}>
                             <i className="material-icons">local_offer</i>
                         </button>
-                        <button className="waves-effect waves-light btn purple accent-4 ml-1">
+                        <button className="waves-effect waves-light btn purple accent-4 ml-1"
+                                onClick={(e) => this.openDeploySetupModal(app, e)}>
                             <i className="material-icons">settings</i>
                         </button>
                         <button className="waves-effect waves-light btn deep-purple dropdown-trigger ml-1"
@@ -178,6 +202,9 @@ var AllApps = (createReactClass({
                 </div>
                 <div id="modalListAppVersions" className="modal modal-tiny">
                     {this.state.appVersions}
+                </div>
+                <div id="modalDeploySetup" className="modal modal-big">
+                    {this.state.deploySetup}
                 </div>
             </div>
         )

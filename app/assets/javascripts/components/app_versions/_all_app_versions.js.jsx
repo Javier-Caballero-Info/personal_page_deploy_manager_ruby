@@ -1,4 +1,4 @@
-var AllAppVersions = (createReactClass({
+const AllAppVersions = (createReactClass({
     componentDidMount() {
         
     },
@@ -7,6 +7,12 @@ var AllAppVersions = (createReactClass({
         return {
             loading: false
         };
+    },
+
+    onOpenDeploySetupModal(app, app_version, e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.onOpenDeploySetupModal(app, app_version);
     },
 
     render() {
@@ -37,7 +43,8 @@ var AllAppVersions = (createReactClass({
                         <strong className="ml-1">{app_version.name}</strong>
                     </td>
                     <td>
-                        <button className="waves-effect waves-light btn purple accent-4">
+                        <button className="waves-effect waves-light btn purple accent-4"
+                                onClick={(e) => this.onOpenDeploySetupModal(this.props.app, app_version, e)}>
                             <i className="material-icons">settings</i>
                         </button>
                     </td>

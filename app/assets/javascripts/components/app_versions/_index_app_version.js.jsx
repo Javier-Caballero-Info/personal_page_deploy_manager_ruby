@@ -8,6 +8,10 @@ const IndexAppVersions = (createReactClass({
         });
     },
 
+    onOpenDeploySetupModal(app, app_version) {
+        this.props.onOpenDeploySetupModal(app, app_version);
+    },
+
     getInitialState() {
         return {
             app_versions: [],
@@ -29,7 +33,8 @@ const IndexAppVersions = (createReactClass({
                 }
 
                 {!this.state.loading && this.state.app_versions.length > 0 &&
-                    <AllAppVersions app_versions={this.state.app_versions}/>
+                    <AllAppVersions app_versions={this.state.app_versions} app={this.props.app}
+                                    onOpenDeploySetupModal={this.onOpenDeploySetupModal}/>
                 }
 
                 {!this.state.loading && this.state.app_versions.length < 1 &&
