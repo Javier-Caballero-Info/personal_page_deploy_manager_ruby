@@ -151,7 +151,7 @@ var AllApps = (createReactClass({
                             <i className="material-icons">local_offer</i>
                         </button>
                         <button className="waves-effect waves-light btn purple accent-4 ml-1"
-                                onClick={(e) => this.openDeploySetupModal(app, e)}>
+                                onClick={(e) => this.openDeploySetupModal(app, null, e)}>
                             <i className="material-icons">settings</i>
                         </button>
                         <button className="waves-effect waves-light btn deep-purple dropdown-trigger ml-1"

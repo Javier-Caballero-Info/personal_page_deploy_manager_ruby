@@ -1,5 +1,4 @@
 const ModalIndexDeploySetup = (createReactClass({
-
     onClose() {
       this.props.onClose();
     },
@@ -17,7 +16,7 @@ const ModalIndexDeploySetup = (createReactClass({
                     }
                 </h5>
                 <div className="modal-content">
-
+                    <IndexDeploySetup version={this.props.version} app={this.props.app} onClose={this.onClose}/>
                 </div>
                 <div className="modal-footer">
                     <button className="btn white black-text waves-effect waves-green" onClick={this.onClose}>Close</button>

@@ -1,25 +1,26 @@
-class Api::V1::AppsController < Api::V1::BaseController
+class Api::V1::DeploySetupItemsController < Api::V1::BaseController
   def index
-    respond_with App.all
+    respond_with DeploySetupItem.all
   end
 
   def create
-    respond_with :api, :v1, App.create(app_params)
+    deploy_setup_item = DeploySetupItem.create!(deploy_setup_params)
+    render json: deploy_setup_item.to_json(:include => [:environment_var])
   end
 
   def destroy
-    respond_with App.destroy(params[:id])
+    respond_with DeploySetupItem.destroy(params[:id])
   end
 
   def update
-    app_item = App.find(params["id"])
-    app_item.update_attributes(app_params)
-    respond_with app_item, json: app_item
+    deploy_setup_item = DeploySetupItem.find(params["id"])
+    deploy_setup_item.update_attributes(deploy_setup_params)
+    respond_with deploy_setup_item, json: deploy_setup_item
   end
 
   private
 
-    def app_params
-      params.require(:app).permit(:id, :name, :description, :docker_image, :exposed_ports)
+    def deploy_setup_params
+      params.require(:deploy_setup_item).permit(:id, :deploy_setup_id, :environment_var_id)
     end
 end

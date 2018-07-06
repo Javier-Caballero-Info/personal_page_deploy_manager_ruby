@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_155222) do
+ActiveRecord::Schema.define(version: 2018_07_06_161234) do
 
   create_table "app_versions", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,24 @@ ActiveRecord::Schema.define(version: 2018_07_03_155222) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "deploy_setup_items", force: :cascade do |t|
+    t.integer "deploy_setup_id"
+    t.integer "environment_var_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deploy_setup_id"], name: "index_deploy_setup_items_on_deploy_setup_id"
+    t.index ["environment_var_id"], name: "index_deploy_setup_items_on_environment_var_id"
+  end
+
+  create_table "deploy_setups", force: :cascade do |t|
+    t.integer "environment_id"
+    t.integer "app_version_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_version_id"], name: "index_deploy_setups_on_app_version_id"
+    t.index ["environment_id"], name: "index_deploy_setups_on_environment_id"
   end
 
   create_table "environment_vars", force: :cascade do |t|
