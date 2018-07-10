@@ -8,10 +8,7 @@ const ItemsDeploySetup = (createReactClass({
         });
 
         return(
-            <ul className="collection with-header">
-                <li className="collection-header">
-                    <h4 className="m-0">Environments vars selected</h4>
-                </li>
+            <ul className="collection">
                 {items}
             </ul>
         );

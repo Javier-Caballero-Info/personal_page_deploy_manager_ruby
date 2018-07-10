@@ -11,7 +11,9 @@ const IndexDeploySetup = (createReactClass({
             loading_deploy_setup: false,
             environment_vars: null,
             selectedEnvVars: [],
-            deploy_setup_items: null
+            deploy_setup_items: null,
+            deploy_setup_ports: null,
+            deploy_setup_restart_policy: null,
         };
     },
 
@@ -105,6 +107,16 @@ const IndexDeploySetup = (createReactClass({
         });
     },
 
+    setDeploySetup(deploy_setup) {
+
+        this.setState({
+            deploy_setup: [deploy_setup],
+            deploy_setup_ports: <PortsDeploySetup deploy_setup={deploy_setup} app={this.props.app}/>,
+            deploy_setup_restart_policy: <RestartPolicyDeploySetup deploy_setup={deploy_setup} app={this.props.app}/>,
+            loading_deploy_setup: false
+        });
+    },
+
     setEnvironmentVars(app_version_id, environment_id, deploy_setup) {
         this.setState({
             environment_vars: null
@@ -112,17 +124,15 @@ const IndexDeploySetup = (createReactClass({
 
         let selectedEnvVars = [];
 
-        if (deploy_setup && deploy_setup.length > 0){
-            selectedEnvVars = this.setSelectedEnvVars(deploy_setup[0].deploy_setup_item);
-            this.setDeploySetupItems(deploy_setup[0].deploy_setup_item);
+        if (deploy_setup){
+            selectedEnvVars = this.setSelectedEnvVars(deploy_setup.deploy_setup_item);
+            this.setDeploySetupItems(deploy_setup.deploy_setup_item);
         }
 
         this.setState({
             environment_vars: <ListEnvironmentVarsDeploySetup app_id={this.props.app.id} environment_id={environment_id}
                                                               selectedEnvVars={selectedEnvVars} onCheckboxChange={this.onCheckboxChange}/>,
-            deploy_setup: deploy_setup,
-            selectedEnvVars: selectedEnvVars,
-            loading_deploy_setup: false
+            selectedEnvVars: selectedEnvVars
         });
     },
 
@@ -131,7 +141,8 @@ const IndexDeploySetup = (createReactClass({
             environment_id: environment_id,
             app_version_id: app_version_id
         });
-        this.setEnvironmentVars(app_version_id, environment_id, deploy_setup);
+        this.setEnvironmentVars(app_version_id, environment_id, deploy_setup[0]);
+        this.setDeploySetup(deploy_setup[0]);
     },
 
     onCreateDeploySetup(copy_from) {
@@ -145,7 +156,8 @@ const IndexDeploySetup = (createReactClass({
                 }},
             success: (deploy_setup) => {
                 Alert.success('Deploy setup was created successfully');
-                this.setEnvironmentVars(this.state.app_version_id, this.state.environment_id, [deploy_setup]);
+                this.setEnvironmentVars(this.state.app_version_id, this.state.environment_id, deploy_setup);
+                this.setDeploySetup(deploy_setup);
                 this.setLoadingDeploySetup(false);
             },
             error: (xhr) => {
@@ -189,36 +201,65 @@ const IndexDeploySetup = (createReactClass({
                 }
 
                 {this.state.deploy_setup &&
-                <div className="card">
-                    <div className="card-content">
+                    <div>
+
                         {this.state.deploy_setup.length > 0 &&
-                            <div className="row m-0 valign-wrapper">
-                                <div className="col m6">
-                                    {this.state.environment_vars}
-                                </div>
-                                <div className="col m6">
-                                    {this.state.loading_deploy_setup &&
-                                        <div className="progress"><div className="indeterminate"/></div>
-                                    }
-                                    {!this.state.loading_deploy_setup && this.state.selectedEnvVars.length > 0 &&
-                                        this.state.deploy_setup_items
-                                    }
-                                    {!this.state.loading_deploy_setup && this.state.selectedEnvVars.length === 0 &&
-                                    <div className="card-panel grey-text">
-                                        <h5 className="center m-0">No environment vars selected</h5>
+                            <div>
+                                <div className="card">
+                                    <div className="card-content">
+                                        <h5 className="header">General Configuration</h5>
+                                        <div className="row">
+                                            <div className="col s12 m6">
+                                                <h6 className="header">Ports</h6>
+                                                {this.state.deploy_setup_ports}
+                                            </div>
+                                            <div className="col s12 m6">
+                                                <h6 className="header">Restart Policy</h6>
+                                                {this.state.deploy_setup_restart_policy}
+                                            </div>
+                                        </div>
                                     </div>
-                                    }
+                                </div>
+                                <div className="card">
+                                    <div className="card-content overflow">
+                                        <h5 className="header">Environment Vars</h5>
+                                        <div className="row m-0 valign-wrapper">
+                                            <div className="col m6">
+                                                {this.state.environment_vars}
+                                            </div>
+                                            <div className="col s12 m6">
+                                                {this.state.loading_deploy_setup &&
+                                                    <div className="progress"><div className="indeterminate"/></div>
+                                                }
+                                                {!this.state.loading_deploy_setup && this.state.selectedEnvVars.length > 0 &&
+                                                    this.state.deploy_setup_items
+                                                }
+                                                {!this.state.loading_deploy_setup && this.state.selectedEnvVars.length === 0 &&
+                                                <div className="card-panel grey-text">
+                                                    <h5 className="center m-0">No environment vars selected</h5>
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         }
                         {this.state.deploy_setup.length === 0 && !this.state.loading_deploy_setup &&
-                            <ListActionsDeploySetup onCreateDeploySetup={this.onCreateDeploySetup}/>
+                        <div className="card">
+                            <div className="card-content">
+                                <ListActionsDeploySetup onCreateDeploySetup={this.onCreateDeploySetup}/>
+                            </div>
+                        </div>
                         }
                         {this.state.deploy_setup.length === 0 && this.state.loading_deploy_setup &&
-                            <div className="progress"><div className="indeterminate"/></div>
+                        <div className="card">
+                            <div className="card-content">
+                                <div className="progress"><div className="indeterminate"/></div>
+                            </div>
+                        </div>
                         }
                     </div>
-                </div>
                 }
             </div>
         )

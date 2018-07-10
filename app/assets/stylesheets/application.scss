@@ -223,12 +223,24 @@ td.middle *{
   margin-top: 0 !important;
 }
 
+.ml-3{
+  margin-left: 30px;
+}
+
+.ml-5{
+  margin-left: 50px;
+}
+
 .mb-1{
   margin-bottom: 10px;
 }
 
 .p-0{
   padding: 0;
+}
+
+.input-filed.inline input{
+  margin: 0;
 }
 
 .page-footer{
@@ -257,4 +269,18 @@ td.middle *{
 
 [type="checkbox"]+span:not(.lever){
   line-height: 20px;
+}
+
+.deploy_setup_port_input{
+  font-size: 18px;
+  display: inline-block;
+}
+
+.default-list li{
+  list-style-type: disc !important;
+}
+
+.overflow{
+  overflow-x: auto;
+  overflow-y: auto;
 }

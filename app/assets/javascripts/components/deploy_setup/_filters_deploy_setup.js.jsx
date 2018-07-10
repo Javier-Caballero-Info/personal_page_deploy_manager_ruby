@@ -68,7 +68,7 @@ const FilterDeploySetup = (createReactClass({
         return (
             <div className="row m-0">
                 {this.state.loading_app_versions &&
-                <div className="input-field col m6">
+                <div className="input-field col s12 m6">
                     <select defaultValue={this.props.version ? this.props.version.id : "null"}
                             onChange={this.onFilterChange} ref="app_version">
                         <option value="null" disabled>Choose a version of the app</option>
@@ -78,10 +78,10 @@ const FilterDeploySetup = (createReactClass({
                 </div>
                 }
                 {!this.state.loading_app_versions &&
-                <div className="progress col m6"><div className="indeterminate"/></div>
+                <div className="progress col s12 m6"><div className="indeterminate"/></div>
                 }
                 {this.state.loading_environments &&
-                <div className="input-field col m6">
+                <div className="input-field col s12 m6">
                     <select defaultValue="null" onChange={this.onFilterChange} ref="environment">
                         <option value="null" disabled>Choose a environment</option>
                         {this.state.environment_items_select}
@@ -90,7 +90,7 @@ const FilterDeploySetup = (createReactClass({
                 </div>
                 }
                 {!this.state.loading_environments &&
-                <div className="progress col m6"><div className="indeterminate"/></div>
+                <div className="progress col s12 m6"><div className="indeterminate"/></div>
                 }
             </div>
         )
