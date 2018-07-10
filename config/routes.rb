@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :apps, only: [:index, :create, :destroy, :update]
       resources :environments, only: [:index, :create, :destroy, :update]
       resources :environment_vars, only: [:index, :create, :destroy, :update]
-      resources :deploy_setups, only: [:index, :create, :destroy, :update]
+      resources :deploy_setups, only: [:index, :create]
       resources :deploy_setup_items, only: [:create, :destroy]
       resources :app_versions, only: [:index]
     end

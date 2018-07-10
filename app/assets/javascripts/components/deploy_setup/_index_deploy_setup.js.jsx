@@ -4,9 +4,9 @@ const IndexDeploySetup = (createReactClass({
 
     getInitialState() {
         return {
+            environment_id: null,
+            app_version_id: null,
             deploy_setup: null,
-            app_version: null,
-            environment: null,
             loading_global_env_vars: false,
             loading_deploy_setup: false,
             environment_vars: null,
@@ -45,7 +45,6 @@ const IndexDeploySetup = (createReactClass({
                 }
             });
         }else{
-
             let selected_item;
 
             const filtered_deploy_setup_items = deploy_setup.deploy_setup_item.filter((item) => {
@@ -106,7 +105,7 @@ const IndexDeploySetup = (createReactClass({
         });
     },
 
-    onFilterChange({app_version_id, environment_id, deploy_setup}) {
+    setEnvironmentVars(app_version_id, environment_id, deploy_setup) {
         this.setState({
             environment_vars: null
         });
@@ -120,10 +119,43 @@ const IndexDeploySetup = (createReactClass({
 
         this.setState({
             environment_vars: <ListEnvironmentVarsDeploySetup app_id={this.props.app.id} environment_id={environment_id}
-                                selectedEnvVars={selectedEnvVars} onCheckboxChange={this.onCheckboxChange}/>,
+                                                              selectedEnvVars={selectedEnvVars} onCheckboxChange={this.onCheckboxChange}/>,
             deploy_setup: deploy_setup,
             selectedEnvVars: selectedEnvVars,
             loading_deploy_setup: false
+        });
+    },
+
+    onFilterChange({app_version_id, environment_id, deploy_setup}) {
+        this.setState({
+            environment_id: environment_id,
+            app_version_id: app_version_id
+        });
+        this.setEnvironmentVars(app_version_id, environment_id, deploy_setup);
+    },
+
+    onCreateDeploySetup(copy_from) {
+        this.setLoadingDeploySetup(true);
+        $.ajax({
+            url: "/api/v1/deploy_setups?copy_from=" + copy_from,
+            type: "POST",
+            data: {deploy_setup: {
+                    environment_id: this.state.environment_id,
+                    app_version_id: this.state.app_version_id,
+                }},
+            success: (deploy_setup) => {
+                Alert.success('Deploy setup was created successfully');
+                this.setEnvironmentVars(this.state.app_version_id, this.state.environment_id, [deploy_setup]);
+                this.setLoadingDeploySetup(false);
+            },
+            error: (xhr) => {
+                if(xhr.status === 404) {
+                    Alert.danger('No exists another deploy setup to copy');
+                } else {
+                    this.processFailedRequest(xhr);
+                }
+                this.setLoadingDeploySetup(false);
+            }
         });
     },
 
@@ -179,8 +211,11 @@ const IndexDeploySetup = (createReactClass({
                                 </div>
                             </div>
                         }
-                        {this.state.deploy_setup.length === 0 &&
-                            <ListActionsDeploySetup/>
+                        {this.state.deploy_setup.length === 0 && !this.state.loading_deploy_setup &&
+                            <ListActionsDeploySetup onCreateDeploySetup={this.onCreateDeploySetup}/>
+                        }
+                        {this.state.deploy_setup.length === 0 && this.state.loading_deploy_setup &&
+                            <div className="progress"><div className="indeterminate"/></div>
                         }
                     </div>
                 </div>
