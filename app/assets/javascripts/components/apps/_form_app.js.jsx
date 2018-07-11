@@ -83,7 +83,12 @@ const FormApp = (createReactClass({
 
         switch(fieldName) {
             case 'name':
-                nameValid = value.length > 0;
+                if(value.length > 0) {
+                    const pattern = /^[a-zA-Z0-9]*[a-zA-Z0-9_.-]*$/i;
+                    nameValid = pattern.test(value);
+                }else{
+                    nameValid = false;
+                }
                 this.setState({
                     nameValid: nameValid
                 }, this.validateForm);
@@ -126,7 +131,8 @@ const FormApp = (createReactClass({
                     <div className="row">
                         <div className="input-field col s12">
                             <input id="name_input" type="text" name="name" className="validate" ref="name"
-                                   required="required" defaultValue={this.state.app.name} onChange={this.handleChange}/>
+                                   required="required" defaultValue={this.state.app.name} onChange={this.handleChange}
+                                   pattern="[a-zA-Z0-9]*[a-zA-Z0-9_.-]*"/>
                             <label className="active" htmlFor="name_input">Name</label>
                             <span className="helper-text" data-error="The name is invalid"/>
                         </div>

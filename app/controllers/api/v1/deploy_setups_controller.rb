@@ -18,7 +18,9 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
 
   def create
 
-    deploy_setup = DeploySetup.create!(deploy_setup_params)
+    deploy_setup = DeploySetup.create(deploy_setup_params)
+    deploy_setup.ports = ''
+    deploy_setup.save
 
     if params[:copy_from] && params[:copy_from] == 'from_app_version'
 
@@ -67,6 +69,6 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
   private
 
     def deploy_setup_params
-      params.require(:deploy_setup).permit(:id, :app_version_id, :environment_id)
+      params.require(:deploy_setup).permit(:id, :app_version_id, :environment_id, :restart_policy, :ports)
     end
 end

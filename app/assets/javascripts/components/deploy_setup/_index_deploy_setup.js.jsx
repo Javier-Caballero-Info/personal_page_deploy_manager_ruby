@@ -108,7 +108,10 @@ const IndexDeploySetup = (createReactClass({
     },
 
     setDeploySetup(deploy_setup) {
-
+        this.setState({
+            deploy_setup_ports: null,
+            deploy_setup_restart_policy: null
+        });
         this.setState({
             deploy_setup: [deploy_setup],
             deploy_setup_ports: <PortsDeploySetup deploy_setup={deploy_setup} app={this.props.app}/>,
@@ -141,8 +144,16 @@ const IndexDeploySetup = (createReactClass({
             environment_id: environment_id,
             app_version_id: app_version_id
         });
-        this.setEnvironmentVars(app_version_id, environment_id, deploy_setup[0]);
-        this.setDeploySetup(deploy_setup[0]);
+        if (deploy_setup.length > 0) {
+            this.setEnvironmentVars(app_version_id, environment_id, deploy_setup[0]);
+            this.setDeploySetup(deploy_setup[0]);
+        } else {
+            this.setState({
+                deploy_setup: [],
+                loading_deploy_setup: false
+            });
+        }
+
     },
 
     onCreateDeploySetup(copy_from) {
@@ -185,7 +196,7 @@ const IndexDeploySetup = (createReactClass({
                     </div>
                 </div>
 
-                {!this.state.deploy_setup &&
+                {this.state.deploy_setup == null &&
                 <div className="card">
                     <div className="card-content">
                         {this.state.loading_deploy_setup &&
@@ -200,9 +211,8 @@ const IndexDeploySetup = (createReactClass({
                 </div>
                 }
 
-                {this.state.deploy_setup &&
+                {this.state.deploy_setup != null &&
                     <div>
-
                         {this.state.deploy_setup.length > 0 &&
                             <div>
                                 <div className="card">
@@ -210,11 +220,9 @@ const IndexDeploySetup = (createReactClass({
                                         <h5 className="header">General Configuration</h5>
                                         <div className="row">
                                             <div className="col s12 m6">
-                                                <h6 className="header">Ports</h6>
                                                 {this.state.deploy_setup_ports}
                                             </div>
                                             <div className="col s12 m6">
-                                                <h6 className="header">Restart Policy</h6>
                                                 {this.state.deploy_setup_restart_policy}
                                             </div>
                                         </div>

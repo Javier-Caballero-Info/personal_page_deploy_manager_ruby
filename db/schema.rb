@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2018_07_06_161234) do
   create_table "deploy_setups", force: :cascade do |t|
     t.integer "environment_id"
     t.integer "app_version_id"
+    t.string "restart_policy"
+    t.string "ports"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["app_version_id"], name: "index_deploy_setups_on_app_version_id"
