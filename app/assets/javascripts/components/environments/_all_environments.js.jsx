@@ -30,6 +30,7 @@ var AllEnvironments = (createReactClass({
             success: (environment) => {
                 this.setState({ loading: false});
                 Alert.success('Environment ' + environment.name +  ' edited');
+                this.props.handleEdit(environment);
                 this.setState({ editForm: null});
                 $('#modalEditEnvironment').modal('close');
             },

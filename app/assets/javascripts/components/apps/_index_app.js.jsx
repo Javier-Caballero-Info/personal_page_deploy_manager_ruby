@@ -9,6 +9,15 @@ const IndexApps = (createReactClass({
         });
     },
 
+    handleUpdateApp(app) {
+        const index = this.state.apps.findIndex((obj => obj.id === app.id));
+        let newApps = this.state.apps;
+
+        newApps[index] = app;
+
+        this.setState({ apps: newApps });
+    },
+
     handleCreateApp(app) {
         const newState = this.state.apps.concat(app);
         this.setState({ apps: newState })
@@ -75,7 +84,7 @@ const IndexApps = (createReactClass({
 
                         {!this.state.loading && this.state.apps.length > 0 &&
                         <AllApps apps={this.state.apps} handleDelete={this.handleDeleteApp}
-                                         handleEdit={this.handleEditApp}/>
+                                         handleEdit={this.handleUpdateApp}/>
                         }
 
                         {!this.state.loading && this.state.apps.length < 1 &&

@@ -53,6 +53,7 @@ var AllApps = (createReactClass({
             success: (app) => {
                 this.setState({ loading: false});
                 Alert.success('App ' + app.name +  ' edited');
+                this.props.handleEdit(app);
                 this.setState({ editForm: null});
                 $('#modalEditApp').modal('close');
             },

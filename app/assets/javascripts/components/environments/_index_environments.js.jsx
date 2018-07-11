@@ -10,6 +10,15 @@ const IndexEnvironments = (createReactClass({
         });
     },
 
+    handleUpdateEnvironment(environment) {
+        const index = this.state.environments.findIndex((obj => obj.id === environment.id));
+        let newEnvironments = this.state.environments;
+
+        newEnvironments[index] = environment;
+
+        this.setState({ environments: newEnvironments });
+    },
+
     handleCreateEnvironment(environment) {
         const newState = this.state.environments.concat(environment);
         this.setState({ environments: newState })
@@ -76,7 +85,7 @@ const IndexEnvironments = (createReactClass({
 
                         {!this.state.loading && this.state.environments.length > 0 &&
                             <AllEnvironments environments={this.state.environments} handleDelete={this.handleDeleteEnvironment}
-                                         handleEdit={this.handleEditEnvironment}/>
+                                         handleEdit={this.handleUpdateEnvironment}/>
                         }
 
                         {!this.state.loading && this.state.environments.length < 1 &&
