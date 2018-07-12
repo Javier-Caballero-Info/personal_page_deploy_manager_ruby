@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  app: one
+  app_version: one
+  deploy_setup: one
+
+two:
+  app: two
+  app_version: two
+  deploy_setup: two
