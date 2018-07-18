@@ -86,7 +86,7 @@ const FilterDeploySetup = (createReactClass({
                         <option value="null" disabled>Choose a environment</option>
                         {this.state.environment_items_select}
                     </select>
-                    <label>Version</label>
+                    <label>Environments</label>
                 </div>
                 }
                 {!this.state.loading_environments &&

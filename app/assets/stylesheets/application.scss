@@ -223,6 +223,10 @@ td.middle *{
   margin-top: 0 !important;
 }
 
+.mr-1{
+  margin-right: 10px;
+}
+
 .ml-3{
   margin-left: 30px;
 }
@@ -231,12 +235,24 @@ td.middle *{
   margin-left: 50px;
 }
 
+.mb-0{
+  margin-bottom: 0;
+}
+
 .mb-1{
   margin-bottom: 10px;
 }
 
 .p-0{
   padding: 0;
+}
+
+.p-1{
+  padding: 10px;
+}
+
+.p-2{
+  padding: 20px;
 }
 
 .input-filed.inline input{
@@ -283,4 +299,41 @@ td.middle *{
 .overflow{
   overflow-x: auto;
   overflow-y: auto;
+}
+
+.preloader-wrapper.small {
+  width: 17px;
+  height: 17px;
+}
+
+.fix-vertical-align{
+  position: relative;
+  top: -1px;
+}
+
+.relative{
+  position: relative;
+}
+
+.progress-middle-wrapper{
+  height: 100%;
+  position: absolute;
+}
+
+.progress-middle-wrapper-right{
+  right: 0 !important;
+}
+
+.progress-middle-wrapper .progress{
+  top: 50%;
+}
+
+.btn-close{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.bordered{
+  border: solid 1px gainsboro;
 }

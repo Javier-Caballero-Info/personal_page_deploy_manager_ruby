@@ -12,4 +12,7 @@ class SiteController < ApplicationController
   def global_env_vars
   end
 
+  def deploys
+  end
+
 end

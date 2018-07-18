@@ -1,41 +1,43 @@
-const NewEnvironment = (createReactClass({
+const NewDeploy = (createReactClass({
     componentDidMount() {
-        $('#modalCreateEnvironment').modal()
+        $('#modalCreateDeploy').modal()
     },
 
     getInitialState() {
         return {
-            environment: {
+            deploy: {
                 'name': '',
-                'portainer_url': ''
-            },
+                'environment': null
+            }
+            ,
             loading: false
         };
     },
 
     openNewModal() {
-        this.setState({environment: {
+        this.setState({deploy: {
                 'name': '',
-                'portainer_url': ''
+                'environment': null
             }});
-        $('#modalCreateEnvironment').modal('open');
+        $('#modalCreateDeploy').modal('open');
+        $('select').formSelect();
     },
 
     onModalClose() {
-        $('#modalCreateEnvironment').modal('close');
+        $('#modalCreateDeploy').modal('close');
     },
 
-    onSave(environment){
+    onSave(deploy){
         this.setState({loading: true});
 
         $.ajax({
-            url: "/api/v1/environments",
+            url: "/api/v1/deploys",
             type: "POST",
-            data: { environment: environment },
-            success: (environment) => {
-                Alert.success('New environment created');
-                $('#modalCreateEnvironment').modal('close');
-                this.props.handleSubmit(environment);
+            data: { deploy: deploy },
+            success: (deploy) => {
+                Alert.success('New deploy created');
+                $('#modalCreateDeploy').modal('close');
+                this.props.handleSubmit(deploy);
                 this.setState({loading: false});
                 this.formInstance.onReset();
             },
@@ -60,11 +62,11 @@ const NewEnvironment = (createReactClass({
         return (
             <div>
                 <button className="waves-effect waves-light btn" onClick={this.openNewModal} >
-                    New Environment <i className="material-icons right">add</i>
+                    New Deploy <i className="material-icons right">add</i>
                 </button>
-                <div id="modalCreateEnvironment" className="modal">
-                    <FormEnvironment ref={instance => { this.formInstance = instance; }} title={"New Environment"}
-                                     environment={this.state.environment} onSubmit={this.onSave} onClose={this.onModalClose}/>
+                <div id="modalCreateDeploy" className="modal modal-big">
+                    <FormDeploy ref={instance => { this.formInstance = instance; }} title={"New Deploy"}
+                                deploy={this.state.deploy} onSubmit={this.onSave} onClose={this.onModalClose}/>
                 </div>
                 {this.state.loading &&
                     <Loader/>
