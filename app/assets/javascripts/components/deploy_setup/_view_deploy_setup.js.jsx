@@ -17,6 +17,11 @@ const ViewDeploySetup = (createReactClass({
             )
         });
 
+        let restart_policy = 'Never';
+        if (this.props.deploy_setup.restart_policy) {
+            toTitleCase(this.props.deploy_setup.restart_policy.toString().split('_').join(' '));
+        }
+
         return (
             <div className="bordered p-2">
                 <div className="row m-0">
@@ -32,14 +37,16 @@ const ViewDeploySetup = (createReactClass({
                             <strong>Restart Policy:</strong>
                         </p>
                         <p className="m-0">
-                            {toTitleCase(this.props.deploy_setup.restart_policy.toString().split('_').join(' '))}
+                            {restart_policy}
                         </p>
                         </span>
                     </div>
                 </div>
+                {this.props.deploy_setup.deploy_setup_item.length > 0 &&
                 <ul className="collection">
                     {deploy_setup_items}
                 </ul>
+                }
             </div>
         )
     }

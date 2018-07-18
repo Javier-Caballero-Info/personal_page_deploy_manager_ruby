@@ -59,12 +59,23 @@ const FormDeploy = (createReactClass({
             selected_apps_ids: [],
             loading_environments: true,
             loading_apps: true,
-            formValid: true
+            formValid: false
         };
     },
 
     validateForm() {
-        this.setState({formValid: true});
+
+        let valid = this.state.environment_id != null;
+
+        valid &= this.state.deploy_apps.length > 0 && this.state.selected_apps_ids.length === this.state.deploy_apps.length;
+
+        const checked_deploy_apps = this.state.deploy_apps.filter((deploy_app) => {
+            return deploy_app.deploy_setup_id == null;
+        });
+
+        valid &= checked_deploy_apps.length === 0;
+
+        this.setState({formValid: valid});
     },
 
     onEnvironmentChange () {
@@ -72,6 +83,8 @@ const FormDeploy = (createReactClass({
             deploy_apps: [],
             deploy_apps_html: [],
             environment_id: this.refs.environment.value
+        }, () => {
+            this.validateForm();
         });
     },
 
@@ -136,6 +149,7 @@ const FormDeploy = (createReactClass({
                 deploy_apps_html: deploy_apps_html
             }, () => {
                 this.setAppIdsTaken();
+                this.validateForm();
             });
         });
     },
@@ -145,10 +159,20 @@ const FormDeploy = (createReactClass({
         let deploy_apps = this.state.deploy_apps;
         this.setState({deploy_apps: []});
         if (!this.state.selected_apps_ids.includes(app_id)) {
-            deploy_apps[index].app_id = app_id;
+            deploy_apps[index] = {
+                app_id: app_id,
+                app_version_id: "",
+                deploy_setup_id: null,
+                deploy_setup: null,
+            };
         } else {
             if (this.state.deploy_apps[index].app_id !== app_id) {
-                deploy_apps[index].app_id = '';
+                deploy_apps[index] = {
+                    app_id: "",
+                    app_version_id: "",
+                    deploy_setup_id: null,
+                    deploy_setup: null,
+                };
                 Alert.danger("App already selected");
                 this.setState({deploy_apps: deploy_apps}, () => {
                     this.setAppIdsTaken();
@@ -158,6 +182,7 @@ const FormDeploy = (createReactClass({
         }
         this.setState({deploy_apps: deploy_apps}, () => {
             this.setAppIdsTaken();
+            this.validateForm();
         });
         return default_result;
     },
@@ -187,7 +212,9 @@ const FormDeploy = (createReactClass({
         this.setState({deploy_apps: []});
         deploy_apps[index].deploy_setup = deploy_setup;
         deploy_apps[index].deploy_setup_id = deploy_setup ? deploy_setup.id : null;
-        this.setState({deploy_apps: deploy_apps});
+        this.setState({deploy_apps: deploy_apps}, () => {
+            this.validateForm();
+        });
     },
 
     render() {
@@ -236,20 +263,22 @@ const FormDeploy = (createReactClass({
                 </div>
                 <div className="modal-footer">
                     <div className="row">
-                        <div className="col s6">
+                        <div className="col s12 m4">
                             <button type="button" className="waves-effect white black-text btn btn-block" onClick={this.onClose}>
                                 Close
                             </button>
                         </div>
+                        <div className="col s12 m4">
+                            <button type="button" className="waves-effect blue btn btn-block"
+                                    onClick={this.onClose} disabled={!this.state.formValid}>
+                                Save Draft <i className="material-icons right">save</i>
+                            </button>
+                        </div>
                         {!this.state.loading_environments &&
-                        <div className="col s6">
-                            <button type="button" className="waves-effect blue btn btn-block" onClick={this.onSubmit}
-                                    disabled={
-                                        !this.state.deploy_apps.length > 0
-                                        ||
-                                        this.state.deploy_apps.length !== this.state.selected_apps_ids.length
-                                    }>
-                                Save <i className="material-icons right">save</i>
+                        <div className="col s12 m4">
+                            <button type="button" className="waves-effect red btn btn-block"
+                                    onClick={this.onSubmit} disabled={!this.state.formValid}>
+                                Save & Deploy <i className="material-icons right">save</i>
                             </button>
                         </div>
                         }

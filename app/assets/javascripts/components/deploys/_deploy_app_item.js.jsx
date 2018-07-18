@@ -32,10 +32,17 @@ const DeployAppItem = (createReactClass({
     },
 
     setDeploySetup(deploy_setup){
-        this.setState({
-            deploy_setup: [deploy_setup],
-            deploy_setup_html: <ViewDeploySetup deploy_setup={deploy_setup}/>
-        });
+        if (deploy_setup) {
+            this.setState({
+                deploy_setup: [deploy_setup],
+                deploy_setup_html: <ViewDeploySetup deploy_setup={deploy_setup}/>
+            });
+        } else {
+            this.setState({
+                deploy_setup: [],
+                deploy_setup_html: null
+            });
+        }
         this.props.setDeploySetup(this.props.index, deploy_setup);
     },
 
@@ -47,10 +54,7 @@ const DeployAppItem = (createReactClass({
             if (response.length > 0){
                 this.setDeploySetup(response[0]);
             }else{
-                this.setState({
-                    deploy_setup: response,
-                    deploy_setup_html: null
-                });
+                this.setDeploySetup(null);
             }
 
         });
