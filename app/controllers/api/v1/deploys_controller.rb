@@ -1,10 +1,45 @@
 class Api::V1::DeploysController < Api::V1::BaseController
+
   def index
-    render json: Deploy.all.to_json(:include => [:environment])
+    render json: Deploy.all.to_json(:include => [:environment, :deploy_app])
+  end
+
+  def show
+    render json: Deploy.find(params["id"]).to_json(:include => [
+      :environment, :deploy_app => { :include => [:deploy_app_environment_var] }
+    ])
   end
 
   def create
-    respond_with :api, :v1, Deploy.create(deploy_params)
+
+    deploy_item = Deploy.new(deploy_params)
+
+    deploy_item.status = 'in_progress'
+
+    deploy_item.name = Environment.find(deploy_item.environment_id).name + '#'  + DateTime.now.strftime('%Y%m%d%H%M%S')
+
+    deploy_item.save()
+
+    deploy_apps = []
+
+    params[:deploy][:deploy_apps].each do |_, da|
+
+      deploy_app_item = DeployApp.new(da.permit(:app_id, :app_version_id, :deploy_setup_id))
+      deploy_app_item.deploy_id = deploy_item.id
+      deploy_app_item.container_name = App.find(da[:app_id]).name
+      deploy_app_item.restart_policy = da[:deploy_setup][:restart_policy]
+      deploy_app_item.ports = da[:deploy_setup][:ports]
+
+      deploy_app_item.save()
+
+      deploy_app_item.set_deploy_app_env_vars(da[:deploy_setup_id])
+
+      deploy_apps.append(deploy_app_item)
+
+    end
+
+    render json: deploy_item.to_json(:include => [:environment, :deploy_app])
+
   end
 
   def destroy

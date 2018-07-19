@@ -1,6 +1,6 @@
 const FormDeploy = (createReactClass({
 
-    componentDidMount() {
+    loadEnvironments () {
         $.getJSON("/api/v1/environments.json", response => {
             const environment_items_select= response.map((environment) => {
                 return (
@@ -18,7 +18,9 @@ const FormDeploy = (createReactClass({
             );
 
         });
+    },
 
+    loadApps () {
         $.getJSON("/api/v1/apps.json", response => {
             this.setState(
                 {
@@ -29,18 +31,31 @@ const FormDeploy = (createReactClass({
         });
     },
 
+    componentDidMount() {
+        this.loadEnvironments();
+        this.loadApps();
+    },
+
     onSubmit(){
-        // this.props.onSubmit(this.state.deploy);
+        this.props.onSubmit({
+            environment_id: this.state.environment_id,
+            deploy_apps: this.state.deploy_apps
+        });
+        this.onReset();
     },
 
     onReset() {
-        /*
-        this.refs.name.value = '';
-        this.refs.name.className = 'validate';
-
-        this.refs.portainer_url.value = '';
-        this.refs.portainer_url.className = 'validate';
-        */
+        this.setState({
+            environment_id: null,
+            environments: [],
+            deploy_apps: [],
+            deploy_apps_html: [],
+            apps: [],
+            selected_apps_ids: [],
+            loading_environments: true,
+            loading_apps: true,
+            formValid: false
+        });
     },
 
     onClose(){
@@ -50,9 +65,9 @@ const FormDeploy = (createReactClass({
 
     getInitialState: function() {
         return {
-            deploy: this.props.deploy,
             environment_id: null,
             environments: [],
+            environment: null,
             deploy_apps: [],
             deploy_apps_html: [],
             apps: [],
@@ -269,7 +284,7 @@ const FormDeploy = (createReactClass({
                             </button>
                         </div>
                         <div className="col s12 m4">
-                            <button type="button" className="waves-effect blue btn btn-block"
+                            <button type="button" className="waves-effect blue btn btn-block hide"
                                     onClick={this.onClose} disabled={!this.state.formValid}>
                                 Save Draft <i className="material-icons right">save</i>
                             </button>

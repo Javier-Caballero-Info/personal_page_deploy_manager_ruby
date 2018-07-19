@@ -5,20 +5,12 @@ const NewDeploy = (createReactClass({
 
     getInitialState() {
         return {
-            deploy: {
-                'name': '',
-                'environment': null
-            }
-            ,
+            formInstance: null,
             loading: false
         };
     },
 
     openNewModal() {
-        this.setState({deploy: {
-                'name': '',
-                'environment': null
-            }});
         $('#modalCreateDeploy').modal('open');
         $('select').formSelect();
     },
@@ -37,9 +29,8 @@ const NewDeploy = (createReactClass({
             success: (deploy) => {
                 Alert.success('New deploy created');
                 $('#modalCreateDeploy').modal('close');
-                this.props.handleSubmit(deploy);
                 this.setState({loading: false});
-                this.formInstance.onReset();
+                this.props.handleSubmit(deploy);
             },
             error: (xhr) => {
                 if(xhr.status === 422) {
@@ -65,8 +56,8 @@ const NewDeploy = (createReactClass({
                     New Deploy <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateDeploy" className="modal modal-big">
-                    <FormDeploy ref={instance => { this.formInstance = instance; }} title={"New Deploy"}
-                                deploy={this.state.deploy} onSubmit={this.onSave} onClose={this.onModalClose}/>
+                    <FormDeploy title={"New Deploy"} deploy={this.state.deploy} onSubmit={this.onSave}
+                                onClose={this.onModalClose}/>
                 </div>
                 {this.state.loading &&
                     <Loader/>

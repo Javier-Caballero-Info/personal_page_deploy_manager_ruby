@@ -1,9 +1,15 @@
 const IndexDeploys= (createReactClass({
-    componentDidMount() {
+
+    loadDeploys () {
+        this.setState({ loading: true });
         $.getJSON("/api/v1/deploys.json", response => {
             this.setState({ deploys: response });
             this.setState({ loading: false });
         });
+    },
+
+    componentDidMount() {
+        this.loadDeploys();
     },
 
     getInitialState() {
@@ -11,6 +17,23 @@ const IndexDeploys= (createReactClass({
             deploys: [],
             loading: true,
         };
+    },
+
+    handleUpdateDeploy(deploy) {
+        const index = this.state.deploys.findIndex((obj => obj.id === deploy.id));
+        let newDeploys = this.state.deploys;
+
+        newDeploys[index] = deploy;
+
+        this.setState({ deploys: newDeploys });
+    },
+
+    handleCreateDeploy(deploy) {
+        /*
+        const newState = this.state.deploys.concat(deploy);
+        this.setState({ deploys: newState })
+        */
+        this.loadDeploys();
     },
 
     render() {
@@ -30,7 +53,7 @@ const IndexDeploys= (createReactClass({
                         }
 
                         {!this.state.loading &&
-                            <NewDeploy/>
+                            <NewDeploy handleSubmit={this.handleCreateDeploy}/>
                         }
 
                         {!this.state.loading && this.state.deploys.length > 0 &&
