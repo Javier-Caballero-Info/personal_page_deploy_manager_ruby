@@ -8,6 +8,10 @@ const AllDeploys = (createReactClass({
         this.props.handleDelete(deploy);
     },
 
+    handleShow (deploy) {
+        this.props.handleShow(deploy);
+    },
+
     handleEdit (deploy) {
         console.log('Edit deploy: ', deploy);
     },
@@ -33,7 +37,8 @@ const AllDeploys = (createReactClass({
                     </td>
                     <td className="middle">{deploy.environment.name}</td>
                     <td className="middle">
-                        <button className="waves-effect waves-light btn blue">
+                        <button className="waves-effect waves-light btn blue"
+                                onClick={this.handleShow.bind(this, deploy)}>
                             <i className="material-icons">visibility</i>
                         </button>
                         {deploy.status === 'draft' &&

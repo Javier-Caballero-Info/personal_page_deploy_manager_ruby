@@ -13,7 +13,7 @@ const NewEnvironment = (createReactClass({
         };
     },
 
-    openNewModal() {
+    openEditEnvironmentModal() {
         this.setState({environment: {
                 'name': '',
                 'portainer_url': ''
@@ -59,7 +59,7 @@ const NewEnvironment = (createReactClass({
 
         return (
             <div>
-                <button className="waves-effect waves-light btn" onClick={this.openNewModal} >
+                <button className="waves-effect waves-light btn" onClick={this.openEditEnvironmentModal} >
                     New Environment <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateEnvironment" className="modal">

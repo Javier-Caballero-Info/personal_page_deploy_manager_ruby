@@ -9,6 +9,7 @@ const IndexDeploys= (createReactClass({
     },
 
     componentDidMount() {
+        $('#modalShowDeploy').modal();
         this.loadDeploys();
         const self = this;
         setInterval(function() {
@@ -22,6 +23,7 @@ const IndexDeploys= (createReactClass({
         return {
             deploys: [],
             childDeletePopUp: null,
+            showDeployView: null,
             loading: true,
             loadingRequest: false,
             modal_is_showing: false
@@ -30,6 +32,19 @@ const IndexDeploys= (createReactClass({
 
     onModalShow () {
         this.setState({modal_is_showing: true});
+    },
+
+    handleShowDeploy (deploy) {
+        this.setState({
+            showDeployView: <ShowDeploy deploy={deploy} onClose={this.closeShowModal}/>,
+            modal_is_showing: true
+        });
+
+        $('#modalShowDeploy').modal('open');
+    },
+
+    closeShowModal () {
+        $('#modalShowDeploy').modal('close');
     },
 
     handleDeleteDeploy (deploy) {
@@ -105,7 +120,8 @@ const IndexDeploys= (createReactClass({
                         }
 
                         {!this.state.loading && this.state.deploys.length > 0 &&
-                            <AllDeploys deploys={this.state.deploys} handleDelete={this.handleDeleteDeploy} />
+                            <AllDeploys deploys={this.state.deploys} handleDelete={this.handleDeleteDeploy}
+                                        handleShow={this.handleShowDeploy}/>
                         }
 
                         {!this.state.loading && this.state.deploys.length < 1 &&
@@ -116,6 +132,9 @@ const IndexDeploys= (createReactClass({
 
                         <DeleteConfirmationMsg  ref={instance => { this.childDeletePopUp = instance; }} handleConfirm={this.confirmDelete} />
 
+                    </div>
+                    <div id="modalShowDeploy" className="modal modal-big">
+                        {this.state.showDeployView}
                     </div>
                 </main>
                 <Footer/>

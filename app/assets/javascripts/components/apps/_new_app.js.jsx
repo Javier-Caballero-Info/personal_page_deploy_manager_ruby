@@ -14,7 +14,7 @@ var NewApp = (createReactClass({
         };
     },
 
-    openNewModal() {
+    openEditEnvironmentModal() {
         this.setState(
             {
                 app:
@@ -66,7 +66,7 @@ var NewApp = (createReactClass({
 
         return (
             <div>
-                <button className="waves-effect waves-light btn" onClick={this.openNewModal} >
+                <button className="waves-effect waves-light btn" onClick={this.openEditEnvironmentModal} >
                     New App <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateApp" className="modal">

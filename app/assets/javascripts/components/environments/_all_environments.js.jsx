@@ -49,7 +49,7 @@ const AllEnvironments = (createReactClass({
         });
     },
 
-    openNewModal(environment) {
+    openEditEnvironmentModal(environment) {
 
         let env = Object.assign({}, environment);
 
@@ -93,7 +93,7 @@ const AllEnvironments = (createReactClass({
                         <button className="waves-effect waves-light btn deep-purple" onClick={(e) => this.openEnvironmentVarsModal(environment, e)}>
                             <i className="material-icons">extension</i>
                         </button>
-                        <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openNewModal(environment, e)}>
+                        <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openEditEnvironmentModal(environment, e)}>
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"

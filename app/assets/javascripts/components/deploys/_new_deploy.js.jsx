@@ -10,7 +10,7 @@ const NewDeploy = (createReactClass({
         };
     },
 
-    openNewModal() {
+    openEditEnvironmentModal() {
         this.props.onModalShow();
         $('#modalCreateDeploy').modal('open');
         $('select').formSelect();
@@ -58,7 +58,7 @@ const NewDeploy = (createReactClass({
 
         return (
             <div className="left">
-                <button className="waves-effect waves-light btn" onClick={this.openNewModal} >
+                <button className="waves-effect waves-light btn" onClick={this.openEditEnvironmentModal} >
                     New Deploy <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateDeploy" className="modal modal-big">

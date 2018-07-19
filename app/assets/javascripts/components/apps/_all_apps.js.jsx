@@ -72,7 +72,7 @@ var AllApps = (createReactClass({
         });
     },
 
-    openNewModal(app) {
+    openEditEnvironmentModal(app) {
 
         const tmp_app = Object.assign({}, app);
 
@@ -160,7 +160,7 @@ var AllApps = (createReactClass({
                             <i className="material-icons"> style </i> <i
                             className="material-icons">arrow_drop_down</i>
                         </button>
-                        <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openNewModal(app, e)}>
+                        <button className="waves-effect waves-light btn blue ml-1" onClick={(e) => this.openEditEnvironmentModal(app, e)}>
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"

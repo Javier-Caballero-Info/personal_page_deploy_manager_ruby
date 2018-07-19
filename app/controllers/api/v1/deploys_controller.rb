@@ -2,7 +2,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
   def index
     render json: Deploy.all.to_json(:include => [
-      :environment, :deploy_app => { :include => [:deploy_app_environment_var] }
+      :environment, :deploy_app => { :include => [:deploy_app_environment_var, :app, :app_version] }
     ])
   end
 

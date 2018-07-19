@@ -47,7 +47,7 @@ var AllEnvVars = (createReactClass({
         });
     },
 
-    openNewModal(environment_var) {
+    openEditEnvironmentModal(environment_var) {
 
         let env_var = Object.assign({}, environment_var);
 
@@ -72,7 +72,7 @@ var AllEnvVars = (createReactClass({
                     <td>{environment_var.key}</td>
                     <td>{environment_var.body}</td>
                     <td>
-                        <button className="waves-effect waves-light btn blue" onClick={(e) => this.openNewModal(environment_var, e)}>
+                        <button className="waves-effect waves-light btn blue" onClick={(e) => this.openEditEnvironmentModal(environment_var, e)}>
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
