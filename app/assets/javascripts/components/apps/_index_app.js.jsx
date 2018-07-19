@@ -34,24 +34,25 @@ const IndexApps = (createReactClass({
     confirmDelete() {
         this.setState({loadingRequest: true});
         $.ajax({
-            url: `/api/v1/apps/${this.app.id}`,
+            url: `/api/v1/apps/${this.state.app.id}`,
             type: 'DELETE',
             success:() => {
                 Alert.success('App deleted');
-                this.removeAppClient(this.app.id);
+                this.removeAppClient(this.state.app.id);
                 this.setState({loadingRequest: false});
             }
         });
     },
 
     handleDeleteApp(app) {
-        this.app = app;
+        this.setState({app: app});
         this.childDeletePopUp.show('¿Are you sure that you want to delete the app "' + app.name + '"?');
     },
 
     getInitialState() {
         return {
             apps: [],
+            app: null,
             loading: true,
             loadingRequest: false
         };
@@ -83,8 +84,7 @@ const IndexApps = (createReactClass({
                         }
 
                         {!this.state.loading && this.state.apps.length > 0 &&
-                        <AllApps apps={this.state.apps} handleDelete={this.handleDeleteApp}
-                                         handleEdit={this.handleUpdateApp}/>
+                        <AllApps apps={this.state.apps} handleDelete={this.handleDeleteApp} handleEdit={this.handleUpdateApp}/>
                         }
 
                         {!this.state.loading && this.state.apps.length < 1 &&

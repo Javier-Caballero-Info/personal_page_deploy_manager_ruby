@@ -1,6 +1,6 @@
 class Deploy < ApplicationRecord
   belongs_to :environment
-  has_many :deploy_app
+  has_many :deploy_app, :dependent => :destroy
 
   def perform_deploy
     Thread.new do

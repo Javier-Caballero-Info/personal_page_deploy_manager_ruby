@@ -21,7 +21,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
       environment_id: deploy_params[:environment_id]
     ).size > 0
 
-    deploy_item.status = exist_others_deploy_in_progress ? 'draft' : 'in_progress'
+    deploy_item.status = exist_others_deploy_in_progress || deploy_params[:status] == 'draft' ? 'draft' : 'in_progress'
 
     deploy_item.name = Environment.find(deploy_item.environment_id).name + '#'  + DateTime.now.strftime('%Y%m%d%H%M%S')
 
@@ -45,23 +45,42 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
     end
 
-    if exist_others_deploy_in_progress
-      render json: deploy_item.to_json(:include => [:environment, :deploy_app]), status: 400
-    else
+    if deploy_item.status != 'draft'
       deploy_item.perform_deploy
-      render json: deploy_item.to_json(:include => [:environment, :deploy_app])
     end
+
+    render json:
+             deploy_item.to_json(:include => [:environment, :deploy_app]),
+           status: exist_others_deploy_in_progress ? 400 : 201
 
   end
 
   def destroy
-    respond_with Deploy.destroy(params[:id])
+
+    deploy_item = Deploy.find(params["id"])
+
+    if deploy_item.status == 'draft'
+      Deploy.destroy(params[:id])
+      render json: nil, status: 200
+    else
+      render json: nil, status: 400
+    end
+
   end
 
   def update
+
     deploy_item = Deploy.find(params["id"])
-    deploy_item.update_attributes(deploy_params)
-    respond_with deploy_item, json: deploy_item
+
+    if deploy_item.status == 'draft'
+      # deploy_item = Deploy.find(params["id"])
+      # deploy_item.update_attributes(deploy_params)
+      # respond_with deploy_item, json: deploy_item
+      render json: nil, status: 200
+    else
+      render json: nil, status: 400
+    end
+
   end
 
   private

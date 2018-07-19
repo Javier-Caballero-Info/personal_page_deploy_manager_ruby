@@ -44,6 +44,15 @@ const FormDeploy = (createReactClass({
         this.onReset();
     },
 
+    saveDraft(){
+        this.props.onSubmit({
+            status: 'draft',
+            environment_id: this.state.environment_id,
+            deploy_apps: this.state.deploy_apps
+        });
+        this.onReset();
+    },
+
     onReset() {
         this.setState({
             environment_id: null,
@@ -286,8 +295,8 @@ const FormDeploy = (createReactClass({
                             </button>
                         </div>
                         <div className="col s12 m4">
-                            <button type="button" className="waves-effect blue btn btn-block hide"
-                                    onClick={this.onClose} disabled={!this.state.formValid}>
+                            <button type="button" className="waves-effect blue btn btn-block"
+                                    onClick={this.saveDraft} disabled={!this.state.formValid}>
                                 Save Draft <i className="material-icons right">save</i>
                             </button>
                         </div>

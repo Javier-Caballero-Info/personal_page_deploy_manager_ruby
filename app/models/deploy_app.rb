@@ -3,7 +3,7 @@ class DeployApp < ApplicationRecord
   belongs_to :app
   belongs_to :app_version
   belongs_to :deploy_setup
-  has_many :deploy_app_environment_var
+  has_many :deploy_app_environment_var, :dependent => :destroy
 
   def set_deploy_app_env_vars (deploy_setup_id)
 
