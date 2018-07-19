@@ -10,13 +10,24 @@ const IndexDeploys= (createReactClass({
 
     componentDidMount() {
         this.loadDeploys();
+        const self = this;
+        setInterval(function() {
+            if (!self.state.modal_is_showing) {
+                self.loadDeploys();
+            }
+        }, 10 * 1000);
     },
 
     getInitialState() {
         return {
             deploys: [],
             loading: true,
+            modal_is_showing: false
         };
+    },
+
+    onModalShow () {
+        this.setState({modal_is_showing: true});
     },
 
     handleUpdateDeploy(deploy) {
@@ -34,6 +45,7 @@ const IndexDeploys= (createReactClass({
         this.setState({ deploys: newState })
         */
         this.loadDeploys();
+        this.setState({modal_is_showing: false});
     },
 
     render() {
@@ -53,7 +65,12 @@ const IndexDeploys= (createReactClass({
                         }
 
                         {!this.state.loading &&
-                            <NewDeploy handleSubmit={this.handleCreateDeploy}/>
+                            <div className="row">
+                                <NewDeploy handleSubmit={this.handleCreateDeploy} onModalShow={this.onModalShow}/>
+                                <button className="waves-effect waves-light btn blue right" onClick={this.loadDeploys} >
+                                    Reload <i className="material-icons left">autorenew</i>
+                                </button>
+                            </div>
                         }
 
                         {!this.state.loading && this.state.deploys.length > 0 &&

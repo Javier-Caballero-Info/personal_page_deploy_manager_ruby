@@ -56,6 +56,8 @@ const FormDeploy = (createReactClass({
             loading_apps: true,
             formValid: false
         });
+        this.loadEnvironments();
+        this.loadApps();
     },
 
     onClose(){

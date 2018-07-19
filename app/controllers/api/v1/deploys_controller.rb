@@ -1,7 +1,9 @@
 class Api::V1::DeploysController < Api::V1::BaseController
 
   def index
-    render json: Deploy.all.to_json(:include => [:environment, :deploy_app])
+    render json: Deploy.all.to_json(:include => [
+      :environment, :deploy_app => { :include => [:deploy_app_environment_var] }
+    ])
   end
 
   def show
@@ -14,7 +16,12 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
     deploy_item = Deploy.new(deploy_params)
 
-    deploy_item.status = 'in_progress'
+    exist_others_deploy_in_progress = Deploy.where(
+      status: 'in_progress',
+      environment_id: deploy_params[:environment_id]
+    ).size > 0
+
+    deploy_item.status = exist_others_deploy_in_progress ? 'draft' : 'in_progress'
 
     deploy_item.name = Environment.find(deploy_item.environment_id).name + '#'  + DateTime.now.strftime('%Y%m%d%H%M%S')
 
@@ -38,7 +45,12 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
     end
 
-    render json: deploy_item.to_json(:include => [:environment, :deploy_app])
+    if exist_others_deploy_in_progress
+      render json: deploy_item.to_json(:include => [:environment, :deploy_app]), status: 400
+    else
+      deploy_item.perform_deploy
+      render json: deploy_item.to_json(:include => [:environment, :deploy_app])
+    end
 
   end
 

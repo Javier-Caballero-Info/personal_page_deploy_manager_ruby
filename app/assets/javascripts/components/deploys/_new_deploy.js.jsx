@@ -11,6 +11,7 @@ const NewDeploy = (createReactClass({
     },
 
     openNewModal() {
+        this.props.onModalShow();
         $('#modalCreateDeploy').modal('open');
         $('select').formSelect();
     },
@@ -33,6 +34,11 @@ const NewDeploy = (createReactClass({
                 this.props.handleSubmit(deploy);
             },
             error: (xhr) => {
+                if(xhr.status === 400) {
+                    Alert.warning('Actually exists a deploy in progress for the same environment');
+                    $('#modalCreateDeploy').modal('close');
+                    this.props.handleSubmit(deploy);
+                }
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
@@ -51,7 +57,7 @@ const NewDeploy = (createReactClass({
     render() {
 
         return (
-            <div>
+            <div className="left">
                 <button className="waves-effect waves-light btn" onClick={this.openNewModal} >
                     New Deploy <i className="material-icons right">add</i>
                 </button>
