@@ -10,6 +10,7 @@ const IndexDeploys= (createReactClass({
 
     componentDidMount() {
         $('#modalShowDeploy').modal();
+        $('#modalEditDeploy').modal();
         this.loadDeploys();
         const self = this;
         setInterval(function() {
@@ -30,8 +31,8 @@ const IndexDeploys= (createReactClass({
         };
     },
 
-    onModalShow () {
-        this.setState({modal_is_showing: true});
+    setFlagModalShow (flag) {
+        this.setState({modal_is_showing: flag});
     },
 
     handleShowDeploy (deploy) {
@@ -44,6 +45,7 @@ const IndexDeploys= (createReactClass({
     },
 
     closeShowModal () {
+        this.setState({modal_is_showing: false});
         $('#modalShowDeploy').modal('close');
     },
 
@@ -53,19 +55,37 @@ const IndexDeploys= (createReactClass({
     },
 
     handleUpdateDeploy(deploy) {
-        const index = this.state.deploys.findIndex((obj => obj.id === deploy.id));
-        let newDeploys = this.state.deploys;
+        this.setState({loadingRequest: true});
 
-        newDeploys[index] = deploy;
-
-        this.setState({ deploys: newDeploys });
+        $.ajax({
+            url: "/api/v1/deploys/" + deploy.id,
+            type: "PUT",
+            data: {deploy: deploy},
+            success: (deploy) => {
+                Alert.success('Deploy app saved');
+                this.loadDeploys();
+                this.setState({loadingRequest: false});
+            },
+            error: (xhr) => {
+                if (xhr.status === 400) {
+                    Alert.warning('Actually exists a deploy in progress for the same environment');
+                    this.loadDeploys();
+                }
+                if (xhr.status === 422) {
+                    const response = xhr.responseJSON;
+                    Object.keys(response.errors).map((k) => {
+                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                    });
+                }
+                if (xhr.status >= 500) {
+                    Alert.danger('Something get wrong');
+                }
+                this.setState({loadingRequest: false});
+            }
+        });
     },
 
-    handleCreateDeploy(deploy) {
-        /*
-        const newState = this.state.deploys.concat(deploy);
-        this.setState({ deploys: newState })
-        */
+    handleCreateDeploy() {
         this.loadDeploys();
         this.setState({modal_is_showing: false});
     },
@@ -112,7 +132,7 @@ const IndexDeploys= (createReactClass({
 
                         {!this.state.loading &&
                             <div className="row">
-                                <NewDeploy handleSubmit={this.handleCreateDeploy} onModalShow={this.onModalShow}/>
+                                <NewDeploy handleSubmit={this.handleCreateDeploy} setFlagModalShow={this.setFlagModalShow}/>
                                 <button className="waves-effect waves-light btn blue right" onClick={this.loadDeploys} >
                                     Reload <i className="material-icons left">autorenew</i>
                                 </button>
@@ -120,8 +140,9 @@ const IndexDeploys= (createReactClass({
                         }
 
                         {!this.state.loading && this.state.deploys.length > 0 &&
-                            <AllDeploys deploys={this.state.deploys} handleDelete={this.handleDeleteDeploy}
-                                        handleShow={this.handleShowDeploy}/>
+                            <AllDeploys deploys={this.state.deploys} handleDeleteDeploy={this.handleDeleteDeploy}
+                                        handleShow={this.handleShowDeploy}  setFlagModalShow={this.setFlagModalShow}
+                                        handleUpdateDeploy={this.handleUpdateDeploy}/>
                         }
 
                         {!this.state.loading && this.state.deploys.length < 1 &&

@@ -48,7 +48,6 @@ const FormApp = (createReactClass({
 
     onClose(){
         this.onReset();
-
         this.props.onClose();
     },
 

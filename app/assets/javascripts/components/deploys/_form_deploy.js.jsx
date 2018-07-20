@@ -26,6 +26,11 @@ const FormDeploy = (createReactClass({
                 {
                     apps: response,
                     loading_apps: false
+                },
+                () => {
+                    this.setAppIdsTaken();
+                    this.initializeDeployAppsHtml();
+                    this.validateForm();
                 }
             );
         });
@@ -37,16 +42,17 @@ const FormDeploy = (createReactClass({
     },
 
     onSubmit(){
-        this.props.onSubmit({
-            environment_id: this.state.environment_id,
-            deploy_apps: this.state.deploy_apps
-        });
-        this.onReset();
+        this.submitDeploy(null);
     },
 
     saveDraft(){
+        this.submitDeploy('draft');
+    },
+
+    submitDeploy (status) {
         this.props.onSubmit({
-            status: 'draft',
+            id: this.props.deploy ? this.props.deploy.id : null,
+            status: status,
             environment_id: this.state.environment_id,
             deploy_apps: this.state.deploy_apps
         });
@@ -75,11 +81,16 @@ const FormDeploy = (createReactClass({
     },
 
     getInitialState: function() {
+
+        const deploy = this.props.deploy;
+
+        const not_null = deploy != null;
+
         return {
-            environment_id: null,
+            environment_id: not_null ? deploy.environment_id : null,
             environments: [],
             environment: null,
-            deploy_apps: [],
+            deploy_apps: not_null ? deploy.deploy_app : [],
             deploy_apps_html: [],
             apps: [],
             selected_apps_ids: [],
@@ -112,6 +123,24 @@ const FormDeploy = (createReactClass({
         }, () => {
             this.validateForm();
         });
+    },
+
+    initializeDeployAppsHtml () {
+        let deploy_apps_html = [];
+
+        this.state.deploy_apps.map((deploy_app, index) =>  {
+            deploy_apps_html.push(
+                <DeployAppItem apps={this.state.apps} deploy_app={deploy_app} index={index} key={index}
+                               onAppChange={this.onAppChange} handleDeleteDeployApp={this.handleDeleteDeployApp}
+                               environment_id={this.state.environment_id} onAppVersionChange={this.onAppVersionChange}
+                               setDeploySetup={this.setDeploySetup}/>
+            );
+        });
+
+        this.setState({
+            deploy_apps_html: deploy_apps_html
+        });
+
     },
 
     addDeployApp() {
@@ -148,7 +177,9 @@ const FormDeploy = (createReactClass({
             });
 
         } else {
-            Alert.warning("You can't add more apps.");
+            if (deploy_apps.length > 0) {
+                Alert.warning("You can't add more apps.");
+            }
         }
     },
 
@@ -244,6 +275,11 @@ const FormDeploy = (createReactClass({
     },
 
     render() {
+
+        const deploy = this.props.deploy;
+
+         const environment_id = deploy != null ? deploy.environment_id : '';
+
         return (
             <form className="col s12">
                 <div className="modal-content">
@@ -259,8 +295,8 @@ const FormDeploy = (createReactClass({
                     <div className="card-panel">
                         <div className="row m-0">
                             <div className="input-field col s12 m6">
-                                <select defaultValue="null" ref="environment" onChange={this.onEnvironmentChange}>
-                                    <option value="null" disabled>Choose an environment</option>
+                                <select defaultValue={environment_id} ref="environment" onChange={this.onEnvironmentChange}>
+                                    <option value="" disabled>Choose an environment</option>
                                     {this.state.environment_items_select}
                                 </select>
                                 <label>Environment</label>

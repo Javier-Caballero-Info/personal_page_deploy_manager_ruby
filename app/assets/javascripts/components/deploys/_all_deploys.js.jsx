@@ -1,26 +1,46 @@
 const AllDeploys = (createReactClass({
 
     componentDidMount() {
-
+        $('#modalEditDeploy').modal();
     },
 
-    handleDelete (deploy) {
-        this.props.handleDelete(deploy);
+    handleDeleteDeploy (deploy) {
+        this.props.handleDeleteDeploy(deploy);
     },
 
     handleShow (deploy) {
         this.props.handleShow(deploy);
     },
 
+    handleUpdateDeploy (deploy) {
+        this.props.handleUpdateDeploy(deploy);
+        this.closeEditModal();
+    },
+
     handleEdit (deploy) {
-        console.log('Edit deploy: ', deploy);
+
+        this.props.setFlagModalShow(true);
+
+        this.setState({
+            editDeployView: <FormDeploy title={"Edit Deploy"} deploy={deploy} onSubmit={this.handleUpdateDeploy}
+                                        onClose={this.closeEditModal}/>
+        });
+
+        $('#modalEditDeploy').modal('open');
+
+    },
+
+    closeEditModal () {
+        $('#modalEditDeploy').modal('close');
+        this.props.setFlagModalShow(false);
+        this.setState({
+            editDeployView: null
+        });
     },
 
     getInitialState() {
         return {
-            deploy: {
-
-            },
+            editDeployView: null,
             formEdit: null,
             loading: false
         };
@@ -49,7 +69,7 @@ const AllDeploys = (createReactClass({
                         }
                         { deploy.status === 'draft' &&
                             <button className="waves-effect waves-light btn red darken-4 ml-1"
-                                    onClick={this.handleDelete.bind(this, deploy)}>
+                                    onClick={this.handleDeleteDeploy.bind(this, deploy)}>
                                 <i className="material-icons">delete</i>
                             </button>
                         }
@@ -59,7 +79,6 @@ const AllDeploys = (createReactClass({
         });
 
         return(
-
             <div className="card-panel">
                 {this.state.loading &&
                    <Loader/>
@@ -76,6 +95,9 @@ const AllDeploys = (createReactClass({
                         {deploys}
                     </tbody>
                 </table>
+                <div id="modalEditDeploy" className="modal modal-big">
+                    {this.state.editDeployView}
+                </div>
             </div>
         )
     }

@@ -11,12 +11,13 @@ const NewDeploy = (createReactClass({
     },
 
     openEditEnvironmentModal() {
-        this.props.onModalShow();
+        this.props.setFlagModalShow(true);
         $('#modalCreateDeploy').modal('open');
         $('select').formSelect();
     },
 
     onModalClose() {
+        this.props.setFlagModalShow(false);
         $('#modalCreateDeploy').modal('close');
     },
 
@@ -62,7 +63,7 @@ const NewDeploy = (createReactClass({
                     New Deploy <i className="material-icons right">add</i>
                 </button>
                 <div id="modalCreateDeploy" className="modal modal-big">
-                    <FormDeploy title={"New Deploy"} deploy={this.state.deploy} onSubmit={this.onSave}
+                    <FormDeploy title={"New Deploy"} deploy={null} onSubmit={this.onSave}
                                 onClose={this.onModalClose}/>
                 </div>
                 {this.state.loading &&

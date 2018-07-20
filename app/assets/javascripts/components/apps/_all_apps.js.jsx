@@ -40,8 +40,8 @@ var AllApps = (createReactClass({
         };
     },
 
-    handleDelete(id) {
-        this.props.handleDelete(id);
+    handleDeleteDeploy(id) {
+        this.props.handleDeleteDeploy(id);
     },
 
     handleEdit(app) {
@@ -164,7 +164,7 @@ var AllApps = (createReactClass({
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
-                                onClick={this.handleDelete.bind(this, app)}>
+                                onClick={this.handleDeleteDeploy.bind(this, app)}>
                             <i className="material-icons">delete</i>
                         </button>
                     </td>
