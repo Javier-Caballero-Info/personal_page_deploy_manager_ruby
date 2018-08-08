@@ -10,6 +10,9 @@ const FormEnvironment = (createReactClass({
 
         this.refs.portainer_url.value = '';
         this.refs.portainer_url.className = 'validate';
+
+        this.refs.endpoint_id.value = 0;
+        this.refs.endpoint_id.className = 'validate';
     },
 
     onClose(){
@@ -23,6 +26,7 @@ const FormEnvironment = (createReactClass({
             environment: this.props.environment,
             nameValid: false,
             portainerUrlValid: false,
+            endpointIdValid: false,
             formValid: false
         };
     },
@@ -45,12 +49,19 @@ const FormEnvironment = (createReactClass({
     validateField(fieldName, value) {
         let nameValid = false;
         let portainerUrlValid = false;
+        let endpointIdValid = false;
 
         switch(fieldName) {
             case 'name':
                 nameValid = value.length > 0;
                 this.setState({
                     nameValid: nameValid
+                }, this.validateForm);
+                break;
+            case 'endpoint_id':
+                endpointIdValid = value >= 0;
+                this.setState({
+                    endpointIdValid: endpointIdValid
                 }, this.validateForm);
                 break;
             case 'portainer_url':
@@ -70,7 +81,7 @@ const FormEnvironment = (createReactClass({
     },
 
     validateForm() {
-        this.setState({formValid: this.state.nameValid && this.state.portainerUrlValid});
+        this.setState({formValid: this.state.nameValid && this.state.portainerUrlValid && this.state.endpointIdValid});
     },
 
     componentWillMount() {
@@ -97,9 +108,14 @@ const FormEnvironment = (createReactClass({
                             <label className="active" htmlFor="portainer_url_input">Portainer URL</label>
                             <span className="helper-text" data-error="The portainer url is invalid"/>
                         </div>
+                        <div className="input-field col s12">
+                            <input id="endpoint_id_input" type="number" step="1" min="0" name="endpoint_id" className="validate" ref="endpoint_id"
+                                   required="required" defaultValue={this.state.environment.endpoint_id} onChange={this.handleChange}/>
+                            <label className="active" htmlFor="portainer_url_input">Endpoint</label>
+                            <span className="helper-text" data-error="The endpoint is invalid"/>
+                        </div>
                     </div>
                 </div>
-                <hr/>
                 <div className="modal-footer">
                     <div className="row">
                         <div className="col s6">

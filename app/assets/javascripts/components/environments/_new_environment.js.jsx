@@ -7,6 +7,7 @@ const NewEnvironment = (createReactClass({
         return {
             environment: {
                 'name': '',
+                'endpoint_id': '',
                 'portainer_url': ''
             },
             loading: false
@@ -16,6 +17,7 @@ const NewEnvironment = (createReactClass({
     openEditEnvironmentModal() {
         this.setState({environment: {
                 'name': '',
+                'endpoint_id': '',
                 'portainer_url': ''
             }});
         $('#modalCreateEnvironment').modal('open');

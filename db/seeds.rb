@@ -2,11 +2,13 @@
 Environment.create!([
                       {
                         name: 'Production',
-                        portainer_url: 'https://portainer.javiercaballero.info'
+                        portainer_url: 'https://portainer.javiercaballero.info',
+                        endpoint_id: 0
                       },
                       {
                         name: 'Stage',
-                        portainer_url: 'http://188.166.96.202:9000'
+                        portainer_url: 'http://188.166.96.202:9000',
+                        endpoint_id: 0
                       }
                     ])
 

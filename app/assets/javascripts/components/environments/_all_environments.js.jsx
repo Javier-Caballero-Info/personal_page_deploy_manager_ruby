@@ -9,6 +9,7 @@ const AllEnvironments = (createReactClass({
         return {
             environment: {
                 'name': '',
+                'endpoint_id': '',
                 'portainer_url': ''
             },
             formEdit: null,
@@ -89,6 +90,7 @@ const AllEnvironments = (createReactClass({
                 <tr key={environment.id}>
                     <td>{environment.name}</td>
                     <td>{environment.portainer_url}</td>
+                    <td>{environment.endpoint_id}</td>
                     <td>
                         <button className="waves-effect waves-light btn deep-purple" onClick={(e) => this.openEnvironmentVarsModal(environment, e)}>
                             <i className="material-icons">extension</i>
@@ -116,6 +118,7 @@ const AllEnvironments = (createReactClass({
                     <tr>
                         <th>Name</th>
                         <th>Portainer Url</th>
+                        <th>Endpoint</th>
                         <th/>
                     </tr>
                     </thead>

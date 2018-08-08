@@ -70,3 +70,8 @@ gem 'react-rails', '2.4.4'
 gem 'jquery-rails'
 
 gem 'material_icons'
+
+gem 'daemons'
+gem 'delayed_job_active_record'
+
+gem 'whenever', require: false

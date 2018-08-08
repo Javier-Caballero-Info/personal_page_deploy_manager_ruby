@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_12_153123) do
+ActiveRecord::Schema.define(version: 2018_08_03_213605) do
 
   create_table "app_versions", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,21 @@ ActiveRecord::Schema.define(version: 2018_07_12_153123) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "deploy_app_environment_vars", force: :cascade do |t|
@@ -69,7 +84,7 @@ ActiveRecord::Schema.define(version: 2018_07_12_153123) do
     t.integer "environment_id"
     t.integer "app_version_id"
     t.string "restart_policy"
-    t.string "ports"
+    t.string "ports", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["app_version_id"], name: "index_deploy_setups_on_app_version_id"
@@ -99,6 +114,7 @@ ActiveRecord::Schema.define(version: 2018_07_12_153123) do
   create_table "environments", force: :cascade do |t|
     t.string "name"
     t.string "portainer_url"
+    t.integer "endpoint_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

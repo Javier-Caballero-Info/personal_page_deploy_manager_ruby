@@ -20,6 +20,6 @@ class Api::V1::EnvironmentsController < Api::V1::BaseController
   private
 
     def environment_params
-      params.require(:environment).permit(:id, :name, :portainer_url)
+      params.require(:environment).permit(:id, :name, :portainer_url, :endpoint_id)
     end
 end
