@@ -46,10 +46,10 @@ const RestartPolicyDeploySetup = (createReactClass({
                     <div className="input-field col s12">
                         <select ref="restart_policy" onChange={this.handleChange} defaultValue={this.state.deploy_setup.restart_policy}>
                             <option value="null" disabled>Choose a policy</option>
-                            <option value="never">Never</option>
+                            <option value="">Never</option>
                             <option value="always">Always</option>
-                            <option value="on_failure">On failure</option>
-                            <option value="unless_stopped">Unless stopped</option>
+                            <option value="on-failure">On failure</option>
+                            <option value="unless-stopped">Unless stopped</option>
                         </select>
                         <label>Restart Policy</label>
                     </div>

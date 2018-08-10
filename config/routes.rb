@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :deploy_setups, only: [:index, :create, :update]
       resources :deploy_setup_items, only: [:create, :destroy]
       resources :app_versions, only: [:index]
+      match 'app_versions', to: 'app_versions#update', via: :put
     end
   end
 end

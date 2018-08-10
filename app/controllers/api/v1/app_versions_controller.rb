@@ -1,4 +1,5 @@
 class Api::V1::AppVersionsController < Api::V1::BaseController
+
   def index
     app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
     app_versions = AppVersion.all.where(deleted: false).order('id DESC')
@@ -8,23 +9,23 @@ class Api::V1::AppVersionsController < Api::V1::BaseController
 
   end
 
-  def create
-    respond_with :api, :v1, AppVersion.create(app_version_params)
-  end
-
-  def destroy
-    respond_with AppVersion.destroy(params[:id])
-  end
-
   def update
-    app_version_item = AppVersion.find(params["id"])
-    app_version_item.update_attributes(app_version_params)
-    respond_with app_version_item, json: app_version_item
+
+    app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
+
+    unless app_id
+      App.all.each do |a|
+        tags = DockerHub.get_tags(a.docker_image)
+        # create new tags
+        # mark as deleted removed tags
+        tags.each do |t|
+        end
+      end
+    end
+
+    render json: {
+      message: "In process"
+    }.to_json, status: 202
   end
 
-  private
-
-    def app_version_params
-      params.require(:app_version).permit(:id, :name)
-    end
 end

@@ -11,7 +11,7 @@ const ShowDeployApp = (createReactClass({
         let restart_policy = 'Never';
 
         if (deploy_app.restart_policy) {
-            toTitleCase(deploy_app.restart_policy.toString().split('_').join(' '));
+            restart_policy = toTitleCase(deploy_app.restart_policy.toString().split('_').join(' '));
         }
 
         const deploy_app_environment_var = deploy_app.deploy_app_environment_var.map((item, index) => {

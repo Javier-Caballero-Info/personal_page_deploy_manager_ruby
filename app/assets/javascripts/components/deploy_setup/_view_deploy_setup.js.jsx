@@ -19,7 +19,7 @@ const ViewDeploySetup = (createReactClass({
 
         let restart_policy = 'Never';
         if (this.props.deploy_setup.restart_policy) {
-            toTitleCase(this.props.deploy_setup.restart_policy.toString().split('_').join(' '));
+            restart_policy = toTitleCase(this.props.deploy_setup.restart_policy.toString().split('-').join(' '));
         }
 
         return (
