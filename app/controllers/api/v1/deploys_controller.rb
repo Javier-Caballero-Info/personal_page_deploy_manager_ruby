@@ -54,7 +54,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
     end
 
     if deploy_item.status != 'draft'
-      deploy_item.perform_deploy
+      deploy_item.delay.perform_deploy
     end
 
     render json:

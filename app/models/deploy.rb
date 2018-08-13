@@ -4,7 +4,6 @@ class Deploy < ApplicationRecord
 
   def perform_deploy
 
-    Thread.new do
       begin
         portainer = Portainer.new(self.environment.portainer_url, self.environment.endpoint_id)
 
@@ -34,12 +33,10 @@ class Deploy < ApplicationRecord
         self.status = 'finished'
         self.save
 
-      rescue RestClient::InternalServerError
+      rescue Exception
         self.status = 'failed'
         self.save
       end
-
-    end
 
   end
 

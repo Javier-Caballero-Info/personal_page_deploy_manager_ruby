@@ -14,12 +14,16 @@ class Api::V1::AppVersionsController < Api::V1::BaseController
     app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
 
     unless app_id
+
       App.all.each do |a|
-        tags = DockerHub.get_tags(a.docker_image)
-        # create new tags
-        # mark as deleted removed tags
-        tags.each do |t|
-        end
+
+        a.delay.update_app_versions
+
+      end
+    else
+      app = App.find(app_id)
+      if app != nil
+        app.delay.update_app_versions
       end
     end
 

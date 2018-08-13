@@ -1,7 +1,5 @@
-require 'uri'
-require 'net/http'
 require "json"
-require 'rest-client'
+require 'rest_client'
 
 class Portainer
 
