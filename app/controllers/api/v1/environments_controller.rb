@@ -8,7 +8,7 @@ class Api::V1::EnvironmentsController < Api::V1::BaseController
   end
 
   def destroy
-    respond_with Environment.destroy(params[:id])
+    respond_with Environment.find(params[:id]).delete
   end
 
   def update

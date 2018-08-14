@@ -11,7 +11,7 @@ class Api::V1::AppVersionsController < Api::V1::BaseController
 
   def update
 
-    app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
+    app_id = params[:app] && params[:app] != "null" ? params[:app] : nil
 
     unless app_id
 

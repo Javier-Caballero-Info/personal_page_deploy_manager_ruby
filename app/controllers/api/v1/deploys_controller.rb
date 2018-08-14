@@ -68,7 +68,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
     deploy_item = Deploy.find(params["id"])
 
     if deploy_item.status == 'draft'
-      Deploy.destroy(params[:id])
+      Deploy.find(params[:id]).delete
       render json: nil, status: 200
     else
       render json: nil, status: 400

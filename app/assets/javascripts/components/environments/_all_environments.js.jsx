@@ -18,8 +18,8 @@ const AllEnvironments = (createReactClass({
         };
     },
 
-    handleDeleteDeploy(id) {
-        this.props.handleDeleteDeploy(id);
+    handleDelete(id) {
+        this.props.handleDelete(id);
     },
 
     handleEdit(environment) {
@@ -99,7 +99,7 @@ const AllEnvironments = (createReactClass({
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
-                           onClick={this.handleDeleteDeploy.bind(this, environment)}>
+                           onClick={this.handleDelete.bind(this, environment)}>
                             <i className="material-icons">delete</i>
                         </button>
                     </td>

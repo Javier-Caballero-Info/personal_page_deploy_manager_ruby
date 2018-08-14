@@ -1,8 +1,8 @@
 class Api::V1::DeploySetupsController < Api::V1::BaseController
   def index
 
-    app_version_id = params[:app_version] && params[:app_version] != "null" ? params[:app_version].to_i : nil
-    environment_id = params[:environment] && params[:environment] != "null" ? params[:environment].to_i : nil
+    app_version_id = params[:app_version] && params[:app_version] != "null" ? params[:app_version] : nil
+    environment_id = params[:environment] && params[:environment] != "null" ? params[:environment] : nil
 
     if app_version_id && environment_id
       respond_with DeploySetup.all
@@ -57,7 +57,7 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
   end
 
   def destroy
-    respond_with DeploySetup.destroy(params[:id])
+    respond_with DeploySetup.find(params[:id]).delete
   end
 
   def update

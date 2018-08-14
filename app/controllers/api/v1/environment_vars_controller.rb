@@ -1,8 +1,8 @@
 class Api::V1::EnvironmentVarsController < Api::V1::BaseController
   def index
 
-    app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
-    environment_id = params[:environment] && params[:environment] != "null" ? params[:environment].to_i : nil
+    app_id = params[:app] && params[:app] != "null" ? params[:app] : nil
+    environment_id = params[:environment] && params[:environment] != "null" ? params[:environment] : nil
 
     environment_vars = EnvironmentVar.all
     environment_vars = environment_vars.where(app_id: app_id)
@@ -17,7 +17,7 @@ class Api::V1::EnvironmentVarsController < Api::V1::BaseController
   end
 
   def destroy
-    respond_with EnvironmentVar.destroy(params[:id])
+    respond_with EnvironmentVar.find(params[:id]).delete
   end
 
   def update

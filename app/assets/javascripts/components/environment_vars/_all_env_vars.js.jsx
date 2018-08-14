@@ -15,8 +15,8 @@ var AllEnvVars = (createReactClass({
         };
     },
 
-    handleDeleteDeploy(id) {
-        this.props.handleDeleteDeploy(id);
+    handleDelete(id) {
+        this.props.handleDelete(id);
     },
 
     handleEdit(environment_var) {
@@ -76,7 +76,7 @@ var AllEnvVars = (createReactClass({
                             <i className="material-icons">create</i>
                         </button>
                         <button className="waves-effect waves-light btn red darken-4 ml-1"
-                                onClick={this.handleDeleteDeploy.bind(this, environment_var)}>
+                                onClick={this.handleDelete.bind(this, environment_var)}>
                             <i className="material-icons">delete</i>
                         </button>
                     </td>

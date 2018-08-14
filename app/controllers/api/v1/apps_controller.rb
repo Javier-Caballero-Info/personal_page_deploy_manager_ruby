@@ -8,7 +8,7 @@ class Api::V1::AppsController < Api::V1::BaseController
   end
 
   def destroy
-    respond_with App.destroy(params[:id])
+    respond_with App.find(params[:id]).delete
   end
 
   def update

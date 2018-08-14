@@ -9,7 +9,7 @@ class Api::V1::DeploySetupItemsController < Api::V1::BaseController
   end
 
   def destroy
-    respond_with DeploySetupItem.destroy(params[:id])
+    respond_with DeploySetupItem.find(params[:id]).delete
   end
 
   def update
