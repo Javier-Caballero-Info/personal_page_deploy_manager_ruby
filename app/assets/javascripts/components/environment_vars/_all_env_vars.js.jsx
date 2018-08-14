@@ -22,7 +22,7 @@ var AllEnvVars = (createReactClass({
     handleEdit(environment_var) {
         this.setState({ loading: true});
         $.ajax({
-            url: "/api/v1/environment_vars/" + environment_var.id,
+            url: "/api/v1/environment_vars/" + environment_var._id.$oid,
             type: "PUT",
             data: { environment_var: environment_var },
             success: (environment_var) => {
@@ -68,7 +68,7 @@ var AllEnvVars = (createReactClass({
 
         const environment_vars = this.props.environment_vars.map((environment_var) => {
             return (
-                <tr key={environment_var.id}>
+                <tr key={environment_var._id.$oid}>
                     <td>{environment_var.key}</td>
                     <td>{environment_var.body}</td>
                     <td>

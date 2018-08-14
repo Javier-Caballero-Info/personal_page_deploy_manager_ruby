@@ -1,4 +1,9 @@
-class Deploy < ApplicationRecord
+class Deploy
+  include Mongoid::Document
+
+  field :name, type: String
+  field :status, type: String
+
   belongs_to :environment
   has_many :deploy_app, :dependent => :destroy
 

@@ -20,7 +20,7 @@ const PortsDeploySetup = (createReactClass({
         });
 
         $.ajax({
-            url: "/api/v1/deploy_setups/" + this.props.deploy_setup.id,
+            url: "/api/v1/deploy_setups/" + this.props.deploy_setup._id.$oid,
             type: "PUT",
             data: {deploy_setup: {
                     ports: ports.join(',')

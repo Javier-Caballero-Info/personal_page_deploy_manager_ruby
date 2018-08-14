@@ -15,7 +15,7 @@ const RestartPolicyDeploySetup = (createReactClass({
         const value = target.value;
         this.setState({loading: true});
         $.ajax({
-            url: "/api/v1/deploy_setups/" + this.props.deploy_setup.id,
+            url: "/api/v1/deploy_setups/" + this.props.deploy_setup._id.$oid,
             type: "PUT",
             data: {deploy_setup: {
                     restart_policy: value

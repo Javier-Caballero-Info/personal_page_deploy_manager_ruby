@@ -1,7 +1,7 @@
 class Api::V1::AppVersionsController < Api::V1::BaseController
 
   def index
-    app_id = params[:app] && params[:app] != "null" ? params[:app].to_i : nil
+    app_id = params[:app] && params[:app] != "null" ? params[:app] : nil
     app_versions = AppVersion.all.where(deleted: false).order('id DESC')
     app_versions = app_versions.where(app_id: app_id)
 

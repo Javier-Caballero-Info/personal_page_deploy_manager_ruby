@@ -3,7 +3,7 @@ var AllApps = (createReactClass({
         $.getJSON("/api/v1/environments.json", response => {
             const environment_items = response.map((environment) => {
                 return (
-                    <li key={environment.id}>
+                    <li key={environment._id.$oid}>
                         <a onClick={(e) => this.openEnvironmentVarsModal(environment, e)}>
                             <i className="material-icons">extension</i>{environment.name}
                         </a>
@@ -47,7 +47,7 @@ var AllApps = (createReactClass({
     handleEdit(app) {
         this.setState({ loading: true});
         $.ajax({
-            url: "/api/v1/apps/" + app.id,
+            url: "/api/v1/apps/" + app._id.$oid,
             type: "PUT",
             data: { app: app },
             success: (app) => {
@@ -144,7 +144,7 @@ var AllApps = (createReactClass({
 
         const apps = this.props.apps.map((app) => {
             return (
-                <tr key={app.id}>
+                <tr key={app._id.$oid}>
                     <td>{app.name}</td>
                     <td>{app.docker_image}</td>
                     <td>

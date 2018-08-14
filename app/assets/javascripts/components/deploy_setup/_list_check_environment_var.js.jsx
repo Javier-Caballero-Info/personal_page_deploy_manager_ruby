@@ -11,11 +11,11 @@ const ListCheckEnvironmentVar = (createReactClass({
 
         const items = this.props.listElements.map((env_var) => {
             return (
-                <li className="collection-item" key={env_var.id}>
+                <li className="collection-item" key={env_var._id.$oid}>
                     <p>
                         <label>
                             <input type="checkbox" value={JSON.stringify(env_var)} className="filled-in" onChange={this.onCheckboxChange}
-                                   defaultChecked={this.props.selectedIds.includes(env_var.id)}/>
+                                   defaultChecked={this.props.selectedIds.includes(env_var._id.$oid)}/>
                             <span>{env_var.key}</span>
                         </label>
                     </p>

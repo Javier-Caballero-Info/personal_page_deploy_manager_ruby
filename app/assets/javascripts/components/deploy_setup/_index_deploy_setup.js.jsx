@@ -31,8 +31,8 @@ const IndexDeploySetup = (createReactClass({
                 url: "/api/v1/deploy_setup_items",
                 type: "POST",
                 data: {deploy_setup_item: {
-                    deploy_setup_id: deploy_setup.id,
-                    environment_var_id: env_var.id
+                    deploy_setup_id: deploy_setup._id.$oid,
+                    environment_var_id: env_var._id.$oid
                 }},
                 success: (deploy_setup_item) => {
                     Alert.success('Environment var was added successfully');
@@ -50,16 +50,16 @@ const IndexDeploySetup = (createReactClass({
             let selected_item;
 
             const filtered_deploy_setup_items = deploy_setup.deploy_setup_item.filter((item) => {
-                if (env_var.id === item.environment_var_id){
+                if (env_var._id.$oid === item.environment_var_id){
                     selected_item = item;
                 }
 
-                return env_var.id !== item.environment_var_id;
+                return env_var._id.$oid !== item.environment_var_id;
 
             });
 
             $.ajax({
-                url: "/api/v1/deploy_setup_items/" + selected_item.id,
+                url: "/api/v1/deploy_setup_items/" + selected_item._id.$oid,
                 type: "DELETE",
                 success: () => {
                     Alert.success('Environment var was removed successfully');
@@ -133,7 +133,7 @@ const IndexDeploySetup = (createReactClass({
         }
 
         this.setState({
-            environment_vars: <ListEnvironmentVarsDeploySetup app_id={this.props.app.id} environment_id={environment_id}
+            environment_vars: <ListEnvironmentVarsDeploySetup app_id={this.props.app._id.$oid} environment_id={environment_id}
                                                               selectedEnvVars={selectedEnvVars} onCheckboxChange={this.onCheckboxChange}/>,
             selectedEnvVars: selectedEnvVars
         });

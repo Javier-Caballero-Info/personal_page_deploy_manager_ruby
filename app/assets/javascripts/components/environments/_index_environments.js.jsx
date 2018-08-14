@@ -11,7 +11,7 @@ const IndexEnvironments = (createReactClass({
     },
 
     handleUpdateEnvironment(environment) {
-        const index = this.state.environments.findIndex((obj => obj.id === environment.id));
+        const index = this.state.environments.findIndex((obj => obj._id.$oid === environment._id.$oid));
         let newEnvironments = this.state.environments;
 
         newEnvironments[index] = environment;
@@ -26,7 +26,7 @@ const IndexEnvironments = (createReactClass({
 
     removeEnvironmentClient(id) {
         const newEnvironments = this.state.environments.filter((environment) => {
-            return environment.id !== id;
+            return environment._id.$oid !== id;
         });
 
         this.setState({ environments: newEnvironments });
@@ -35,11 +35,11 @@ const IndexEnvironments = (createReactClass({
     confirmDelete() {
         this.setState({loadingRequest: true});
         $.ajax({
-            url: `/api/v1/environments/${this.environment.id}`,
+            url: `/api/v1/environments/${this.environment._id.$oid}`,
             type: 'DELETE',
             success:() => {
                 Alert.success('Environment deleted');
-                this.removeEnvironmentClient(this.environment.id);
+                this.removeEnvironmentClient(this.environment._id.$oid);
                 this.setState({loadingRequest: false});
             }
         });

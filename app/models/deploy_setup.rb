@@ -1,4 +1,9 @@
-class DeploySetup < ApplicationRecord
+class DeploySetup
+  include Mongoid::Document
+
+  field :restart_policy, type: String
+  field :ports, default: '', type: String
+
   belongs_to :environment
   belongs_to :app_version
   has_many :deploy_setup_item, :dependent => :destroy

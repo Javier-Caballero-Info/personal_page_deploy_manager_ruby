@@ -10,7 +10,7 @@ const IndexApps = (createReactClass({
     },
 
     handleUpdateApp(app) {
-        const index = this.state.apps.findIndex((obj => obj.id === app.id));
+        const index = this.state.apps.findIndex((obj => obj._id.$oid === app._id.$oid));
         let newApps = this.state.apps;
 
         newApps[index] = app;
@@ -25,7 +25,7 @@ const IndexApps = (createReactClass({
 
     removeAppClient(id) {
         const newApps = this.state.apps.filter((app) => {
-            return app.id !== id;
+            return app._id.$oid !== id;
         });
 
         this.setState({ apps: newApps });
@@ -34,11 +34,11 @@ const IndexApps = (createReactClass({
     confirmDelete() {
         this.setState({loadingRequest: true});
         $.ajax({
-            url: `/api/v1/apps/${this.state.app.id}`,
+            url: `/api/v1/apps/${this.state.app._id.$oid}`,
             type: 'DELETE',
             success:() => {
                 Alert.success('App deleted');
-                this.removeAppClient(this.state.app.id);
+                this.removeAppClient(this.state.app._id.$oid);
                 this.setState({loadingRequest: false});
             }
         });

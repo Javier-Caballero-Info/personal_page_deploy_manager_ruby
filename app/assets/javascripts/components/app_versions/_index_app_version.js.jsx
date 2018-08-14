@@ -1,6 +1,6 @@
 const IndexAppVersions = (createReactClass({
     componentDidMount() {
-        const app_id = this.props.app ? this.props.app.id : null;
+        const app_id = this.props.app ? this.props.app._id.$oid : null;
 
         $.getJSON("/api/v1/app_versions.json?app=" + app_id , response => {
             this.setState({ app_versions: response });

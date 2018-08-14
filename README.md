@@ -19,6 +19,10 @@ Things you may want to cover:
 
 * Services (job queues, cache servers, search engines, etc.)
 
+    `rails runner 'Delayed::Backend::Mongoid::Job.create_indexes'`
+    
+    `rails generate delayed_job`
+
     `bin/delayed_job start`
 
 * Deployment instructions

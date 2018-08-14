@@ -29,7 +29,7 @@ const AllAppVersions = (createReactClass({
             }
 
             return (
-                <tr key={app_version.id} className={bg_const}>
+                <tr key={app_version._id.$oid} className={bg_const}>
                     <td className="middle">
                         {app_version.stable > 0 &&
                             <span className="mdi mdi-approval mdi-24 green-text ml-1"/>

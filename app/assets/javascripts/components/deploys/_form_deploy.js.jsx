@@ -4,7 +4,7 @@ const FormDeploy = (createReactClass({
         $.getJSON("/api/v1/environments.json", response => {
             const environment_items_select= response.map((environment) => {
                 return (
-                    <option key={environment.id} value={environment.id}>{environment.name}</option>
+                    <option key={environment._id.$oid} value={environment._id.$oid}>{environment.name}</option>
                 )
             });
 
@@ -51,7 +51,7 @@ const FormDeploy = (createReactClass({
 
     submitDeploy (status) {
         this.props.onSubmit({
-            id: this.props.deploy ? this.props.deploy.id : null,
+            id: this.props.deploy ? this.props.deploy._id.$oid : null,
             status: status,
             environment_id: this.state.environment_id,
             deploy_apps: this.state.deploy_apps
@@ -268,7 +268,7 @@ const FormDeploy = (createReactClass({
         let deploy_apps = this.state.deploy_apps;
         this.setState({deploy_apps: []});
         deploy_apps[index].deploy_setup = deploy_setup;
-        deploy_apps[index].deploy_setup_id = deploy_setup ? deploy_setup.id : null;
+        deploy_apps[index].deploy_setup_id = deploy_setup ? deploy_setup._id.$oid : null;
         this.setState({deploy_apps: deploy_apps}, () => {
             this.validateForm();
         });

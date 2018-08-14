@@ -2,8 +2,10 @@ const FormApp = (createReactClass({
 
     getPorts() {
         let ports = [];
-        const instance = M.Chips.getInstance($('.chips'));
-        instance.chipsData.map(function(item){ports.push(item.tag)});
+        const instance = M.Chips.getInstance($('#chips_' + this.props.title.replace(' ', '_')));
+        instance.chipsData.map(function(item){
+            ports.push(item.tag);
+        });
         return ports.join(',');
     },
 
@@ -115,7 +117,7 @@ const FormApp = (createReactClass({
 
     componentDidMount() {
         const ports = this.formatPortData(this.props.app.exposed_ports);
-        $('.chips').chips({
+        $('#chips_' + this.props.title.replace(' ', '_')).chips({
             placeholder: '',
             secondaryPlaceholder: '+Port',
             data: ports
@@ -143,7 +145,7 @@ const FormApp = (createReactClass({
                         </div>
                         <div className="col s12">
                             <label className="active">Exposed Ports</label>
-                            <div className="chips mt-0">
+                            <div className="chips mt-0" id={'chips_' + this.props.title.replace(' ', '_')}>
                                 <input type="number"/>
                             </div>
                         </div>

@@ -58,7 +58,7 @@ const IndexDeploys= (createReactClass({
         this.setState({loadingRequest: true});
 
         $.ajax({
-            url: "/api/v1/deploys/" + deploy.id,
+            url: "/api/v1/deploys/" + deploy._id.$oid,
             type: "PUT",
             data: {deploy: deploy},
             success: (deploy) => {
@@ -93,7 +93,7 @@ const IndexDeploys= (createReactClass({
     confirmDelete() {
         this.setState({loadingRequest: true});
         $.ajax({
-            url: `/api/v1/deploys/${this.state.deploy.id}`,
+            url: `/api/v1/deploys/${this.state.deploy._id.$oid}`,
             type: 'DELETE',
             success:() => {
                 Alert.success('Draft deploy deleted');

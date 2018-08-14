@@ -1,5 +1,17 @@
-class App < ApplicationRecord
+class App
+  include Mongoid::Document
+  
+  field :name, type: String
+  field :docker_image, type: String
+  field :exposed_ports, type: String
+  field  :description, type: String
+
   has_many :environment_var
+
+  validates :name, presence: true
+  validates :name, uniqueness: true
+
+  validates :docker_image, presence: true
 
   def update_app_versions
     tags_register = DockerHub.get_tags(self.docker_image)

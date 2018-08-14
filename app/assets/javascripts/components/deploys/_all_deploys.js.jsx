@@ -50,7 +50,7 @@ const AllDeploys = (createReactClass({
 
         const deploys = this.props.deploys.map((deploy) => {
             return (
-                <tr key={deploy.id}>
+                <tr key={deploy._id.$oid}>
                     <td className="middle">
                         <DeployStatus status={deploy.status}/>
                         <span>{deploy.name}</span>

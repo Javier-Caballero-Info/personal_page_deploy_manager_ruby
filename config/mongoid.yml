@@ -1,0 +1,28 @@
+development:
+  # Configure available database clients. (required)
+  clients:
+      # Defines the default client. (required)
+      default:
+        # Defines the name of the default database that Mongoid can connect to.
+        # (required).
+        database: 'version_manager_develop'
+
+        # Provides the hosts the default client can connect to. Must be an array
+        # of host:port pairs. (required)
+        hosts:
+          - cluster0-shard-00-00-tkidn.mongodb.net:27017
+          - cluster0-shard-00-01-tkidn.mongodb.net:27017
+          - cluster0-shard-00-02-tkidn.mongodb.net:27017
+        options:
+          # The name of the user for authentication.
+          user: root
+
+          # The password of the user for authentication.
+          password: root
+
+          # The database or source to authenticate the user against. If the database
+          # specified above is not admin, admin MUST be specified here.
+          auth_source: admin
+
+          # All Atlas servers use SSL. (default: false)
+          ssl: true

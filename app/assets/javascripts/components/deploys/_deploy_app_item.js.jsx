@@ -4,7 +4,7 @@ const DeployAppItem = (createReactClass({
 
         const apps_item_html = this.props.apps.map((app) => {
             return (
-                <option value={app.id} key={app.id}>{app.name}</option>
+                <option value={app._id.$oid} key={app._id.$oid}>{app.name}</option>
             );
         });
 
@@ -67,7 +67,7 @@ const DeployAppItem = (createReactClass({
             $.getJSON("/api/v1/app_versions.json?app=" + app_id , response => {
                 const app_versions_item_html = response.map((version) => {
                     return (
-                      <option value={version.id} key={version.id}>
+                      <option value={version._id.$oid} key={version._id.$oid}>
                           {version.name}
                       </option>
                     );

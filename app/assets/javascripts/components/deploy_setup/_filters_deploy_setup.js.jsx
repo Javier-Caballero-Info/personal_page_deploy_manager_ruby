@@ -4,7 +4,7 @@ const FilterDeploySetup = (createReactClass({
         $.getJSON("/api/v1/environments.json", response => {
             const environment_items_select= response.map((environment) => {
                 return (
-                    <option key={environment.id} value={environment.id}>{environment.name}</option>
+                    <option key={environment._id.$oid} value={environment._id.$oid}>{environment.name}</option>
                 )
             });
 
@@ -19,10 +19,10 @@ const FilterDeploySetup = (createReactClass({
 
         });
 
-        $.getJSON("/api/v1/app_versions.json?app=" + this.props.app.id, response => {
+        $.getJSON("/api/v1/app_versions.json?app=" + this.props.app._id.$oid, response => {
             const app_version_items_select= response.map((app_version) => {
                 return (
-                    <option key={app_version.id} value={app_version.id}>{app_version.name}</option>
+                    <option key={app_version._id.$oid} value={app_version._id.$oid}>{app_version.name}</option>
                 )
             });
 
@@ -48,18 +48,23 @@ const FilterDeploySetup = (createReactClass({
     },
 
     onFilterChange() {
-        const app_version_id = this.refs.app_version.value;
-        const environment_id = this.refs.environment.value;
-        if(app_version_id !== 'null' && environment_id !== 'null'){
-            this.props.setLoadingDeploySetup(true);
-            $.getJSON("/api/v1/deploy_setups.json?app_version=" + app_version_id + '&environment=' + environment_id, response => {
-                this.props.setLoadingDeploySetup(false);
-                this.props.onFilterChange({
-                   app_version_id: app_version_id,
-                   environment_id: environment_id,
-                   deploy_setup: response
+
+        if (this.refs.app_version && this.refs.environment) {
+
+            const app_version_id = this.refs.app_version.value;
+            const environment_id = this.refs.environment.value;
+            if (app_version_id !== 'null' && environment_id !== 'null') {
+                this.props.setLoadingDeploySetup(true);
+                $.getJSON("/api/v1/deploy_setups.json?app_version=" + app_version_id + '&environment=' + environment_id, response => {
+                    this.props.setLoadingDeploySetup(false);
+                    this.props.onFilterChange({
+                        app_version_id: app_version_id,
+                        environment_id: environment_id,
+                        deploy_setup: response
+                    });
                 });
-            });
+            }
+
         }
 
     },
@@ -69,7 +74,7 @@ const FilterDeploySetup = (createReactClass({
             <div className="row m-0">
                 {this.state.loading_app_versions &&
                 <div className="input-field col s12 m6">
-                    <select defaultValue={this.props.version ? this.props.version.id : "null"}
+                    <select defaultValue={this.props.version ? this.props.version._id.$oid : "null"}
                             onChange={this.onFilterChange} ref="app_version">
                         <option value="null" disabled>Choose a version of the app</option>
                         {this.state.app_version_items_select}

@@ -3,8 +3,8 @@ const IndexEnvVars = (createReactClass({
 
         this.refs.deleteModal = null;
 
-        const env_id = this.props.environment ? this.props.environment.id : null;
-        const app_id = this.props.app ? this.props.app.id : null;
+        const env_id = this.props.environment ? this.props.environment._id.$oid : null;
+        const app_id = this.props.app ? this.props.app._id.$oid : null;
 
         $.getJSON("/api/v1/environment_vars.json?environment=" + env_id + '&app=' + app_id , response => {
             this.setState({ environment_vars: response });
@@ -13,7 +13,7 @@ const IndexEnvVars = (createReactClass({
     },
 
     handleUpdateEnvironmentVar(environment_var) {
-        const index = this.state.environment_vars.findIndex((obj => obj.id === environment_var.id));
+        const index = this.state.environment_vars.findIndex((obj => obj._id.$oid === environment_var._id.$oid));
         let newEnvironmentVars = this.state.environment_vars;
 
         newEnvironmentVars[index] = environment_var;
@@ -28,7 +28,7 @@ const IndexEnvVars = (createReactClass({
 
     removeEnvironmentVarClient(id) {
         const newEnvironmentVars = this.state.environment_vars.filter((environment_var) => {
-            return environment_var.id !== id;
+            return environment_var._id.$oid !== id;
         });
 
         this.setState({ environment_vars: newEnvironmentVars });
@@ -37,11 +37,11 @@ const IndexEnvVars = (createReactClass({
     confirmDelete() {
         this.setState({loadingRequest: true});
         $.ajax({
-            url: `/api/v1/environment_vars/${this.environment_var.id}`,
+            url: `/api/v1/environment_vars/${this.environment_var._id.$oid}`,
             type: 'DELETE',
             success:() => {
                 Alert.success('Environment var deleted');
-                this.removeEnvironmentVarClient(this.environment_var.id);
+                this.removeEnvironmentVarClient(this.environment_var._id.$oid);
                 this.setState({loadingRequest: false});
             }
         });

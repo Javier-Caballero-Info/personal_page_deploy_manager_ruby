@@ -25,7 +25,7 @@ const AllEnvironments = (createReactClass({
     handleEdit(environment) {
         this.setState({ loading: true});
         $.ajax({
-            url: "/api/v1/environments/" + environment.id,
+            url: "/api/v1/environments/" + environment._id.$oid,
             type: "PUT",
             data: { environment: environment },
             success: (environment) => {
@@ -87,7 +87,7 @@ const AllEnvironments = (createReactClass({
 
         const environments = this.props.environments.map((environment) => {
             return (
-                <tr key={environment.id}>
+                <tr key={environment._id.$oid}>
                     <td>{environment.name}</td>
                     <td>{environment.portainer_url}</td>
                     <td>{environment.endpoint_id}</td>
