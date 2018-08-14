@@ -5,14 +5,16 @@ class DeployApp
   field :restart_policy, type: String
   field :container_name, type: String
 
-  belongs_to :deploy
   belongs_to :app
   belongs_to :app_version
   belongs_to :deploy_setup
 
-  has_many :deploy_app_environment_var, :dependent => :destroy
+  embedded_in :deploy
+  embeds_many :deploy_app_environment_var
 
   def set_deploy_app_env_vars (deploy_setup_id)
+
+    deploy_app_env_vars =  []
 
     DeploySetupItem.where(deploy_setup: DeploySetup.find(deploy_setup_id)).each do |dsi|
 
@@ -25,7 +27,13 @@ class DeployApp
 
       daev.save()
 
+      deploy_app_env_vars.push(daev)
+
     end
+
+    self.deploy_app_environment_var = deploy_app_env_vars
+
+    self.save
 
   end
 

@@ -1,23 +1,19 @@
 class Api::V1::DeploysController < Api::V1::BaseController
 
   def index
-    render json: Deploy.all.to_json(:include => [
+    render json: Deploy.all, include: [
       :environment,
-      :deploy_app => { :include => [
-        :deploy_app_environment_var,
-        :app,
-        :app_version,
-        :deploy_setup => { :include => [
-          :deploy_setup_item => {:include => [:environment_var]}
-        ]}
-      ] }
-    ])
+      :deploy_app_environment_var,
+      :app,
+      :app_version,
+      :deploy_setup,
+      :deploy_setup_item,
+      :environment_var
+    ]
   end
 
   def show
-    render json: Deploy.find(params["id"]).to_json(:include => [
-      :environment, :deploy_app => { :include => [:deploy_app_environment_var] }
-    ])
+    render json: Deploy.find(params["id"]), include: [:environment, :deploy_app_environment_var]
   end
 
   def create
@@ -33,14 +29,14 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
     deploy_item.name = Environment.find(deploy_params[:environment_id]).name + '#'  + DateTime.now.strftime('%Y%m%d%H%M%S')
 
-    deploy_item.save()
-
     deploy_apps = []
+
+    deploy_item.save
 
     params[:deploy][:deploy_apps].each do |_, da|
 
       deploy_app_item = DeployApp.new(da.permit(:app_id, :app_version_id, :deploy_setup_id))
-      deploy_app_item.deploy_id = deploy_item.id
+      deploy_app_item.deploy = deploy_item
       deploy_app_item.container_name = App.find(da[:app_id]).name
       deploy_app_item.restart_policy = da[:deploy_setup][:restart_policy]
       deploy_app_item.ports = da[:deploy_setup][:ports]
@@ -49,9 +45,14 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
       deploy_app_item.set_deploy_app_env_vars(da[:deploy_setup_id])
 
+      deploy_app_item.save()
+
       deploy_apps.append(deploy_app_item)
 
     end
+
+    deploy_item.deploy_app=deploy_apps
+    deploy_item.save
 
     if deploy_item.status != 'draft'
       deploy_item.delay.perform_deploy

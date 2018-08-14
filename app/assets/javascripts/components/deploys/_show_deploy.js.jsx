@@ -8,9 +8,14 @@ const ShowDeploy = (createReactClass({
 
         const deploy = this.props.deploy;
 
-        const deploy_apps = deploy.deploy_app.map((deploy_app, index)=>{
-            return <ShowDeployApp deploy_app={deploy_app} key={index}/>
-        });
+        console.log(deploy);
+
+        let deploy_apps = null;
+        if (deploy.deploy_app) {
+            deploy_apps = deploy.deploy_app.map((deploy_app, index) => {
+                return <ShowDeployApp deploy_app={deploy_app} key={index}/>
+            });
+        }
 
         return (
             <div>

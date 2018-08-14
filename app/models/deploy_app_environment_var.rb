@@ -4,5 +4,5 @@ class DeployAppEnvironmentVar
   field :key, type: String
   field :value, type: String
 
-  belongs_to :deploy_app
+  embedded_in :deploy_app
 end

@@ -5,7 +5,7 @@ class Deploy
   field :status, type: String
 
   belongs_to :environment
-  has_many :deploy_app, :dependent => :destroy
+  embeds_many :deploy_app
 
   def perform_deploy
 
