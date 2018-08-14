@@ -23,6 +23,8 @@ const ListCheckEnvironmentVar = (createReactClass({
             )
         });
 
+        console.log(this.props.listElements);
+
         return (
             <ul className="collection">
                 {items}

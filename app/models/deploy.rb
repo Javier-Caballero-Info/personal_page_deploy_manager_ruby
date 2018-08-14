@@ -9,7 +9,7 @@ class Deploy
 
   def perform_deploy
 
-      begin
+    # begin
         portainer = Portainer.new(self.environment.portainer_url, self.environment.endpoint_id)
 
         portainer.login
@@ -38,10 +38,10 @@ class Deploy
         self.status = 'finished'
         self.save
 
-      rescue Exception
-        self.status = 'failed'
-        self.save
-      end
+      # rescue Exception
+      # self.status = 'failed'
+      # self.save
+      # end
 
   end
 

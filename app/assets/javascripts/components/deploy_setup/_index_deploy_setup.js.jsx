@@ -50,11 +50,11 @@ const IndexDeploySetup = (createReactClass({
             let selected_item;
 
             const filtered_deploy_setup_items = deploy_setup.deploy_setup_item.filter((item) => {
-                if (env_var._id.$oid === item.environment_var_id){
+                if (env_var._id.$oid === item.environment_var_id.$oid){
                     selected_item = item;
                 }
 
-                return env_var._id.$oid !== item.environment_var_id;
+                return env_var._id.$oid !== item.environment_var_id.$oid;
 
             });
 
@@ -103,7 +103,7 @@ const IndexDeploySetup = (createReactClass({
 
     setSelectedEnvVars(deploy_setup_item) {
         return deploy_setup_item.map((deploy_setup_item) => {
-            return deploy_setup_item.environment_var_id;
+            return deploy_setup_item.environment_var_id.$oid;
         });
     },
 

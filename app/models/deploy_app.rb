@@ -14,7 +14,7 @@ class DeployApp
 
   def set_deploy_app_env_vars (deploy_setup_id)
 
-    DeploySetupItem.where(deploy_setup_id: deploy_setup_id).each do |dsi|
+    DeploySetupItem.where(deploy_setup: DeploySetup.find(deploy_setup_id)).each do |dsi|
 
       daev = DeployAppEnvironmentVar.new
 

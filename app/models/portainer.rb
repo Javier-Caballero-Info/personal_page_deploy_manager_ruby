@@ -2,12 +2,12 @@ require "json"
 require 'rest_client'
 
 class Portainer
-
-  attr_accessor :authorization_token, :base_url, :endpoint
+  attr_accessor :authorization_token, :base_url, :endpoint, :logger
 
   def initialize(base_url, endpoint)
     self.base_url = base_url
     self.endpoint = endpoint.to_s
+    self.logger = Logger.new("#{Rails.root}/log/portainer.log")
   end
 
   def login
@@ -16,21 +16,32 @@ class Portainer
 
     password_portainer = ENV.fetch("PORTAINER_PASSWORD")
 
+    self.logger.debug user_portainer
+
+    self.logger.debug password_portainer
+
+
     url = self.base_url + '/api/auth'
 
-    response = RestClient.post(url,
-                               {
-                                 :Username => user_portainer,
-                                 :Password => password_portainer
-                               }.to_json,
-                               {
-                                 :content_type => 'application/json',
-                                 "Cache-Control" => 'no-cache'
-                               }
-    )
+    begin
+
+      response = RestClient.post(url,
+                                 {
+                                   :Username => user_portainer,
+                                   :Password => password_portainer
+                                 }.to_json,
+                                 {
+                                   :content_type => 'application/json',
+                                   "Cache-Control" => 'no-cache'
+                                 }
+      )
+
+    rescue RestClient::ExceptionWithResponse => e
+      self.logger.debug e.response
+      exit 1
+    end
 
     result = JSON.parse(response.body)
-
     self.authorization_token = "Bearer " + result["jwt"]
 
   end
@@ -38,11 +49,15 @@ class Portainer
   def pull_image(docker_image, docker_image_version)
     url = self.base_url + "/api/endpoints/" + self.endpoint + "/docker/images/create?fromImage=" + docker_image + ":" + docker_image_version
 
-    RestClient.post(url, {}.to_json, {
-      :content_type => 'application/json',
-      :Authorization => self.authorization_token,
-      "Cache-Control" => 'no-cache'
-    })
+    begin
+      RestClient.post(url, {}.to_json, {
+        :content_type => 'application/json',
+        :Authorization => self.authorization_token,
+        "Cache-Control" => 'no-cache'
+      })
+    rescue RestClient::ExceptionWithResponse => e
+      self.logger.debug e.response
+    end
   end
 
   def find_container_by_name(container_name)
@@ -108,7 +123,7 @@ class Portainer
       container_id = result["Id"]
 
     rescue RestClient::ExceptionWithResponse => e
-      puts e.response
+      self.logger.debug e.response
     end
 
     container_id

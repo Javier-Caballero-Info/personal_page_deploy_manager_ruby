@@ -31,7 +31,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
     deploy_item.status = exist_others_deploy_in_progress || deploy_params[:status] == 'draft' ? 'draft' : 'in_progress'
 
-    deploy_item.name = Environment.find(deploy_item.environment_id).name + '#'  + DateTime.now.strftime('%Y%m%d%H%M%S')
+    deploy_item.name = Environment.find(deploy_params[:environment_id]).name + '#'  + DateTime.now.strftime('%Y%m%d%H%M%S')
 
     deploy_item.save()
 
@@ -124,6 +124,6 @@ class Api::V1::DeploysController < Api::V1::BaseController
   private
 
     def deploy_params
-      params.require(:deploy).permit(:id, :name, :environment_id, :status)
+      params.require(:deploy).permit(:name, :environment_id, :status)
     end
 end
