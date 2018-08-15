@@ -8,7 +8,9 @@ const DeployAppItem = (createReactClass({
             );
         });
 
-        this.loadAppVersion(this.props.deploy_app.app_id);
+        if (this.props.deploy_app.app) {
+            this.loadAppVersion(this.props.deploy_app.app_id.$oid);
+        }
 
         if (this.props.deploy_app.deploy_setup) {
             this.setDeploySetup(this.props.deploy_app.deploy_setup);
@@ -46,9 +48,16 @@ const DeployAppItem = (createReactClass({
         this.props.setDeploySetup(this.props.index, deploy_setup);
     },
 
-    onAppVersionChange () {
-        const app_version_id = this.refs.app_version_id.value;
-        const environment_id = this.props.environment_id;
+    onAppVersionChange (_, version_id) {
+
+        let app_version_id = version_id ? version_id : this.refs.app_version_id.value;
+
+        let environment_id = this.props.environment_id;
+
+        if (environment_id.$oid) {
+            environment_id = this.props.environment_id.$oid;
+        }
+
         $.getJSON("/api/v1/deploy_setups.json?app_version=" + app_version_id + '&environment=' + environment_id, response => {
 
             if (response.length > 0){
@@ -78,6 +87,11 @@ const DeployAppItem = (createReactClass({
                 }, () => {
                     $('select').formSelect();
                 });
+
+                if (this.props.deploy_app.app_version_id) {
+                    this.onAppVersionChange(this.props.deploy_app.app_version_id.$oid);
+                }
+
             });
         } else {
             this.setState({app_versions_item_html: null});

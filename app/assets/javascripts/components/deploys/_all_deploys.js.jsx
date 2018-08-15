@@ -22,13 +22,16 @@ const AllDeploys = (createReactClass({
 
         this.props.setFlagModalShow(true);
 
-        this.setState({
-            editDeployView: <FormDeploy title={"Edit Deploy"} deploy={deploy} onSubmit={this.handleUpdateDeploy}
-                                        onClose={this.closeEditModal}/>
+        const self = this;
+
+        $.getJSON("/api/v1/deploys/" + deploy._id.$oid + ".json", response => {
+            self.setState({
+                editDeployView: <FormDeploy title={"Edit Deploy"} deploy={response} onSubmit={this.handleUpdateDeploy}
+                                            onClose={this.closeEditModal}/>
+            });
         });
 
         $('#modalEditDeploy').modal('open');
-
     },
 
     closeEditModal () {
