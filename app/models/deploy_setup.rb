@@ -6,7 +6,7 @@ class DeploySetup
 
   belongs_to :environment
   belongs_to :app_version
-  has_many :deploy_setup_item, :dependent => :destroy
+  embeds_many :deploy_setup_item
 
   def copy_configuration_from(deploy_setup)
 

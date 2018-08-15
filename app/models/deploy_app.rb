@@ -16,24 +16,30 @@ class DeployApp
 
     deploy_app_env_vars =  []
 
-    DeploySetupItem.where(deploy_setup: DeploySetup.find(deploy_setup_id)).each do |dsi|
+    deploy_setup = DeploySetup.find(deploy_setup_id)
 
-      daev = DeployAppEnvironmentVar.new
+    if deploy_setup != nil
 
-      daev.key = dsi.environment_var.key
-      daev.value = dsi.environment_var.body
+      deploy_setup.deploy_setup_item.each do |dsi|
 
-      daev.deploy_app = self
+        daev = DeployAppEnvironmentVar.new
 
-      daev.save()
+        daev.key = dsi.environment_var.key
+        daev.value = dsi.environment_var.body
 
-      deploy_app_env_vars.push(daev)
+        daev.deploy_app = self
+
+        daev.save!
+
+        deploy_app_env_vars.append(daev)
+
+      end
+
+      self.deploy_app_environment_var = deploy_app_env_vars
+
+      self.save!
 
     end
-
-    self.deploy_app_environment_var = deploy_app_env_vars
-
-    self.save
 
   end
 

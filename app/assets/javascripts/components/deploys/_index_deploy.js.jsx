@@ -45,7 +45,10 @@ const IndexDeploys= (createReactClass({
     },
 
     closeShowModal () {
-        this.setState({modal_is_showing: false});
+        this.setState({
+            showDeployView: null,
+            modal_is_showing: false
+        });
         $('#modalShowDeploy').modal('close');
     },
 

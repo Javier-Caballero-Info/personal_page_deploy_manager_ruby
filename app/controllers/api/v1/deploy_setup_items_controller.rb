@@ -4,7 +4,14 @@ class Api::V1::DeploySetupItemsController < Api::V1::BaseController
   end
 
   def create
-    deploy_setup_item = DeploySetupItem.create!(deploy_setup_params)
+    deploy_setup_item = DeploySetupItem.new(deploy_setup_params)
+
+    deploy_setup = DeploySetup.find(params[:deploy_setup_item][:deploy_setup_id])
+
+    deploy_setup_item.deploy_setup = deploy_setup
+
+    deploy_setup_item.save
+
     render json: deploy_setup_item.to_json(:include => [:environment_var])
   end
 
@@ -21,6 +28,6 @@ class Api::V1::DeploySetupItemsController < Api::V1::BaseController
   private
 
     def deploy_setup_params
-      params.require(:deploy_setup_item).permit(:id, :deploy_setup_id, :environment_var_id)
+      params.require(:deploy_setup_item).permit(:id, :environment_var_id)
     end
 end

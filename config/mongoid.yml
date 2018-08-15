@@ -24,5 +24,7 @@ development:
           # specified above is not admin, admin MUST be specified here.
           auth_source: admin
 
+          identity_map_enabled: true
+
           # All Atlas servers use SSL. (default: false)
           ssl: true

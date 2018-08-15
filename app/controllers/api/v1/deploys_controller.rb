@@ -1,19 +1,20 @@
 class Api::V1::DeploysController < Api::V1::BaseController
 
   def index
-    render json: Deploy.all, include: [
-      :environment,
-      :deploy_app_environment_var,
-      :app,
-      :app_version,
-      :deploy_setup,
-      :deploy_setup_item,
-      :environment_var
+
+    result = Deploy.all
+
+    render json: result, include: [
+      :environment
     ]
   end
 
   def show
-    render json: Deploy.find(params["id"]), include: [:environment, :deploy_app_environment_var]
+    render json: Deploy.find(params["id"]), include: [
+      :environment,
+      :app,
+      :app_version,
+      :deploy_app_environment_var]
   end
 
   def create
@@ -50,9 +51,6 @@ class Api::V1::DeploysController < Api::V1::BaseController
       deploy_apps.append(deploy_app_item)
 
     end
-
-    deploy_item.deploy_app=deploy_apps
-    deploy_item.save
 
     if deploy_item.status != 'draft'
       deploy_item.delay.perform_deploy
