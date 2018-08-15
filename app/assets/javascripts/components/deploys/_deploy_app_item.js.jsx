@@ -50,6 +50,8 @@ const DeployAppItem = (createReactClass({
 
     onAppVersionChange (_, version_id) {
 
+        this.setState({loading_deploy_setup: true});
+
         let app_version_id = version_id ? version_id : this.refs.app_version_id.value;
 
         let environment_id = this.props.environment_id;
@@ -65,6 +67,8 @@ const DeployAppItem = (createReactClass({
             }else{
                 this.setDeploySetup(null);
             }
+
+            this.setState({loading_deploy_setup: false});
 
         });
         this.props.onAppVersionChange(this.props.index, app_version_id);
