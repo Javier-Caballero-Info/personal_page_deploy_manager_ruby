@@ -88,7 +88,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
     deploy_item.save
 
-    DeployApp.where(deploy: deploy_item).each { |da| da.delete }
+    deploy_item.deploy_app.each { |da| da.delete }
 
     params[:deploy][:deploy_apps].each do |_, da|
 
@@ -110,7 +110,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
     end
 
     if deploy_item.status != 'draft'
-      deploy_item.perform_deploy
+      deploy_item.delay.perform_deploy
     end
 
     render json:

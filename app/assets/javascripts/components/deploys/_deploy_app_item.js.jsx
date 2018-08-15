@@ -145,7 +145,7 @@ const DeployAppItem = (createReactClass({
                     { !this.state.loading_app_versions && this.state.app_versions_item_html !== null &&
                     <div className="col s12 m6 relative">
                         <div className="input-field">
-                            <select value={this.props.deploy_app.app_version_id} onChange={this.onAppVersionChange} ref="app_version_id">
+                            <select value={this.props.deploy_app.app_version_id.$oid} onChange={this.onAppVersionChange} ref="app_version_id">
                                 <option value="" disabled>Choose a version</option>
                                 {this.state.app_versions_item_html}
                             </select>
