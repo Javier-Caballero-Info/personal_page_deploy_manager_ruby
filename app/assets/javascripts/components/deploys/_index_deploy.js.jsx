@@ -61,7 +61,7 @@ const IndexDeploys= (createReactClass({
         this.setState({loadingRequest: true});
 
         $.ajax({
-            url: "/api/v1/deploys/" + deploy._id.$oid,
+            url: "/api/v1/deploys/" + deploy.id,
             type: "PUT",
             data: {deploy: deploy},
             success: (deploy) => {

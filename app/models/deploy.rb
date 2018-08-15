@@ -18,7 +18,7 @@ class Deploy
 
           environment_vars = []
 
-          DeployAppEnvironmentVar.where(deploy_app_id: da.id).each do |da_ev|
+          da.deploy_app_environment_var.each do |da_ev|
             environment_vars.push(da_ev.key + '=' + da_ev.value)
           end
 

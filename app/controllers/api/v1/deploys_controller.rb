@@ -48,8 +48,6 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
       deploy_app_item.save()
 
-      deploy_apps.append(deploy_app_item)
-
     end
 
     if deploy_item.status != 'draft'
@@ -77,28 +75,29 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
   def update
 
-    deploy_item = Deploy.find(params["id"])
+    deploy_item = Deploy.find(params[:deploy]["id"])
 
     exist_others_deploy_in_progress = Deploy.where(
       status: 'in_progress',
-      environment_id: deploy_params[:environment_id]
+      environment_id: params[:deploy][:environment_id]["$oid"]
     ).size > 0
 
     deploy_item.status = exist_others_deploy_in_progress || deploy_params[:status] == 'draft' ? 'draft' : 'in_progress'
 
-    deploy_item.environment_id = deploy_params[:environment_id]
+    deploy_item.environment = Environment.find(params[:deploy][:environment_id]["$oid"])
 
-    deploy_item.save()
+    deploy_item.save
 
-    deploy_apps = []
-
-    DeployApp.where(deploy_id: deploy_item.id).each { |da| da.destroy }
+    DeployApp.where(deploy: deploy_item).each { |da| da.delete }
 
     params[:deploy][:deploy_apps].each do |_, da|
 
+      app = App.find(da[:app_id]["$oid"])
+
       deploy_app_item = DeployApp.new(da.permit(:app_id, :app_version_id, :deploy_setup_id))
-      deploy_app_item.deploy_id = deploy_item.id
-      deploy_app_item.container_name = App.find(da[:app_id]).name
+      deploy_app_item.deploy = deploy_item
+      deploy_app_item.app = app
+      deploy_app_item.container_name = app.name
       deploy_app_item.restart_policy = da[:deploy_setup][:restart_policy]
       deploy_app_item.ports = da[:deploy_setup][:ports]
 
@@ -106,7 +105,7 @@ class Api::V1::DeploysController < Api::V1::BaseController
 
       deploy_app_item.set_deploy_app_env_vars(da[:deploy_setup_id])
 
-      deploy_apps.append(deploy_app_item)
+      deploy_app_item.save()
 
     end
 

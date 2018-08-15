@@ -14,7 +14,6 @@ const AllDeploys = (createReactClass({
 
     handleUpdateDeploy (deploy) {
         this.props.handleUpdateDeploy(deploy);
-        this.props.handleUpdateDeploy(deploy);
         this.closeEditModal();
     },
 
