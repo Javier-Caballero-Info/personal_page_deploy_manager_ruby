@@ -26,7 +26,7 @@ const PortsDeploySetup = (createReactClass({
                     ports: ports.join(',')
                 }},
             success: (deploy_setup) => {
-                Alert.success('Deploy setup was updated successfully');
+                notification.success('Deploy setup was updated successfully');
                 this.setState({
                     loading: false,
                     deploy_setup: deploy_setup,
@@ -34,7 +34,7 @@ const PortsDeploySetup = (createReactClass({
                 });
             },
             error: () => {
-                Alert.danger('An error as occurred. Please try again.');
+                notification.danger('An error as occurred. Please try again.');
                 this.setState({loading: false, is_edited: false});
             }
         });

@@ -52,7 +52,7 @@ var AllApps = (createReactClass({
             data: { app: app },
             success: (app) => {
                 this.setState({ loading: false});
-                Alert.success('App ' + app.name +  ' edited');
+                notification.success('App ' + app.name +  ' edited');
                 this.props.handleEdit(app);
                 this.setState({ editForm: null});
                 $('#modalEditApp').modal('close');
@@ -61,11 +61,11 @@ var AllApps = (createReactClass({
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if(xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loading: false});
             }

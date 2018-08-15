@@ -35,7 +35,7 @@ const NewEnvironment = (createReactClass({
             type: "POST",
             data: { environment: environment },
             success: (environment) => {
-                Alert.success('New environment created');
+                notification.success('New environment created');
                 $('#modalCreateEnvironment').modal('close');
                 this.props.handleSubmit(environment);
                 this.setState({loading: false});
@@ -45,11 +45,11 @@ const NewEnvironment = (createReactClass({
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if(xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loading: false});
             }

@@ -40,7 +40,7 @@ var NewApp = (createReactClass({
             type: "POST",
             data: { app: app },
             success: (app) => {
-                Alert.success('New app created');
+                notification.success('New app created');
                 $('#modalCreateApp').modal('close');
                 this.props.handleSubmit(app);
                 this.setState({loading: false});
@@ -50,11 +50,11 @@ var NewApp = (createReactClass({
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if(xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loading: false});
             }

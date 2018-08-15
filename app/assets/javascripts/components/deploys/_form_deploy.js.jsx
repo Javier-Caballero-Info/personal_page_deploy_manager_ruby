@@ -178,7 +178,7 @@ const FormDeploy = (createReactClass({
 
         } else {
             if (deploy_apps.length > 0) {
-                Alert.warning("You can't add more apps.");
+                notification.warning("You can't add more apps.");
             }
         }
     },
@@ -230,7 +230,7 @@ const FormDeploy = (createReactClass({
                     deploy_setup_id: null,
                     deploy_setup: null,
                 };
-                Alert.danger("App already selected");
+                notification.danger("App already selected");
                 this.setState({deploy_apps: deploy_apps}, () => {
                     this.setAppIdsTaken();
                 });

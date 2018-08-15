@@ -7,7 +7,7 @@
 //= require ./components
 
 
-let Alert = {
+let notification = {
 
     success: function (text) {
         const toastHTML = '<span class="green center">' + text + '</span>';

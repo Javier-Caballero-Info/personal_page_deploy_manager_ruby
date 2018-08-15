@@ -65,23 +65,23 @@ const IndexDeploys= (createReactClass({
             type: "PUT",
             data: {deploy: deploy},
             success: (deploy) => {
-                Alert.success('Deploy app saved');
+                notification.success('Deploy app saved');
                 this.loadDeploys();
                 this.setState({loadingRequest: false});
             },
             error: (xhr) => {
                 if (xhr.status === 400) {
-                    Alert.warning('Actually exists a deploy in progress for the same environment');
+                    notification.warning('Actually exists a deploy in progress for the same environment');
                     this.loadDeploys();
                 }
                 if (xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if (xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loadingRequest: false});
             }
@@ -99,13 +99,13 @@ const IndexDeploys= (createReactClass({
             url: `/api/v1/deploys/${this.state.deploy._id.$oid}`,
             type: 'DELETE',
             success:() => {
-                Alert.success('Draft deploy deleted');
+                notification.success('Draft deploy deleted');
                 this.setState({loadingRequest: false});
                 this.loadDeploys();
             },
             error: (xhr) => {
                 if(xhr.status === 400) {
-                    Alert.warning('The selected deploy is not draft');
+                    notification.warning('The selected deploy is not draft');
                     this.setState({loadingRequest: false});
                     this.loadDeploys();
                 }

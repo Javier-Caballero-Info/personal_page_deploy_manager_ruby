@@ -40,7 +40,7 @@ const IndexEnvVars = (createReactClass({
             url: `/api/v1/environment_vars/${this.environment_var._id.$oid}`,
             type: 'DELETE',
             success:() => {
-                Alert.success('Environment var deleted');
+                notification.success('Environment var deleted');
                 this.removeEnvironmentVarClient(this.environment_var._id.$oid);
                 this.setState({loadingRequest: false});
             }

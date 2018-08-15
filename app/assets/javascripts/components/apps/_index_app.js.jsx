@@ -37,7 +37,7 @@ const IndexApps = (createReactClass({
             url: `/api/v1/apps/${this.state.app._id.$oid}`,
             type: 'DELETE',
             success:() => {
-                Alert.success('App deleted');
+                notification.success('App deleted');
                 this.removeAppClient(this.state.app._id.$oid);
                 this.setState({loadingRequest: false});
             }

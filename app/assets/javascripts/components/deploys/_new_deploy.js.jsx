@@ -29,25 +29,25 @@ const NewDeploy = (createReactClass({
             type: "POST",
             data: { deploy: deploy },
             success: (deploy) => {
-                Alert.success('New deploy created');
+                notification.success('New deploy created');
                 $('#modalCreateDeploy').modal('close');
                 this.setState({loading: false});
                 this.props.handleSubmit(deploy);
             },
             error: (xhr) => {
                 if(xhr.status === 400) {
-                    Alert.warning('Actually exists a deploy in progress for the same environment');
+                    notification.warning('Actually exists a deploy in progress for the same environment');
                     $('#modalCreateDeploy').modal('close');
                     this.props.handleSubmit(deploy);
                 }
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if(xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loading: false});
             }

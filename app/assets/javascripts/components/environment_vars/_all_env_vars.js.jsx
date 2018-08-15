@@ -27,7 +27,7 @@ var AllEnvVars = (createReactClass({
             data: { environment_var: environment_var },
             success: (environment_var) => {
                 this.setState({ loading: false});
-                Alert.success('Environment var ' + environment_var.key +  ' edited');
+                notification.success('Environment var ' + environment_var.key +  ' edited');
                 this.props.handleEdit(environment_var);
                 this.setState({ editForm: null});
                 $('#modalEditEnvironmentVar').modal('close');
@@ -36,11 +36,11 @@ var AllEnvVars = (createReactClass({
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if(xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loading: false});
             }

@@ -1,30 +1,49 @@
+
+<% uri = ENV['MONGOHQ_URL'] %>
+<% database = uri.split('@')[1].split('/')[1] %>
+<% hosts = uri.split('@')[1].split('/')[0].split(',') %>
+<% user = uri.split('@')[0].split(':')[0] %>
+<% password = uri.split('@')[0].split(':')[1] %>
+
 development:
-  # Configure available database clients. (required)
-  clients:
-      # Defines the default client. (required)
+   clients:
+         default:
+           database: <%= database.to_s %>
+           hosts:
+             - <%= hosts[0] %>
+             - <%= hosts[1] %>
+             - <%= hosts[2] %>
+           options:
+             user:  <%= user.to_s %>
+             password:  <%= password.to_s %>
+             auth_source: admin
+             identity_map_enabled: true
+             ssl: true
+test:
+   clients:
       default:
-        # Defines the name of the default database that Mongoid can connect to.
-        # (required).
-        database: 'version_manager_develop'
-
-        # Provides the hosts the default client can connect to. Must be an array
-        # of host:port pairs. (required)
+        database: <%= database.to_s %>
         hosts:
-          - cluster0-shard-00-00-tkidn.mongodb.net:27017
-          - cluster0-shard-00-01-tkidn.mongodb.net:27017
-          - cluster0-shard-00-02-tkidn.mongodb.net:27017
+          - <%= hosts[0] %>
+          - <%= hosts[1] %>
+          - <%= hosts[2] %>
         options:
-          # The name of the user for authentication.
-          user: root
-
-          # The password of the user for authentication.
-          password: root
-
-          # The database or source to authenticate the user against. If the database
-          # specified above is not admin, admin MUST be specified here.
+          user:  <%= user.to_s %>
+          password:  <%= password.to_s %>
           auth_source: admin
-
           identity_map_enabled: true
-
-          # All Atlas servers use SSL. (default: false)
+          ssl: true
+production:
+  clients:
+      default:
+        database: <%= database.to_s %>
+        hosts:
+          - <%= hosts[0] %>
+          - <%= hosts[1] %>
+          - <%= hosts[2] %>
+        options:
+          user:  <%= user.to_s %>
+          password:  <%= password.to_s %>
+          auth_source: admin
+          identity_map_enabled: true
           ssl: true

@@ -30,7 +30,7 @@ const AllEnvironments = (createReactClass({
             data: { environment: environment },
             success: (environment) => {
                 this.setState({ loading: false});
-                Alert.success('Environment ' + environment.name +  ' edited');
+                notification.success('Environment ' + environment.name +  ' edited');
                 this.props.handleEdit(environment);
                 this.setState({ editForm: null});
                 $('#modalEditEnvironment').modal('close');
@@ -39,11 +39,11 @@ const AllEnvironments = (createReactClass({
                 if(xhr.status === 422) {
                     const response = xhr.responseJSON;
                     Object.keys(response.errors).map((k) => {
-                        Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
                     });
                 }
                 if(xhr.status >= 500) {
-                    Alert.danger('Something get wrong');
+                    notification.danger('Something get wrong');
                 }
                 this.setState({loading: false});
             }

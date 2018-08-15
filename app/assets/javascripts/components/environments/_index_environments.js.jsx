@@ -38,7 +38,7 @@ const IndexEnvironments = (createReactClass({
             url: `/api/v1/environments/${this.environment._id.$oid}`,
             type: 'DELETE',
             success:() => {
-                Alert.success('Environment deleted');
+                notification.success('Environment deleted');
                 this.removeEnvironmentClient(this.environment._id.$oid);
                 this.setState({loadingRequest: false});
             }

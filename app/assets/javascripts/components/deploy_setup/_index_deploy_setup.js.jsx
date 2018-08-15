@@ -35,7 +35,7 @@ const IndexDeploySetup = (createReactClass({
                     environment_var_id: env_var._id.$oid
                 }},
                 success: (deploy_setup_item) => {
-                    Alert.success('Environment var was added successfully');
+                    notification.success('Environment var was added successfully');
                     this.setLoadingDeploySetup(false);
                     deploy_setup.deploy_setup_item.push(deploy_setup_item);
                     this.setState({deploy_setup: [deploy_setup]});
@@ -62,7 +62,7 @@ const IndexDeploySetup = (createReactClass({
                 url: "/api/v1/deploy_setup_items/" + selected_item._id.$oid,
                 type: "DELETE",
                 success: () => {
-                    Alert.success('Environment var was removed successfully');
+                    notification.success('Environment var was removed successfully');
                     this.setLoadingDeploySetup(false);
                     deploy_setup.deploy_setup_item = filtered_deploy_setup_items;
                     this.setState({deploy_setup: [deploy_setup]});
@@ -82,11 +82,11 @@ const IndexDeploySetup = (createReactClass({
         if(xhr.status === 422) {
             const response = xhr.responseJSON;
             Object.keys(response.errors).map((k) => {
-                Alert.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
             });
         }
         if(xhr.status >= 500) {
-            Alert.danger('Something get wrong');
+            notification.danger('Something get wrong');
         }
     },
 
@@ -166,14 +166,14 @@ const IndexDeploySetup = (createReactClass({
                     app_version_id: this.state.app_version_id,
                 }},
             success: (deploy_setup) => {
-                Alert.success('Deploy setup was created successfully');
+                notification.success('Deploy setup was created successfully');
                 this.setEnvironmentVars(this.state.app_version_id, this.state.environment_id, deploy_setup);
                 this.setDeploySetup(deploy_setup);
                 this.setLoadingDeploySetup(false);
             },
             error: (xhr) => {
                 if(xhr.status === 404) {
-                    Alert.danger('No exists another deploy setup to copy');
+                    notification.danger('No exists another deploy setup to copy');
                 } else {
                     this.processFailedRequest(xhr);
                 }
