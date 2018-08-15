@@ -12,6 +12,8 @@
 	- [Dependencies](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#dependencies)
 - [Environment](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#environment)
 - [Run test](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#run-test)
+- [Run the background taks](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#run-the-background-taks)
+- [Run the cron jobs](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#run-the-cron-jobs)
 - [Build](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#build)
 - [Running with Docker](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#running-with-docker)
 	- [Building the image](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#building-the-image)
