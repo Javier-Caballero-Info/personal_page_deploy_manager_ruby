@@ -5,6 +5,7 @@
 ## Table of Contents
 
 -   [Overview](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master/README.md#overview)
+-   [API Description](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master/README.md#api_description)
 -   [Clone](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master/README.md#clone)
 - [Requirements](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#requirements)
 - [Installation](https://github.com/Javier-Caballero-Info/personal_page_deploy_manager_ruby/tree/master#installation)
@@ -25,6 +26,9 @@
 ## Overview
 
 
+## API Description
+
+For more information about the endpoints of the API please check the [apiary doc](https://personalpagedeploymanagerruby.docs.apiary.io).
 
 ## Clone
 
