@@ -1,9 +1,9 @@
 
 <% uri = ENV['MONGOHQ_URL'] %>
-<% database = uri.split('@')[1].split('/')[1] %>
-<% hosts = uri.split('@')[1].split('/')[0].split(',') %>
-<% user = uri.split('@')[0].split(':')[0] %>
-<% password = uri.split('@')[0].split(':')[1] %>
+<% database = uri ? uri.split('@')[1].split('/')[1] : '' %>
+<% hosts = uri ?  uri.split('@')[1].split('/')[0].split(',')  : ''%>
+<% user = uri ?  uri.split('@')[0].split(':')[0] : '' %>
+<% password = uri ? uri.split('@')[0].split(':')[1] : ''%>
 
 development:
    clients:
