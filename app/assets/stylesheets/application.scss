@@ -140,28 +140,32 @@ blockquote{
 }
 
 .standard-table-1 tr td:last-child{
-  width: 60px;
+  min-width: 60px;
+}
+
+.standard-table-2 tr td:last-child{
+  min-width: 125px;
 }
 
 .standard-table-3 tr td:last-child{
-  width: 185px;
+  min-width: 185px;
 }
 
 .standard-table-4 tr td:last-child{
-  width: 235px;
+  min-width: 235px;
 }
 
 .standard-table-5 tr td:last-child{
-  width: 290px;
+  min-width: 290px;
   overflow: overlay;
 }
 
 .standard-table-5 td:last-child i:first-child{
-  width: 18px;
+  min-width: 18px;
 }
 
 .standard-table-6 tr td:last-child{
-  width: 350px;
+  min-width: 350px;
   overflow: overlay;
 }
 
@@ -344,4 +348,14 @@ td.middle *{
 
 .dropdown-content{
   max-height: 300px !important;
+}
+
+.column-big-text{
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.column-big-text p{
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

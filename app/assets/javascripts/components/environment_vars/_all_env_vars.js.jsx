@@ -70,7 +70,7 @@ var AllEnvVars = (createReactClass({
             return (
                 <tr key={environment_var._id.$oid}>
                     <td>{environment_var.key}</td>
-                    <td>{environment_var.body}</td>
+                    <td className="column-big-text"><p>{environment_var.body}</p></td>
                     <td>
                         <button className="waves-effect waves-light btn blue" onClick={(e) => this.openEditEnvironmentModal(environment_var, e)}>
                             <i className="material-icons">create</i>
