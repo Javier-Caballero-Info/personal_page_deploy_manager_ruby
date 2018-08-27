@@ -10,6 +10,7 @@ COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 COPY . /myapp
 RUN rake assets:precompile
+RUN rails credentials:edit
 
 EXPOSE 3000
 
