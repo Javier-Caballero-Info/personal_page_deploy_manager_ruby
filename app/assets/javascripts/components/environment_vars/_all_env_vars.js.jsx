@@ -90,7 +90,7 @@ var AllEnvVars = (createReactClass({
                 {this.state.loading &&
                 <Loader/>
                 }
-                <table className="responsive-table  striped standard-table">
+                <table className="responsive-table  striped standard-table standard-table-2">
                     <thead>
                     <tr>
                         <th>Key</th>
