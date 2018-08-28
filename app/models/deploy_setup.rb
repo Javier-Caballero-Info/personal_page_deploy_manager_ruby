@@ -6,7 +6,7 @@ class DeploySetup
 
   belongs_to :environment
   belongs_to :app_version
-  embeds_many :deploy_setup_item
+  embeds_many :deploy_setup_item, cascade_callbacks: true
 
   def copy_configuration_from(deploy_setup)
 
@@ -15,7 +15,7 @@ class DeploySetup
     self.save
 
     deploy_setup.deploy_setup_item.each do |i|
-      DeploySetupItem.create!({deploy_setup_id: self.id, environment_var_id: i.environment_var_id})
+      DeploySetupItem.create!({deploy_setup: self, environment_var_id: i.environment_var_id})
     end
   end
 

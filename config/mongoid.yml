@@ -11,14 +11,11 @@ development:
            database: <%= database.to_s %>
            hosts:
              - <%= hosts[0] %>
-             - <%= hosts[1] %>
-             - <%= hosts[2] %>
            options:
              user:  <%= user.to_s %>
              password:  <%= password.to_s %>
              auth_source: admin
              identity_map_enabled: true
-             ssl: true
 test:
    clients:
       default:

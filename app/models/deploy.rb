@@ -5,7 +5,7 @@ class Deploy
   field :status, type: String
 
   belongs_to :environment
-  embeds_many :deploy_app
+  embeds_many :deploy_app, cascade_callbacks: true
 
   def perform_deploy
 

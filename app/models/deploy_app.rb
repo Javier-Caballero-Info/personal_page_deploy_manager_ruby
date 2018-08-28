@@ -10,7 +10,7 @@ class DeployApp
   belongs_to :deploy_setup
 
   embedded_in :deploy
-  embeds_many :deploy_app_environment_var
+  embeds_many :deploy_app_environment_var, cascade_callbacks: true
 
   def set_deploy_app_env_vars (deploy_setup_id)
 

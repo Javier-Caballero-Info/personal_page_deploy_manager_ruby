@@ -20,7 +20,7 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
 
     deploy_setup = DeploySetup.create(deploy_setup_params)
     deploy_setup.ports = ''
-    deploy_setup.save
+    deploy_setup.save!
 
     if params[:copy_from] && params[:copy_from] == 'from_app_version'
 
@@ -32,13 +32,14 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
                               environment_id: deploy_setup_params[:environment_id]
                             )
                             .where(
-                              "app_version_id < ?", deploy_setup_params[:app_version_id]
+                              :app_version_id.lt => deploy_setup_params[:app_version_id]
                             )
-                            .where.not(id: deploy_setup.id)
+                            .not.where(id: deploy_setup.__id__)
                             .order('app_version_id DESC')
 
-      puts last_deploy_setup.to_sql
-      puts last_deploy_setup.to_a
+      puts last_deploy_setup
+
+
 
       if last_deploy_setup.size > 0
         deploy_setup.copy_configuration_from(last_deploy_setup.first)
