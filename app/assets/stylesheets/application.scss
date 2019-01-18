@@ -36,6 +36,14 @@ input[type=number]::-webkit-outer-spin-button {
 h1.header{
   color: #616161;
 }
+
+nav .brand-logo img {
+  max-height: 38px;
+  top: 10px;
+  position: relative;
+  margin-right: 8px;
+}
+
 @media all and (max-width: 600px) {
 
   h1{
@@ -358,4 +366,10 @@ td.middle *{
 .column-big-text p{
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+#index-banner img{
+  max-width: 200px;
+  height: auto;
+  text-align: center;
 }

@@ -14,7 +14,10 @@ const Header = (createReactClass({
             <div className="navbar-fixed">
                 <nav className="teal">
                     <div className="nav-wrapper">
-                        <a href="/" className="brand-logo">{ this.state.title }</a>
+                        <a href="/" className="brand-logo">
+                            <img src="/pictures/rocket.png" alt="Rocket logo" />
+                            { this.state.title }
+                        </a>
                         <a href="#" data-target="mobile-menu" className="sidenav-trigger">
                             <i className="material-icons">menu</i>
                         </a>

@@ -2,7 +2,7 @@
 
 class Api::V1::DeploysController < Api::V1::BaseController
   def index
-    result = Deploy.all
+    result = Deploy.all.limit(5).desc(:_id)
 
     render json: result, include: [
       :environment

@@ -37,9 +37,6 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
                             .not.where(id: deploy_setup.__id__)
                             .order('app_version_id DESC')
 
-      puts last_deploy_setup
-
-
 
       if last_deploy_setup.size > 0
         deploy_setup.copy_configuration_from(last_deploy_setup.first)

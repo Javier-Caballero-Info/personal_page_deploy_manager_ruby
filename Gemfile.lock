@@ -251,6 +251,7 @@ DEPENDENCIES
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   material_icons
+  minitest (= 5.11.3)
   mongoid (~> 6.0)
   puma (~> 3.11)
   rails (~> 5.2.0)
@@ -268,7 +269,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 2.3.1p112
+   ruby 2.5.1p57
 
 BUNDLED WITH
    1.16.3
