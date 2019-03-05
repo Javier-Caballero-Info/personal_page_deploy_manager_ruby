@@ -89,7 +89,7 @@ MONGOHQ_URL=conection_path_string
 
 ## Run test
 
-Without test for the momment
+Without test for the moment
 
 
 ## Run the background taks
