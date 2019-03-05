@@ -1,0 +1,46 @@
+<div class="row login-bg">
+  <div class="col s12">
+    <div class="container">
+      <div id="login-page" class="row">
+        <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-6">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'login-form', autocomplete: 'off') do |f| %>
+            <div class="row">
+              <div class="input-field col s12">
+                <h5 class="ml-4">Sign in</h5>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix pt-2">person_outline</i>
+                <input autofocus="autofocus" autocomplete="off" type="email" value="" name="user[email]" id="user_email">
+                <label for="user_email" class="center-align">Email</label>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="input-field col s12">
+                <i class="material-icons prefix pt-2">lock_outline</i>
+                <%= f.password_field :password, autocomplete: "!off" %>
+                <label for="password">Password</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 m12 l12 ml-2 mt-1">
+                <p>
+                  <label>
+                    <input type="checkbox">
+                    <span>Remember Me</span>
+                  </label>
+                </p>
+              </div>
+            </div>
+            <div class="">
+              <div class="input-field col s12">
+                <button type="submit" class="btn waves-effect waves-light teal col s12">Login</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

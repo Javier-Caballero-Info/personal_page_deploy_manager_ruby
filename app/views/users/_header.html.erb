@@ -1,0 +1,36 @@
+<div class="navbar-fixed">
+  <nav class="teal">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">
+        <img src="/pictures/rocket.png" alt="Rocket logo">
+        <span class="hide-on-small-only">Deploy Manager</span>
+      </a>
+      <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li class="user_dropdown">
+          <a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="material-icons right">person_pin</i>
+            <%= current_user.full_name %>
+          </a>
+          <ul id="dropdown1" class="dropdown-content" tabindex="0">
+            <li tabindex="0"><a href="/auth/logout">Logout <i class="material-icons">open_in_new</i></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="collection with-header sidenav" id="mobile-menu">
+    <div class="collection-header">
+      <h4>Deploy Manager</h4>
+    </div>
+    <a href="/" class="collection-item">
+      <div>
+        Home
+        <span class="secondary-content"><i class="material-icons">send</i></span>
+      </div>
+    </a>
+    <a href="/auth/logout" class="collection-item">
+      <div>Logout<span class="secondary-content"><i class="material-icons">open_in_new</i></span></div>
+    </a>
+  </div>
+</div>

@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require style
  *= require_self
  */
 input[type=number]::-webkit-inner-spin-button,
@@ -19,21 +20,22 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.chips .input{
+.chips .input {
   margin: 0 !important;
   border: none !important;
 }
 
-.full-width-table{
+.full-width-table {
   width: 100%;
 }
+
 .body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
-h1.header{
+h1.header {
   color: #616161;
 }
 
@@ -46,15 +48,16 @@ nav .brand-logo img {
 
 @media all and (max-width: 600px) {
 
-  h1{
+  h1 {
     font-size: 3.2rem;
   }
 
-  nav .brand-logo{
+  nav .brand-logo {
     font-size: 1.7rem;
   }
 
 }
+
 @media all and (min-width: 600px) {
 
   nav .brand-logo {
@@ -62,51 +65,54 @@ nav .brand-logo img {
   }
 
 }
+
 main {
   flex: 1 0 auto;
   background: gainsboro;
 }
-.dropdown-content > li.disabled{
+
+.dropdown-content > li.disabled {
   cursor: default;
 }
 
-.dropdown-content > li.disabled:hover{
+.dropdown-content > li.disabled:hover {
   background: none;
 }
 
-blockquote{
+blockquote {
   border-left: 5px solid teal;
 }
 
-.modal.modal-fixed-footer .modal-content{
+.modal.modal-fixed-footer .modal-content {
   overflow-x: hidden;
 }
+
 .btn-block {
   display: block;
   width: 100%;
 }
 
-.modal-footer .row{
+.modal-footer .row {
   margin: 0;
 }
 
-.ml-1{
+.ml-1 {
   margin-left: 10px;
 }
 
-.toast{
+.toast {
   padding: 0;
   min-height: 0;
 }
 
-.toast span{
+.toast span {
   padding: 10px 25px;
   min-height: 48px;
   line-height: 28px;
   width: 100%;
 }
 
-.background-loader{
+.background-loader {
   position: fixed;
   width: 100%;
   top: 0;
@@ -116,80 +122,80 @@ blockquote{
   z-index: 10000;
 }
 
-.background-loader .preloader-wrapper.big{
+.background-loader .preloader-wrapper.big {
   width: 128px;
   height: 128px;
   top: calc(50% - 64px);
   left: calc(50% - 64px);
 }
 
-.delete-modal{
+.delete-modal {
 
 }
 
-.delete-modal .modal-header{
+.delete-modal .modal-header {
   padding: 14px;
 }
 
-.delete-modal .modal-content h6{
+.delete-modal .modal-content h6 {
   margin: 0.46rem;
 }
 
-.delete-modal .modal-footer{
-  border-top: 1px solid rgba(0,0,0,0.1);
+.delete-modal .modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.table-flat td, .table-flat th{
+.table-flat td, .table-flat th {
   border-radius: 0;
 }
 
-.standard-table tr td:last-child{
+.standard-table tr td:last-child {
   width: 125px;
 }
 
-.standard-table-1 tr td:last-child{
+.standard-table-1 tr td:last-child {
   min-width: 60px;
 }
 
-.standard-table-2 tr td:last-child{
+.standard-table-2 tr td:last-child {
   min-width: 125px;
 }
 
-.standard-table-3 tr td:last-child{
+.standard-table-3 tr td:last-child {
   min-width: 185px;
 }
 
-.standard-table-4 tr td:last-child{
+.standard-table-4 tr td:last-child {
   min-width: 235px;
 }
 
-.standard-table-5 tr td:last-child{
+.standard-table-5 tr td:last-child {
   min-width: 290px;
   overflow: overlay;
 }
 
-.standard-table-5 td:last-child i:first-child{
+.standard-table-5 td:last-child i:first-child {
   min-width: 18px;
 }
 
-.standard-table-6 tr td:last-child{
+.standard-table-6 tr td:last-child {
   min-width: 350px;
   overflow: overlay;
 }
 
-.standard-table-6 td:last-child i:first-child{
+.standard-table-6 td:last-child i:first-child {
   width: 18px;
 }
 
-td.middle *{
+td.middle * {
   vertical-align: middle;
 }
 
-.modal-tiny{
+.modal-tiny {
   max-width: 500px;
 }
 
-.modal-big{
+.modal-big {
   position: fixed;
   width: 95%;
   // height: 90% !important;
@@ -198,117 +204,117 @@ td.middle *{
   background: #e2e2e2;
 }
 
-.modal .header{
+.modal .header {
   border-bottom: solid 1px #c1c1c1;
   padding-bottom: 10px;
   margin: 20px;
 }
 
-.modal .modal-content{
+.modal .modal-content {
   height: calc(100% - 92px);
 }
 
-.modal .modal-footer{
+.modal .modal-footer {
   position: static;
   bottom: 0;
   border-top: solid 2px #adadad;
   background: #f1f1f1;
 }
 
-.modal-big blockquote{
+.modal-big blockquote {
   margin: 0 20px;
 }
 
-.modal .modal-content{
+.modal .modal-content {
   height: auto;
 }
 
-.row{
+.row {
   width: 100%;
 }
 
-.m-0{
-   margin: 0 !important;
+.m-0 {
+  margin: 0 !important;
 }
 
-.mt-0{
+.mt-0 {
   margin-top: 0 !important;
 }
 
-.mr-1{
+.mr-1 {
   margin-right: 10px;
 }
 
-.ml-3{
+.ml-3 {
   margin-left: 30px;
 }
 
-.ml-5{
+.ml-5 {
   margin-left: 50px;
 }
 
-.mb-0{
+.mb-0 {
   margin-bottom: 0;
 }
 
-.mb-1{
+.mb-1 {
   margin-bottom: 10px;
 }
 
-.p-0{
+.p-0 {
   padding: 0;
 }
 
-.p-1{
+.p-1 {
   padding: 10px;
 }
 
-.p-2{
+.p-2 {
   padding: 20px;
 }
 
-.input-filed.inline input{
+.input-filed.inline input {
   margin: 0;
 }
 
-.page-footer{
+.page-footer {
   padding: 0;
 }
 
-.sidenav-overlay{
+.sidenav-overlay {
   z-index: 1;
 }
 
-.sidenav.collection .collection-item:last-child{
+.sidenav.collection .collection-item:last-child {
   border-bottom: 1px solid #e0e0e0;
 }
 
-.modal-content > .row{
+.modal-content > .row {
   margin-bottom: 0;
 }
 
-.mdi-24{
+.mdi-24 {
   font-size: 24px;
 }
 
-.progress, .card-panel{
+.progress, .card-panel {
   margin: .5rem 0 0.5rem 0;
 }
 
-[type="checkbox"]+span:not(.lever){
+[type="checkbox"] + span:not(.lever) {
   line-height: 20px;
 }
 
-.deploy_setup_port_input{
+.deploy_setup_port_input {
   font-size: 18px;
   display: inline-block;
 }
 
-.default-list li{
+.default-list li {
   list-style-type: disc !important;
 }
 
-.overflow{
+.overflow {
   overflow-x: auto;
   overflow-y: auto;
 }
@@ -318,58 +324,131 @@ td.middle *{
   height: 17px;
 }
 
-.fix-vertical-align{
+.fix-vertical-align {
   position: relative;
   top: -1px;
 }
 
-.relative{
+.relative {
   position: relative;
 }
 
-.progress-middle-wrapper{
+.progress-middle-wrapper {
   height: 100%;
   position: absolute;
 }
 
-.progress-middle-wrapper-right{
+.progress-middle-wrapper-right {
   right: 0 !important;
 }
 
-.progress-middle-wrapper .progress{
+.progress-middle-wrapper .progress {
   top: 50%;
 }
 
-.btn-close{
+.btn-close {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-.bordered{
+.bordered {
   border: solid 1px gainsboro;
 }
 
-.border-radius{
+.border-radius {
   border-radius: 3px;
 }
 
-.dropdown-content{
+.dropdown-content {
   max-height: 300px !important;
 }
 
-.column-big-text{
+.column-big-text {
   max-width: 400px;
   overflow: hidden;
 }
 
-.column-big-text p{
+.column-big-text p {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-#index-banner img{
+#index-banner img {
   max-width: 200px;
   height: auto;
+  text-align: center;
+}
+
+.user_dropdown {
+  background: rgba(50, 50, 50, 0.2);
+  padding-right: 10px;
+}
+
+/*----------------------------------------
+    Login Page
+------------------------------------------*/
+.login-bg {
+  background: #dcdcdc;
+}
+
+#login-page {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  height: 100vh;
+
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+  background: url("/pictures/rocket.png") no-repeat center;
+  background-size: 50% auto;
+  margin: 0;
+
+}
+
+#login-page .card-panel.border-radius-6.login-card {
+  margin: 0 auto;
+  z-index: 1;
+}
+
+#login-page img {
+  z-index: 0;
+  position: absolute;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert {
+  position: absolute;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  width: 90%;
+  bottom: 0;
+  left: 5%;
+  box-shadow: 0 0 5px rgba(50,50,50,0.4);
   text-align: center;
 }

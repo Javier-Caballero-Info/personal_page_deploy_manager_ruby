@@ -1,0 +1,38 @@
+<%= form_with(model: user, local: true, class: 'mt-5') do |f| %>
+
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <p>
+        <strong>
+          <%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:
+        </strong>
+      </p>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="input-field">
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+  </div>
+
+  <div class="input-field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="row">
+      <div class="actions">
+        <%= f.button :submit, class: 'waves-effect blue btn' do %>
+          Save <i class='material-icons left'>save</i>
+        <% end %>
+        <%= link_to 'Back', users_path, class: 'waves-effect waves-white btn-flat' %>
+    </div>
+  </div>
+
+<% end %>
