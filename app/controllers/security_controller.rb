@@ -25,9 +25,8 @@ class SecurityController < ApplicationController
     end
   end
 
-  # authroize method redirects user to login page if not logged in:
   def authorize
-      if request.format.json?
+      if !session['warden.user.user.key'] && request.format.json?
         check_auth
       else
         cookies[:username] = current_user ? current_user.full_name : 'guest'

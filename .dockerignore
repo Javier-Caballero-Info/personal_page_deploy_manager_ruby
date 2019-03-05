@@ -1,5 +1,4 @@
 .git
 .github
 Gemfile.lock
-config/credentials.yml.enc
 .ruby-version
