@@ -302,6 +302,14 @@ td.middle * {
   margin: .5rem 0 0.5rem 0;
 }
 
+.card{
+  overflow: auto;
+}
+
+.card-panel {
+  overflow-x: scroll;
+}
+
 [type="checkbox"] + span:not(.lever) {
   line-height: 20px;
 }

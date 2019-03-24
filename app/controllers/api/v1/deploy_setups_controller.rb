@@ -26,7 +26,7 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
 
       last_deploy_setup = DeploySetup.where(
                               app_version_id: AppVersion.where(
-                                app_id: AppVersion.find(deploy_setup_params[:app_version_id]).app_id,
+                                app_id: deploy_setup.app_version.app_id,
                                 deleted: false
                               ),
                               environment_id: deploy_setup_params[:environment_id]
@@ -37,15 +37,12 @@ class Api::V1::DeploySetupsController < Api::V1::BaseController
                             .not.where(id: deploy_setup.__id__)
                             .order('app_version_id DESC')
 
+      a = last_deploy_setup.first
 
       if last_deploy_setup.size > 0
         deploy_setup.copy_configuration_from(last_deploy_setup.first)
       end
 
-    end
-
-    if params[:copy_from] && params[:copy_from] == 'from_environment'
-      # deploy_setup
     end
 
     render json: deploy_setup.to_json(:include => {

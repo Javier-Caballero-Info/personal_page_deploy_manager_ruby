@@ -59,7 +59,7 @@ const IndexDeploySetup = (createReactClass({
             });
 
             $.ajax({
-                url: "/api/v1/deploy_setup_items/" + selected_item._id.$oid,
+                url: "/api/v1/deploy_setup_items/" + selected_item._id.$oid + '?deploy_setup_id=' + deploy_setup._id.$oid,
                 type: "DELETE",
                 success: () => {
                     notification.success('Environment var was removed successfully');
