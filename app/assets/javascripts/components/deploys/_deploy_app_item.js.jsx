@@ -50,28 +50,34 @@ const DeployAppItem = (createReactClass({
 
     onAppVersionChange (_, version_id) {
 
-        this.setState({loading_deploy_setup: true});
-
         let app_version_id = version_id ? version_id : this.refs.app_version_id.value;
 
-        let environment_id = this.props.environment_id;
+        if (app_version_id === "")  {
+            this.setDeploySetup(null);
+        } else {
 
-        if (environment_id.$oid) {
-            environment_id = this.props.environment_id.$oid;
-        }
+            this.setState({loading_deploy_setup: true});
 
-        $.getJSON("/api/v1/deploy_setups.json?app_version=" + app_version_id + '&environment=' + environment_id, response => {
+            let environment_id = this.props.environment_id;
 
-            if (response.length > 0){
-                this.setDeploySetup(response[0]);
-            }else{
-                this.setDeploySetup(null);
+            if (environment_id.$oid) {
+                environment_id = this.props.environment_id.$oid;
             }
 
-            this.setState({loading_deploy_setup: false});
+            $.getJSON("/api/v1/deploy_setups.json?app_version=" + app_version_id + '&environment=' + environment_id, response => {
 
-        });
-        this.props.onAppVersionChange(this.props.index, app_version_id);
+                if (response.length > 0) {
+                    this.setDeploySetup(response[0]);
+                } else {
+                    this.setDeploySetup(null);
+                }
+
+                this.setState({loading_deploy_setup: false});
+
+            });
+
+            this.props.onAppVersionChange(this.props.index, app_version_id);
+        }
     },
 
     loadAppVersion (app_id) {
@@ -146,7 +152,7 @@ const DeployAppItem = (createReactClass({
                     <div className="col s12 m6 relative">
                         <div className="input-field">
                             <select value={this.props.deploy_app.app_version_id.$oid} onChange={this.onAppVersionChange} ref="app_version_id">
-                                <option value="" disabled>Choose a version</option>
+                                <option value="">Choose a version</option>
                                 {this.state.app_versions_item_html}
                             </select>
                             <label>Version</label>

@@ -41,6 +41,40 @@ const FormDeploy = (createReactClass({
         this.loadApps();
     },
 
+    downloadDockerCompose(){
+        $.ajax({
+            url: "/api/v1/docker_compose/download.yml",
+            type: "post",
+            data: { deploy: {
+                    id: this.props.deploy ? this.props.deploy._id.$oid : null,
+                    status: status,
+                    environment_id: this.state.environment_id,
+                    deploy_apps: this.state.deploy_apps
+                }
+            },
+            success: (docker_compose) => {
+                const url = window.URL.createObjectURL(new Blob([docker_compose]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'docker_compose.yml');
+                document.body.appendChild(link);
+                link.click();
+            },
+            error: (xhr) => {
+                if(xhr.status === 422) {
+                    const response = xhr.responseJSON;
+                    Object.keys(response.errors).map((k) => {
+                        notification.danger(k.replace(/^\w/, c => c.toUpperCase()).replace('_', ' ') + ' ' + response.errors[k]);
+                    });
+                } else {
+                    notification.danger('Something get wrong');
+                }
+                this.setState({loading: false});
+            }
+        });
+
+    },
+
     onSubmit(){
         this.submitDeploy(null);
     },
@@ -296,7 +330,7 @@ const FormDeploy = (createReactClass({
                         <div className="row m-0">
                             <div className="input-field col s12 m6">
                                 <select defaultValue={environment_id} ref="environment" onChange={this.onEnvironmentChange}>
-                                    <option value="" disabled>Choose an environment</option>
+                                    <option value="">Choose an environment</option>
                                     {this.state.environment_items_select}
                                 </select>
                                 <label>Environment</label>
@@ -325,19 +359,27 @@ const FormDeploy = (createReactClass({
                 </div>
                 <div className="modal-footer">
                     <div className="row">
-                        <div className="col s12 m4">
+                        <div className="col s12 m3">
                             <button type="button" className="waves-effect white black-text btn btn-block" onClick={this.onClose}>
                                 Close
                             </button>
                         </div>
-                        <div className="col s12 m4">
+                        <div className="col s12 m3">
                             <button type="button" className="waves-effect blue btn btn-block"
                                     onClick={this.saveDraft} disabled={!this.state.formValid}>
                                 Save Draft <i className="material-icons right">save</i>
                             </button>
                         </div>
                         {!this.state.loading_environments &&
-                        <div className="col s12 m4">
+                        <div className="col s12 m3">
+                            <button type="button" className="waves-effect cyan btn btn-block"
+                                    onClick={this.downloadDockerCompose} disabled={!this.state.formValid}>
+                                Download Docker Compose <i className="material-icons right">save_alt</i>
+                            </button>
+                        </div>
+                        }
+                        {!this.state.loading_environments &&
+                        <div className="col s12 m3">
                             <button type="button" className="waves-effect red btn btn-block"
                                     onClick={this.onSubmit} disabled={!this.state.formValid}>
                                 Save & Deploy <i className="material-icons right">save</i>

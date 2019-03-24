@@ -217,8 +217,9 @@ td.middle * {
 .modal .modal-footer {
   position: static;
   bottom: 0;
-  border-top: solid 2px #adadad;
   background: #f1f1f1;
+  width: 100% !important;
+  margin-bottom: 10px;
 }
 
 .modal-big blockquote {

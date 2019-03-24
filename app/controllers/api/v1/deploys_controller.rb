@@ -104,6 +104,54 @@ class Api::V1::DeploysController < Api::V1::BaseController
            status: exist_others_deploy_in_progress ? 400 : 200
   end
 
+  def download_docker_compose
+
+    docker_compose = {}
+
+    docker_compose['version'] = 2
+
+    services = {}
+
+    params[:deploy][:deploy_apps].each do |_, da|
+      app = App.find(da[:app_id])
+
+      services[app.name] = {}
+
+      app_version = AppVersion.find(da[:app_version_id])
+
+      services[app.name]['image'] = app.docker_image + ':' + app_version.name
+
+      deploy_setup = DeploySetup.find(da[:deploy_setup_id])
+
+      ports = deploy_setup.ports.to_s.split(',')
+
+      if ports.length > 0
+        services[app.name]['ports'] = ports
+      end
+
+      services[app.name]['restart'] = deploy_setup.restart_policy
+
+      unless deploy_setup[:deploy_setup_item].nil?
+
+        env_vars = []
+
+        deploy_setup[:deploy_setup_item].each do |dsi|
+          environment_var = EnvironmentVar.find(dsi[:environment_var_id])
+          env_vars.push(environment_var.key + '=' + environment_var.body)
+        end
+
+        services[app.name]['environment'] = env_vars
+
+      end
+
+    end
+
+    docker_compose['services'] = services
+
+    send_data docker_compose.to_yaml, :filename => 'docker_compose.yml'
+
+  end
+
   private
 
   def deploy_params

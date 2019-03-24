@@ -18,10 +18,12 @@ Rails.application.routes.draw do
       resources :deploy_setup_items, only: [:create, :destroy]
       resources :app_versions, only: [:index]
       match 'app_versions', to: 'app_versions#update', via: :put
+      match 'docker_compose/download', to: 'deploys#download_docker_compose', via: :post
     end
   end
 
-  #devise_for :users, controllers: { sessions: 'users/sessions' }
+
+
 """
   devise_for :users,
              path: 'auth',
